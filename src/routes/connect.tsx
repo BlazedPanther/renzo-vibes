@@ -5,7 +5,7 @@ export const Route = createFileRoute("/connect")({
   head: () =>
     artistHead(
       "Follow the Journey | Renzo Vibes",
-      "Stay connected with Renzo Vibes on TikTok, YouTube and the official website.",
+      "Stay connected with Renzo Vibes on TikTok, YouTube, Spotify and Instagram.",
     ),
   component: Page,
 });

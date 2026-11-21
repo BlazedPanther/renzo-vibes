@@ -107,9 +107,9 @@ export function ArtistFooter() {
           <a href={channels.youtube} target="_blank" rel="noopener noreferrer">
             YOUTUBE <ArrowUpRight />
           </a>
-          <a href={channels.website} target="_blank" rel="noopener noreferrer">
-            OFFICIAL WEBSITE <ArrowUpRight />
-          </a>
+          <Link to="/links">
+            ALL LINKS <ArrowUpRight />
+          </Link>
           <Link to="/datenschutz">DATENSCHUTZ</Link>
           {siteConfig.legal.impressum.enabled && <Link to="/impressum">IMPRESSUM</Link>}
         </div>

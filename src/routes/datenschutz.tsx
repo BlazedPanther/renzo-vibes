@@ -111,10 +111,10 @@ function Page() {
 
           <h3>6. Links zu anderen Diensten</h3>
           <p>
-            Links zu YouTube, TikTok, der offiziellen Website, Apple Music und weiteren Profilen
-            öffnen ein neues Fenster. Erst mit dem Klick verlassen Sie diese Website; ab dann gilt
-            die Datenschutzerklärung des jeweiligen Anbieters. Wir protokollieren Link-Klicks nicht
-            und verwenden keine Tracking-Weiterleitungen.
+            Links zu Spotify, YouTube, TikTok, Instagram, Apple Music und weiteren Profilen öffnen
+            ein neues Fenster. Erst mit dem Klick verlassen Sie diese Website; ab dann gilt die
+            Datenschutzerklärung des jeweiligen Anbieters. Wir protokollieren Link-Klicks nicht und
+            verwenden keine Tracking-Weiterleitungen.
           </p>
 
           <h3>7. Automatisch aktualisierte Inhalte</h3>

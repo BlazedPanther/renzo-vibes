@@ -24,7 +24,6 @@ export const siteConfig = {
   channels: {
     youtube: "https://www.youtube.com/@RenzoVibes",
     tiktok: "https://www.tiktok.com/@renzo_vibez",
-    website: "https://www.renzovibes.ch/",
   },
 
   /** Bisher NICHT belegte Profile. Erst eintragen, wenn die URL/ID verifiziert ist. */

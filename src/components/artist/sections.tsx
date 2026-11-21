@@ -423,11 +423,11 @@ export function SocialSection({ standalone = false }: { standalone?: boolean }) 
               <span>YouTube</span>
               <ArrowUpRight />
             </a>
-            <a href={channels.website} target="_blank" rel="noopener noreferrer">
+            <Link to="/links">
               <Globe />
-              <span>Official website</span>
+              <span>All links</span>
               <ArrowUpRight />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

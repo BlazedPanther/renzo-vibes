@@ -15,7 +15,7 @@ Existiert der Name schon: nichts überschreiben, anderen Namen/Ort klären.
 - [x] Verantwortlich: Renzo Vibes, renzovibez@gmail.com, Schweiz (Adresse nach DSG nicht zwingend, nicht angegeben)
 - [x] Domain `renzovibes.com`, Spotify `7DOTyjrzC2XqXXD850bmxY`, Apple `1655332137` (live geprüft, CH-Store), YouTube `UCo0CiOUcsh9PwqbRslyGUsA` (live geprüft, „Renzo Vibes TV“), Instagram `renzovibez`
 - [x] Bürgerlicher Name als Verantwortlicher: Lorenzo Di Meo (Künstlername Renzo Vibes)
-- [ ] Klären: Soll „OFFICIAL WEBSITE“ weiterhin auf `renzovibes.ch` zeigen (wie im Original)?
+- [x] renzovibes.ch-Link entfernt, ersetzt durch eigenen Linktree /links
 - [ ] Impressum: für eine rein informierende CH-Künstlerseite i. d. R. nicht nötig; bei Verkauf (Merch-Shop) neu prüfen
 
 ## 2. GitHub Pages

@@ -101,15 +101,6 @@ export const linkEntries: LinkEntry[] = [
     visible: true,
     order: 80,
   },
-  {
-    id: "website",
-    title: "OFFICIAL WEBSITE",
-    subtitle: "renzovibes.ch",
-    href: siteConfig.channels.website,
-    icon: "website",
-    visible: true,
-    order: 90,
-  },
 ];
 
 export const isExternal = (href: string): boolean => /^https?:\/\//.test(href);
