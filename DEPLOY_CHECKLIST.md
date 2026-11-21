@@ -14,7 +14,7 @@ Existiert der Name schon: nichts überschreiben, anderen Namen/Ort klären.
 - [x] Bilder freigegeben (offizielle Künstlerseite) → `public/media/`
 - [x] Verantwortlich: Renzo Vibes, renzovibez@gmail.com, Schweiz (Adresse nach DSG nicht zwingend, nicht angegeben)
 - [x] Domain `renzovibes.com`, Spotify `7DOTyjrzC2XqXXD850bmxY`, Apple `1655332137` (live geprüft, CH-Store), YouTube `UCo0CiOUcsh9PwqbRslyGUsA` (live geprüft, „Renzo Vibes TV“), Instagram `renzovibez`
-- [ ] Empfehlung: bürgerlichen Namen als Verantwortlichen ergänzen (`legal.operatorName`); ein Künstlername allein kann für die DSG-Informationspflicht zu wenig sein
+- [x] Bürgerlicher Name als Verantwortlicher: Lorenzo Di Meo (Künstlername Renzo Vibes)
 - [ ] Klären: Soll „OFFICIAL WEBSITE“ weiterhin auf `renzovibes.ch` zeigen (wie im Original)?
 - [ ] Impressum: für eine rein informierende CH-Künstlerseite i. d. R. nicht nötig; bei Verkauf (Merch-Shop) neu prüfen
 

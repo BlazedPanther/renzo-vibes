@@ -54,7 +54,7 @@ export const siteConfig = {
    * bricht der Produktions-Build ab (scripts/check-config.mjs), ausser ALLOW_PLACEHOLDERS=true.
    */
   legal: {
-    operatorName: "Renzo Vibes",
+    operatorName: "Lorenzo Di Meo (Künstlername: Renzo Vibes)",
     /** Optional nach DSG; `null` = wird nicht angezeigt. */
     operatorAddress: null as string | null,
     contactEmail: "renzovibez@gmail.com",
