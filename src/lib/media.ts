@@ -9,12 +9,13 @@ const media = (file: string) => ({ url: `${base}media/${file}` });
 export const mediaFiles = {
   portrait: media("renzo-portrait.webp"),
   logo: media("renzo-vibes-logo.png"),
-  shirt: media("pow-pow-shirt-cutout.webp"),
-  hoodie: media("pow-pow-hoodie-cutout.webp"),
-  goatShirt: media("renzo-goat-shirt-cutout.webp"),
   hero: media("renzo-hero.webp"),
   cover: media("renzo-cover.webp"),
-  hoodie2: media("renzo-hoodie.webp"),
-  purpleHoodieFront: media("rv-purple-hoodie-front.webp"),
-  purpleHoodieBack: media("rv-purple-hoodie-back.webp"),
+  // Merch: freigestellt, alle auf gleich grosser quadratischer Fläche (siehe scripts/merch-images.md)
+  merchPowPowTee: media("merch-pow-pow-tee.webp"),
+  merchPowPowHoodie: media("merch-pow-pow-hoodie.webp"),
+  merchGoatTeeFront: media("merch-goat-tee-front.webp"),
+  merchGoatTeeBack: media("merch-goat-tee-back.webp"),
+  merchPurpleHoodieFront: media("merch-purple-hoodie-front.webp"),
+  merchPurpleHoodieBack: media("merch-purple-hoodie-back.webp"),
 };

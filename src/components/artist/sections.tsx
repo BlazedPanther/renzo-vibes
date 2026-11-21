@@ -6,32 +6,36 @@ import { releases, channels, tracks, latestReleases, type Track } from "@/lib/ar
 import { mediaFiles } from "@/lib/media";
 import { spotifyArtistId } from "@/config/site.config";
 
-const { portrait, logo, shirt, hoodie, goatShirt, purpleHoodieFront, purpleHoodieBack } =
-  mediaFiles;
+const { portrait, logo } = mediaFiles;
 
 const merchItems = [
   {
-    image: shirt,
+    image: mediaFiles.merchPowPowTee,
     alt: "Black Renzo Vibes POW POW T-shirt with purple lightning and Renzo portraits",
     caption: "POW POW TEE · COMING SOON",
   },
   {
-    image: hoodie,
+    image: mediaFiles.merchPowPowHoodie,
     alt: "Black Renzo Vibes POW POW hoodie with red graphic print",
     caption: "POW POW HOODIE · COMING SOON",
   },
   {
-    image: goatShirt,
-    alt: "Black Renzo Goat T-shirt, front with portrait print and POW POW back",
+    image: mediaFiles.merchGoatTeeFront,
+    alt: "Black Renzo Goat T-shirt, front with portrait print",
     caption: "RENZO GOAT TEE · COMING SOON",
   },
   {
-    image: purpleHoodieFront,
+    image: mediaFiles.merchGoatTeeBack,
+    alt: "Black Renzo Goat T-shirt, back with small POW POW print",
+    caption: "RENZO GOAT TEE · COMING SOON",
+  },
+  {
+    image: mediaFiles.merchPurpleHoodieFront,
     alt: "Purple Renzo Vibes hoodie, front with the RR logo on the chest",
     caption: "PURPLE HOODIE · COMING SOON",
   },
   {
-    image: purpleHoodieBack,
+    image: mediaFiles.merchPurpleHoodieBack,
     alt: "Purple Renzo Vibes hoodie, back with a large black and white group photo print",
     caption: "PURPLE HOODIE · COMING SOON",
   },
@@ -396,7 +400,7 @@ export function MerchSection({ standalone = false }: { standalone?: boolean }) {
         </div>
         <div className="merch-items">
           {merchItems.map((item) => (
-            <figure className="merch-image" key={item.caption}>
+            <figure className="merch-image" key={item.image.url}>
               <img src={item.image.url} alt={item.alt} loading="lazy" />
               <figcaption>{item.caption}</figcaption>
             </figure>
