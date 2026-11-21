@@ -13,9 +13,7 @@ const F = ({ v }: { v: string }) =>
 
 function Page() {
   const l = siteConfig.legal;
-  const hasTodo = [l.operatorName, l.operatorAddress, l.contactEmail, l.operatorCountry].some(
-    isTodo,
-  );
+  const hasTodo = [l.operatorName, l.contactEmail, l.operatorCountry].some(isTodo);
   const spotify = !!spotifyArtistId();
   return (
     <main className="legal-page">
@@ -38,8 +36,12 @@ function Page() {
           <p>
             <F v={l.operatorName} />
             <br />
-            <F v={l.operatorAddress} />
-            <br />
+            {l.operatorAddress && (
+              <>
+                <F v={l.operatorAddress} />
+                <br />
+              </>
+            )}
             E-Mail: <F v={l.contactEmail} />
           </p>
 

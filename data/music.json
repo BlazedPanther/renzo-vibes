@@ -1,1 +1,63 @@
-{ "updatedAt": null, "source": "apple-itunes-lookup", "artistId": null, "items": [] }
+{
+  "updatedAt": "2026-11-21T21:13:45.426Z",
+  "source": "apple-itunes-lookup",
+  "artistId": "1655332137",
+  "items": [
+    {
+      "id": "1858783044",
+      "title": "Sorry",
+      "type": "Single",
+      "isoDate": "2025-07-26",
+      "url": "https://music.apple.com/ch/album/sorry-single/1858783044"
+    },
+    {
+      "id": "1858783201",
+      "title": "Anthem (feat. Joel Harmony)",
+      "type": "Single",
+      "isoDate": "2025-07-24",
+      "url": "https://music.apple.com/ch/album/anthem-feat-joel-harmony-single/1858783201"
+    },
+    {
+      "id": "1783346057",
+      "title": "Shaman in Africa",
+      "type": "EP",
+      "isoDate": "2024-11-29",
+      "url": "https://music.apple.com/ch/album/shaman-in-africa-ep/1783346057"
+    },
+    {
+      "id": "1753710043",
+      "title": "High of life",
+      "type": "Album",
+      "isoDate": "2024-06-29",
+      "url": "https://music.apple.com/ch/album/high-of-life/1753710043"
+    },
+    {
+      "id": "1694053110",
+      "title": "Sich im Namen der Natur wehren",
+      "type": "Single",
+      "isoDate": "2023-06-30",
+      "url": "https://music.apple.com/ch/album/sich-im-namen-der-natur-wehren-single/1694053110"
+    },
+    {
+      "id": "1671348659",
+      "title": "Danced Together On the Floor",
+      "type": "Single",
+      "isoDate": "2023-02-11",
+      "url": "https://music.apple.com/ch/album/danced-together-on-the-floor-single/1671348659"
+    },
+    {
+      "id": "1663368767",
+      "title": "Im Stich gloh",
+      "type": "Single",
+      "isoDate": "2023-01-05",
+      "url": "https://music.apple.com/ch/album/im-stich-gloh-single/1663368767"
+    },
+    {
+      "id": "1661588222",
+      "title": "Es isch wie ne Flamme (La di la)",
+      "type": "Single",
+      "isoDate": "2022-12-27",
+      "url": "https://music.apple.com/ch/album/es-isch-wie-ne-flamme-la-di-la-single/1661588222"
+    }
+  ]
+}

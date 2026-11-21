@@ -61,7 +61,8 @@ export function parseYouTubeFeed(xml: string, channelId: string, limit = 6): Vid
   const feed = doc?.feed;
   if (!feed) return null;
   const feedChannel = str(feed["yt:channelId"]);
-  if (feedChannel && feedChannel !== channelId) return null;
+  // YouTube schreibt die Kanal-ID im Feed-Kopf ohne "UC"-Präfix, in den Einträgen mit.
+  if (feedChannel && feedChannel !== channelId && `UC${feedChannel}` !== channelId) return null;
 
   const seen = new Set<string>();
   const items: VideoItem[] = [];

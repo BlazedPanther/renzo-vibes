@@ -15,7 +15,6 @@ const warn = (m: string) => console.log(`::warning title=Konfiguration::${m}`);
 const l = siteConfig.legal;
 const required: Record<string, string> = {
   operatorName: l.operatorName,
-  operatorAddress: l.operatorAddress,
   contactEmail: l.contactEmail,
   operatorCountry: l.operatorCountry,
 };

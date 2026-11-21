@@ -8,6 +8,10 @@ const feed = (entries: string, ch = CH) =>
   `<?xml version="1.0"?><feed xmlns:yt="http://www.youtube.com/xml/schemas/2015"><yt:channelId>${ch}</yt:channelId>${entries}</feed>`;
 
 describe("YouTube-Feed", () => {
+  it("akzeptiert den echten Feed-Kopf ohne UC-Präfix", () => {
+    const xml = feed(entry("AAAAAAAAAAA", "A", "2026-01-01T10:00:00+00:00"), CH.slice(2));
+    expect(parseYouTubeFeed(xml, CH)).toHaveLength(1);
+  });
   it("sortiert neueste zuerst, entfernt Dubletten und ungültige Einträge", () => {
     const xml = feed(
       entry("AAAAAAAAAAA", "Alt", "2026-01-01T10:00:00+00:00") +

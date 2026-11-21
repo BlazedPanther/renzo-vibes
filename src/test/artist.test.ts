@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { releases, tracks, buildTracks } from "@/lib/artist";
+import videos from "../../data/videos.json";
 
 describe("Artist release facts", () => {
   it("GAMBian Prince is an EP released March 20, 2026", () => {
@@ -19,8 +20,11 @@ describe("Artist release facts", () => {
 });
 
 describe("Music previews", () => {
+  it("zeigen die Feed-Videos in Feed-Reihenfolge, sobald Daten vorhanden sind", () => {
+    if (videos.items.length) expect(tracks[0]!.id).toBe(videos.items[0]!.id);
+  });
   it("fallen ohne Feed-Daten auf die beiden offiziellen YouTube-Videos zurück", () => {
-    expect(tracks.map((t) => t.url)).toEqual([
+    expect(buildTracks({ items: [] }).map((t) => t.url)).toEqual([
       "https://youtu.be/Mw4mxqRhytU",
       "https://youtu.be/ivYRhk-Cgys",
     ]);

@@ -94,7 +94,7 @@ async function updateMusic(): Promise<void> {
   let fresh = null;
   try {
     const txt = await fetchText(
-      `https://itunes.apple.com/lookup?id=${artistId}&entity=album&limit=200`,
+      `https://itunes.apple.com/lookup?id=${artistId}&entity=album&limit=200&country=${siteConfig.profiles.appleCountry}`,
       "application/json",
     );
     fresh = filterItunesReleases(

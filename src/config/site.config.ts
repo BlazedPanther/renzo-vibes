@@ -18,7 +18,7 @@ export const siteConfig = {
    * `null` = noch nicht bekannt -> kein CNAME, keine canonical-/Sitemap-URLs.
    * Siehe DEPLOY_CHECKLIST.md (Infomaniak-DNS).
    */
-  domain: null as string | null,
+  domain: "renzovibes.com" as string | null,
 
   /** Offizielle Kanäle aus dem Originalprojekt (karl95l/renzo-vibes, src/lib/artist.ts). */
   channels: {
@@ -30,15 +30,17 @@ export const siteConfig = {
   /** Bisher NICHT belegte Profile. Erst eintragen, wenn die URL/ID verifiziert ist. */
   profiles: {
     /** Spotify-Artist-ID (22 Zeichen, aus open.spotify.com/artist/<ID>). */
-    spotifyArtistId: null as string | null,
+    spotifyArtistId: "7DOTyjrzC2XqXXD850bmxY" as string | null,
     /** Apple-Music/iTunes-Artist-ID (Zahl aus music.apple.com/.../artist/.../<ID>). */
-    appleArtistId: null as string | null,
+    appleArtistId: "1655332137" as string | null,
+    /** Apple-Storefront für Release-Links (music.apple.com/<land>/...). */
+    appleCountry: "ch",
     /** Erwarteter Künstlername im Apple-Feed (Plausibilitätsprüfung gegen falsche Matches). */
     appleArtistName: "Renzo Vibes",
     /** YouTube-Channel-ID (beginnt mit "UC", 24 Zeichen). */
-    youtubeChannelId: null as string | null,
+    youtubeChannelId: "UCo0CiOUcsh9PwqbRslyGUsA" as string | null,
     /** Optional, nur mit verifizierter URL, z. B. "https://www.instagram.com/<name>/". */
-    instagramUrl: null as string | null,
+    instagramUrl: "https://www.instagram.com/renzovibez/" as string | null,
   },
 
   /** Anzahl angezeigter automatischer Einträge. */
@@ -52,11 +54,12 @@ export const siteConfig = {
    * bricht der Produktions-Build ab (scripts/check-config.mjs), ausser ALLOW_PLACEHOLDERS=true.
    */
   legal: {
-    operatorName: `${TODO} Name der verantwortlichen Person / Organisation`,
-    operatorAddress: `${TODO} Strasse Nr., PLZ Ort, Land`,
-    contactEmail: `${TODO} E-Mail-Adresse für Datenschutzanfragen`,
+    operatorName: "Renzo Vibes",
+    /** Optional nach DSG; `null` = wird nicht angezeigt. */
+    operatorAddress: null as string | null,
+    contactEmail: "renzovibez@gmail.com",
     /** Land des Betreibers, relevant für DSG (CH) vs. DSGVO (EU/IT). */
-    operatorCountry: `${TODO} Sitzland des Betreibers`,
+    operatorCountry: "Schweiz",
     /** Stand der Datenschutzerklärung (ISO-Datum), vor Livegang aktualisieren. */
     privacyUpdated: "2026-11-21",
     /** /impressum nur aktivieren, wenn rechtlich nötig (siehe README). */

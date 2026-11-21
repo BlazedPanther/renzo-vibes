@@ -10,15 +10,13 @@ git push -u rent2wipes claude/rent2wipes-github-pages-d4kw17:main
 ```
 Existiert der Name schon: nichts überschreiben, anderen Namen/Ort klären.
 
-## 1. Offene Pflichtangaben (Platzhalter nie live!)
-- [ ] **Zustimmung des Originalbetreibers** zu Bildern/Logo/Inhalten, Medien ablegen → `MEDIA.md`
-- [ ] `legal.operatorName`, `operatorAddress`, `contactEmail`, `operatorCountry` → `src/config/site.config.ts`
-- [ ] Rechtliche Prüfung der Datenschutzerklärung (Entwurf!) – CH-DSG Art. 19; DSGVO/IT nur falls Sitz/Zielpublikum EU/Italien → Sitz nicht aus `.ch` ableiten
-- [ ] Impressum: prüfen, ob nötig (Warenangebot/Dienstleistung, EU-/IT-Betreiber → kann anders sein). Falls ja: `legal.impressum.enabled = true` und Felder füllen
-- [ ] `domain`, `spotifyArtistId`, `appleArtistId`, `youtubeChannelId` (optional `instagramUrl`) → `CONTENT_CONFIG.md`
-- [ ] Footer-Link „LINKS“/„DATENSCHUTZ“ ist gesetzt; Datenschutz-Link sichtbar auf allen Seiten ✔
-
-Der Build bricht ab, solange `legal.*` `TODO:` enthält (Absicherung). Vorschau: Actions → *Run workflow* → `allow_placeholders` (Seite zeigt „ENTWURF“ – nicht veröffentlichen).
+## 1. Angaben (Stand 21.11.2026)
+- [x] Bilder freigegeben (offizielle Künstlerseite) → `public/media/`
+- [x] Verantwortlich: Renzo Vibes, renzovibez@gmail.com, Schweiz (Adresse nach DSG nicht zwingend, nicht angegeben)
+- [x] Domain `renzovibes.com`, Spotify `7DOTyjrzC2XqXXD850bmxY`, Apple `1655332137` (live geprüft, CH-Store), YouTube `UCo0CiOUcsh9PwqbRslyGUsA` (live geprüft, „Renzo Vibes TV“), Instagram `renzovibez`
+- [ ] Empfehlung: bürgerlichen Namen als Verantwortlichen ergänzen (`legal.operatorName`); ein Künstlername allein kann für die DSG-Informationspflicht zu wenig sein
+- [ ] Klären: Soll „OFFICIAL WEBSITE“ weiterhin auf `renzovibes.ch` zeigen (wie im Original)?
+- [ ] Impressum: für eine rein informierende CH-Künstlerseite i. d. R. nicht nötig; bei Verkauf (Merch-Shop) neu prüfen
 
 ## 2. GitHub Pages
 1. Repo → Settings → Pages → **Source: GitHub Actions**.

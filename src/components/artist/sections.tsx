@@ -190,9 +190,9 @@ export function SpotifySection() {
             />
           ) : (
             <div className="spotify-placeholder">
-              <button type="button" className="artist-button" onClick={() => setActive(true)}>
+              <Button type="button" variant="artist" onClick={() => setActive(true)}>
                 <Play /> LOAD SPOTIFY PLAYER
-              </button>
+              </Button>
               <p className="consent-note">
                 Loads the official Spotify player. This connects to Spotify.{" "}
                 <Link to="/datenschutz">Privacy</Link>
