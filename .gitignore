@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.log
+*.local
+.DS_Store
+.env
+.env.*
+public/media/*
+!public/media/.gitkeep

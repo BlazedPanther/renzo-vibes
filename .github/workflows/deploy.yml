@@ -1,0 +1,91 @@
+name: Build & Deploy (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 */6 * * *" # alle 6 Stunden: neueste Videos/Releases holen und neu deployen
+  workflow_dispatch:
+    inputs:
+      allow_placeholders:
+        description: "Vorschau-Build trotz offener Pflichtangaben (NICHT für den Livegang!)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Feeds aktualisieren (YouTube-Feed, Apple/iTunes) – Fehler fallen auf den Cache zurück
+        run: npm run feeds
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Statischen Build erzeugen
+        env:
+          ALLOW_PLACEHOLDERS: ${{ inputs.allow_placeholders == true && 'true' || 'false' }}
+        run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: feed-data
+          path: |
+            data/videos.json
+            data/music.json
+            public/thumbs/*.jpg
+          if-no-files-found: ignore
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # Schreibt geänderte Feed-Daten als versionierten Cache zurück. Commit nur bei echten Änderungen
+  # (keine Schein-Commits). Eigener Job, damit der Build-Job nur Leserechte braucht.
+  commit-cache:
+    needs: deploy
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: feed-data
+          path: _feed
+      - name: Cache-Dateien übernehmen und committen, falls geändert
+        run: |
+          mkdir -p data public/thumbs
+          cp -f _feed/data/*.json data/ 2>/dev/null || true
+          cp -f _feed/public/thumbs/*.jpg public/thumbs/ 2>/dev/null || true
+          rm -rf _feed
+          git add data/videos.json data/music.json public/thumbs
+          if git diff --cached --quiet; then echo "Keine Änderungen am Feed-Cache."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: Feed-Cache aktualisieren (Videos/Releases)"
+          git push

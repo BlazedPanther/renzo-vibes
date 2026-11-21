@@ -1,0 +1,54 @@
+{
+  "note": "Aus den Lovable-Asset-Pointern des Quellprojekts übernommen (nur Metadaten, keine Geheimnisse). Dateien sind NICHT enthalten.",
+  "origin": "https://renzo-vibes.lovable.app",
+  "files": [
+    {
+      "file": "pow-pow-hoodie.png",
+      "size": 993009,
+      "contentType": "image/png",
+      "originalPointer": "/__l5e/assets-v1/6eae1833-f758-4cf2-a3c9-443488b64ddc/pow-pow-hoodie.png"
+    },
+    {
+      "file": "pow-pow-shirt.webp",
+      "size": 142758,
+      "contentType": "image/webp",
+      "originalPointer": "/__l5e/assets-v1/2bd47a4c-0a31-40ad-8488-b54ee150d099/pow-pow-shirt.webp"
+    },
+    {
+      "file": "renzo-cover.webp",
+      "size": 284410,
+      "contentType": "image/webp",
+      "originalPointer": "/__l5e/assets-v1/5a43a908-49f0-4d21-bd5b-f96e9e46bcff/renzo-cover.webp"
+    },
+    {
+      "file": "renzo-goat-shirt.png",
+      "size": 224288,
+      "contentType": "image/png",
+      "originalPointer": "/__l5e/assets-v1/181116b7-75a2-4173-9aa4-1d2588e2c1ec/renzo-goat-shirt.png"
+    },
+    {
+      "file": "renzo-hero.webp",
+      "size": 229250,
+      "contentType": "image/webp",
+      "originalPointer": "/__l5e/assets-v1/3907ec1c-8f8f-44f0-9aec-8167cf2f8494/renzo-hero.webp"
+    },
+    {
+      "file": "renzo-hoodie.webp",
+      "size": 116146,
+      "contentType": "image/webp",
+      "originalPointer": "/__l5e/assets-v1/6cb45ed8-edcd-4fea-9bb9-de339f7013a9/renzo-hoodie.webp"
+    },
+    {
+      "file": "renzo-portrait.webp",
+      "size": 121618,
+      "contentType": "image/webp",
+      "originalPointer": "/__l5e/assets-v1/8a3cdf3b-5111-4e9e-ba4b-997543bf6aa9/renzo-portrait.webp"
+    },
+    {
+      "file": "renzo-vibes-logo.png",
+      "size": 204428,
+      "contentType": "image/png",
+      "originalPointer": "/__l5e/assets-v1/4d68825f-89a0-444e-b5a8-a19834b983c6/renzo-vibes-logo.png"
+    }
+  ]
+}
