@@ -7,9 +7,9 @@
 	root * /srv
 	encode zstd gzip
 
-	# www -> kanonische Domain (Railway terminiert HTTPS)
-	@www host www.renzovibes.com
-	redir @www https://renzovibes.com{uri} permanent
+	# Hauptadresse ist www.renzovibes.com (Railway terminiert HTTPS)
+	@apex host renzovibes.com
+	redir @apex https://www.renzovibes.com{uri} permanent
 
 	header {
 		X-Content-Type-Options nosniff

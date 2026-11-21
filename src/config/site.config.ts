@@ -18,7 +18,7 @@ export const siteConfig = {
    * `null` = noch nicht bekannt -> kein CNAME, keine canonical-/Sitemap-URLs.
    * Siehe DEPLOY_CHECKLIST.md (Infomaniak-DNS).
    */
-  domain: "renzovibes.com" as string | null,
+  domain: "www.renzovibes.com" as string | null,
 
   /** Offizielle Kanäle aus dem Originalprojekt (karl95l/renzo-vibes, src/lib/artist.ts). */
   channels: {
