@@ -155,12 +155,6 @@ function VideoCard({ track: t }: { track: Track }) {
           <ArrowUpRight />
         </a>
       </div>
-      {!active && (
-        <p className="consent-note">
-          Click to load the video. This connects to YouTube (Google).{" "}
-          <Link to="/datenschutz">Privacy</Link>
-        </p>
-      )}
     </div>
   );
 }

@@ -6,5 +6,3 @@ dist-ssr
 .DS_Store
 .env
 .env.*
-public/media/*
-!public/media/.gitkeep

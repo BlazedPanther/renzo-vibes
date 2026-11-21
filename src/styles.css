@@ -201,6 +201,7 @@
 .video-play:hover .play-circle { background:var(--primary); border-color:var(--primary); box-shadow:0 0 30px var(--primary); }
 .video-play:focus-visible,.spotify-placeholder .artist-button:focus-visible { outline:2px solid var(--primary); outline-offset:3px; }
 .video-frame { position:absolute; inset:0; width:100%; height:100%; border:0; background:var(--hero-ink); }
+.video-title>a>svg { width:18px; flex-shrink:0; }
 .video-title>a { display:flex; color:inherit; } .video-title>a:hover { color:var(--primary); }
 .consent-note { margin-top:10px; font-size:9px; letter-spacing:.8px; color:var(--muted-foreground); line-height:1.6; }
 .consent-note a { text-decoration:underline; text-underline-offset:3px; } .consent-note a:hover { color:var(--primary); }

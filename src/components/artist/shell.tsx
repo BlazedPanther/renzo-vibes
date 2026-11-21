@@ -110,7 +110,6 @@ export function ArtistFooter() {
           <a href={channels.website} target="_blank" rel="noopener noreferrer">
             OFFICIAL WEBSITE <ArrowUpRight />
           </a>
-          <Link to="/links">LINKS</Link>
           <Link to="/datenschutz">DATENSCHUTZ</Link>
           {siteConfig.legal.impressum.enabled && <Link to="/impressum">IMPRESSUM</Link>}
         </div>
