@@ -1212,9 +1212,11 @@
   max-width: 860px;
 }
 .legal-page h2 {
-  font-size: 44px;
+  font-size: clamp(30px, 8.6vw, 44px);
   margin: 14px 0 26px;
   font-family: var(--font-display);
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 .legal-page h3 {
   font-family: var(--font-display);

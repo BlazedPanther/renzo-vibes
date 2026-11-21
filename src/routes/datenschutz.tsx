@@ -53,16 +53,17 @@ function Page() {
             reine Vorschau.
           </p>
 
-          <h3>3. Hosting über GitHub Pages und Server-Logfiles</h3>
+          <h3>3. Hosting über Railway und Server-Logfiles</h3>
           <p>
-            Die Website wird als statische Seite über GitHub Pages ausgeliefert (GitHub, Inc., 88
-            Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA, ein Unternehmen der
-            Microsoft-Gruppe). Beim Aufruf verarbeitet GitHub technisch notwendige Verbindungsdaten,
-            insbesondere die IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, Browser- und
-            Systeminformationen, um die Seite auszuliefern und die Sicherheit zu gewährleisten. Wir
-            haben auf diese Logdaten keinen Zugriff und nehmen keine eigene Auswertung vor. Eine
-            Übermittlung in die USA ist möglich; Einzelheiten und Garantien nennt GitHub in seiner
-            eigenen Datenschutzerklärung.
+            Die Website wird als statische Seite über den Hosting-Anbieter Railway ausgeliefert
+            (Railway Corporation, USA). Die Server stehen in einem Rechenzentrum in den Niederlanden
+            (Region Europe West). Beim Aufruf verarbeitet Railway technisch notwendige
+            Verbindungsdaten, insbesondere die IP-Adresse, Datum und Uhrzeit, die aufgerufene Seite
+            sowie Browser- und Systeminformationen, um die Seite auszuliefern und die Sicherheit zu
+            gewährleisten. Diese Zugriffsprotokolle sind für uns im Railway-Konto für eine begrenzte
+            Zeit einsehbar; wir werten sie nicht aus und nutzen sie höchstens zur Fehlerbehebung. Da
+            Railway ein US-Unternehmen ist, ist ein Zugriff aus den USA bzw. eine Übermittlung
+            dorthin möglich; Einzelheiten nennt Railway in seiner eigenen Datenschutzerklärung.
           </p>
 
           <h3>4. Cookies und lokaler Speicher</h3>
@@ -113,16 +114,16 @@ function Page() {
 
           <h3>7. Automatisch aktualisierte Inhalte</h3>
           <p>
-            Neueste Videos und Veröffentlichungen werden regelmässig auf den Servern von GitHub
-            (GitHub Actions) von öffentlichen Datenquellen (YouTube-Kanal-Feed, Apple/iTunes Search
-            API) abgerufen und als statische Dateien ausgeliefert. Dabei werden keine Daten von
-            Besucherinnen und Besuchern an diese Dienste übermittelt.
+            Neueste Videos und Veröffentlichungen werden beim Erstellen der Website auf den Servern
+            des Hosting-Anbieters von öffentlichen Datenquellen (YouTube-Kanal-Feed, Apple/iTunes
+            Search API) abgerufen und als statische Dateien ausgeliefert. Dabei werden keine Daten
+            von Besucherinnen und Besuchern an diese Dienste übermittelt.
           </p>
 
           <h3>8. Speicherdauer</h3>
           <p>
             Wir speichern keine personenbezogenen Daten von Besucherinnen und Besuchern. Zur
-            Speicherdauer der Server-Logs bei GitHub verweisen wir auf dessen Angaben.
+            Speicherdauer der Zugriffsprotokolle bei Railway verweisen wir auf dessen Angaben.
           </p>
 
           <h3>9. Ihre Rechte</h3>
