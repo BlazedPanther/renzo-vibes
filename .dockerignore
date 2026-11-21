@@ -1,0 +1,7 @@
+node_modules
+dist
+dist-ssr
+.git
+*.png.bak
+neu-*.png
+vergleich-*.png
