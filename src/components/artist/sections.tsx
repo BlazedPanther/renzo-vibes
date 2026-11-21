@@ -6,7 +6,8 @@ import { releases, channels, tracks, latestReleases, type Track } from "@/lib/ar
 import { mediaFiles } from "@/lib/media";
 import { spotifyArtistId } from "@/config/site.config";
 
-const { portrait, logo, shirt, hoodie, goatShirt } = mediaFiles;
+const { portrait, logo, shirt, hoodie, goatShirt, purpleHoodieFront, purpleHoodieBack } =
+  mediaFiles;
 
 const merchItems = [
   {
@@ -23,6 +24,16 @@ const merchItems = [
     image: goatShirt,
     alt: "Black Renzo Goat T-shirt, front with portrait print and POW POW back",
     caption: "RENZO GOAT TEE · COMING SOON",
+  },
+  {
+    image: purpleHoodieFront,
+    alt: "Purple Renzo Vibes hoodie, front with the RR logo on the chest",
+    caption: "PURPLE HOODIE · COMING SOON",
+  },
+  {
+    image: purpleHoodieBack,
+    alt: "Purple Renzo Vibes hoodie, back with a large black and white group photo print",
+    caption: "PURPLE HOODIE · COMING SOON",
   },
 ];
 

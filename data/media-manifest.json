@@ -50,5 +50,15 @@
       "contentType": "image/png",
       "originalPointer": "/__l5e/assets-v1/4d68825f-89a0-444e-b5a8-a19834b983c6/renzo-vibes-logo.png"
     }
+  ],
+  "additional": [
+    {
+      "file": "rv-purple-hoodie-front.webp",
+      "note": "Vom Betreiber gelieferte Produktfotos (lila Hoodie), Hintergrund freigestellt (transparent). Original: 577x641 JPG."
+    },
+    {
+      "file": "rv-purple-hoodie-back.webp",
+      "note": "Vom Betreiber gelieferte Produktfotos (lila Hoodie Rückseite), Hintergrund freigestellt. Original: 592x646 JPG."
+    }
   ]
 }

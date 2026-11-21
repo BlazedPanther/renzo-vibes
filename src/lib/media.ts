@@ -15,4 +15,6 @@ export const mediaFiles = {
   hero: media("renzo-hero.webp"),
   cover: media("renzo-cover.webp"),
   hoodie2: media("renzo-hoodie.webp"),
+  purpleHoodieFront: media("rv-purple-hoodie-front.webp"),
+  purpleHoodieBack: media("rv-purple-hoodie-back.webp"),
 };
