@@ -75,10 +75,12 @@ function Page() {
             ausgeliefert; es werden keine Schriften von Google-Servern geladen.
           </p>
 
-          <h3>5. Externe Inhalte (Zwei-Klick-Lösung)</h3>
+          <h3>5. Eingebettete Inhalte (Spotify, YouTube)</h3>
           <p>
-            Eingebettete Player werden erst nach Ihrem Klick geladen. Bis dahin wird keine
-            Verbindung zu den Anbietern aufgebaut; Videovorschaubilder liegen auf dieser Website.
+            Videovorschaubilder liegen auf dieser Website. YouTube-Videos werden erst nach Ihrem
+            Klick geladen; bis dahin wird keine Verbindung zu YouTube aufgebaut.
+            {spotify &&
+              " Der Spotify-Player wird dagegen automatisch geladen, sobald Sie zu dem entsprechenden Bereich der Startseite oder der Musikseite scrollen."}
           </p>
           <ul>
             <li>
@@ -91,7 +93,7 @@ function Page() {
             </li>
             {spotify && (
               <li>
-                <strong>Spotify</strong> (nach Klick auf „Load Spotify player“): Spotify AB,
+                <strong>Spotify</strong> (automatisch beim Anzeigen des Players): Spotify AB,
                 Regeringsgatan 19, 111 53 Stockholm, Schweden. Dabei werden mindestens Ihre
                 IP-Adresse und Browserdaten übermittelt; Spotify kann Cookies oder ähnliche
                 Technologien einsetzen.
@@ -99,9 +101,12 @@ function Page() {
             )}
           </ul>
           <p>
-            Rechtsgrundlage ist Ihre Einwilligung durch den Klick (Art. 6 Abs. 1 lit. a DSGVO,
-            soweit anwendbar). Sie können die Einwilligung jederzeit widerrufen, indem Sie die Seite
-            neu laden bzw. verlassen.
+            Die Einbindung dient dazu, die Musik und Videos des Künstlers direkt auf der Website
+            abspielbar zu machen. Für YouTube gilt der Klick als Einwilligung (Art. 6 Abs. 1 lit. a
+            DSGVO, soweit anwendbar); der Spotify-Player beruht auf unserem Interesse an einer
+            ansprechenden Präsentation der Musik (Art. 6 Abs. 1 lit. f DSGVO, soweit anwendbar).
+            Wenn Sie keine Verbindung zu Spotify wünschen, scrollen Sie nicht zum Spotify-Bereich
+            oder nutzen Sie einen Inhalts- bzw. Tracking-Blocker.
           </p>
 
           <h3>6. Links zu anderen Diensten</h3>

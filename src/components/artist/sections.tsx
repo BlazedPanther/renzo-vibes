@@ -158,10 +158,9 @@ function VideoCard({ track: t }: { track: Track }) {
     </div>
   );
 }
-/** Spotify-Embed (offiziell, Zwei-Klick). Erscheint nur mit verifizierter Artist-ID in site.config.ts. */
+/** Spotify-Embed (offiziell, lädt automatisch beim Hinscrollen). Erscheint nur mit verifizierter Artist-ID in site.config.ts. */
 export function SpotifySection() {
   const id = spotifyArtistId();
-  const [active, setActive] = useState(false);
   if (!id) return null;
   return (
     <section className="artist-section spotify-section">
@@ -178,27 +177,15 @@ export function SpotifySection() {
           </Button>
         </Heading>
         <div className="spotify-embed">
-          {active ? (
-            <iframe
-              title="Renzo Vibes on Spotify"
-              src={`https://open.spotify.com/embed/artist/${id}`}
-              width="100%"
-              height="352"
-              allow="encrypted-media; clipboard-write; fullscreen; picture-in-picture"
-              loading="lazy"
-              referrerPolicy="strict-origin-when-cross-origin"
-            />
-          ) : (
-            <div className="spotify-placeholder">
-              <Button type="button" variant="artist" onClick={() => setActive(true)}>
-                <Play /> LOAD SPOTIFY PLAYER
-              </Button>
-              <p className="consent-note">
-                Loads the official Spotify player. This connects to Spotify.{" "}
-                <Link to="/datenschutz">Privacy</Link>
-              </p>
-            </div>
-          )}
+          <iframe
+            title="Renzo Vibes on Spotify"
+            src={`https://open.spotify.com/embed/artist/${id}`}
+            width="100%"
+            height="352"
+            allow="encrypted-media; clipboard-write; fullscreen; picture-in-picture"
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
         </div>
       </div>
     </section>
