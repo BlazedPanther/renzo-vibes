@@ -36,3 +36,11 @@ Offizielle GitHub-Pages-IPs vor dem Eintrag gegen https://docs.github.com/pages/
 ## 4. Betrieb
 - Feed-Refresh alle 6 h; **60-Tage-Regel** und Reaktivierung → README.
 - Dependabot/`npm audit` gelegentlich prüfen; Action-Versionen sind auf Major gepinnt.
+
+---
+## Alternative: Hosting auf Railway (aktuell genutzt, da GitHub-Konto wegen Abrechnung gesperrt war)
+- Projekt `renzo-vibes-website`, Service `website`, Deploy bei jedem Push auf `main` (Dockerfile → Caddy, Port 8080). Test-URL: `website-production-885a2d5a.up.railway.app`.
+- Hauptadresse: **www.renzovibes.com**; `renzovibes.com` leitet per Caddy/Infomaniak-Weiterleitung dorthin.
+- DNS bei Infomaniak: `CNAME www → ovcg3rto.up.railway.app`, `TXT _railway-verify.www → railway-verify=ef029f12…` (genauer Wert im Railway-Dashboard unter Settings → Networking).
+- Feeds (Videos/Releases) werden bei jedem Railway-Build neu geholt (Fallback auf `data/*.json`). Für regelmässige Updates in Railway einen Cron-Redeploy einrichten oder einmal pro Woche „Redeploy“ klicken.
+- Kosten: Railway ist nach der Testphase kostenpflichtig (Hobby-Plan, ab ca. 5 $/Monat Nutzung).
