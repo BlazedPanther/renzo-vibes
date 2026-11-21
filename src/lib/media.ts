@@ -9,9 +9,9 @@ const media = (file: string) => ({ url: `${base}media/${file}` });
 export const mediaFiles = {
   portrait: media("renzo-portrait.webp"),
   logo: media("renzo-vibes-logo.png"),
-  shirt: media("pow-pow-shirt.webp"),
-  hoodie: media("pow-pow-hoodie.png"),
-  goatShirt: media("renzo-goat-shirt.png"),
+  shirt: media("pow-pow-shirt-cutout.webp"),
+  hoodie: media("pow-pow-hoodie-cutout.webp"),
+  goatShirt: media("renzo-goat-shirt-cutout.webp"),
   hero: media("renzo-hero.webp"),
   cover: media("renzo-cover.webp"),
   hoodie2: media("renzo-hoodie.webp"),
