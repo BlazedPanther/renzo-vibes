@@ -17,6 +17,7 @@ const routes = [
   "/merch",
   "/connect",
   "/links",
+  "/privacy",
   "/datenschutz",
   ...(siteConfig.legal.impressum.enabled ? ["/impressum"] : []),
 ];

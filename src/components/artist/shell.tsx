@@ -110,7 +110,7 @@ export function ArtistFooter() {
           <Link to="/links">
             ALL LINKS <ArrowUpRight />
           </Link>
-          <Link to="/datenschutz">DATENSCHUTZ</Link>
+          <Link to="/privacy">PRIVACY</Link>
           {siteConfig.legal.impressum.enabled && <Link to="/impressum">IMPRESSUM</Link>}
         </div>
         <span>FROM ITALY. TO THE WORLD.</span>

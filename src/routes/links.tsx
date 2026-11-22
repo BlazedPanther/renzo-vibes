@@ -83,7 +83,7 @@ function LinksPage() {
       </ul>
       <nav className="links-foot" aria-label="Legal">
         <Link to="/">HOME</Link>
-        <Link to="/datenschutz">DATENSCHUTZ</Link>
+        <Link to="/privacy">PRIVACY</Link>
       </nav>
     </main>
   );

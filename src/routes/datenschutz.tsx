@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { artistHead } from "@/lib/artist";
 import { siteConfig, isTodo, spotifyArtistId } from "@/config/site.config";
 
@@ -30,7 +30,10 @@ function Page() {
               Betreiber rechtlich zu prüfen.
             </p>
           )}
-          <p>Stand: {l.privacyUpdated.split("-").reverse().join(".")}</p>
+          <p>
+            Stand: {l.privacyUpdated.split("-").reverse().join(".")} ·{" "}
+            <Link to="/privacy">English version</Link>
+          </p>
 
           <h3>1. Verantwortliche Stelle</h3>
           <p>

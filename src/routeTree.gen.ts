@@ -17,6 +17,7 @@ import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as LinksRouteImport } from './routes/links'
 import { Route as MerchRouteImport } from './routes/merch'
 import { Route as MusicRouteImport } from './routes/music'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as VisualsRouteImport } from './routes/visuals'
 
 const IndexRoute = IndexRouteImport.update({
@@ -59,6 +60,11 @@ const MusicRoute = MusicRouteImport.update({
   path: '/music',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VisualsRoute = VisualsRouteImport.update({
   id: '/visuals',
   path: '/visuals',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/links': typeof LinksRoute
   '/merch': typeof MerchRoute
   '/music': typeof MusicRoute
+  '/privacy': typeof PrivacyRoute
   '/visuals': typeof VisualsRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/links': typeof LinksRoute
   '/merch': typeof MerchRoute
   '/music': typeof MusicRoute
+  '/privacy': typeof PrivacyRoute
   '/visuals': typeof VisualsRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/links': typeof LinksRoute
   '/merch': typeof MerchRoute
   '/music': typeof MusicRoute
+  '/privacy': typeof PrivacyRoute
   '/visuals': typeof VisualsRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/links'
     | '/merch'
     | '/music'
+    | '/privacy'
     | '/visuals'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/links'
     | '/merch'
     | '/music'
+    | '/privacy'
     | '/visuals'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/links'
     | '/merch'
     | '/music'
+    | '/privacy'
     | '/visuals'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   LinksRoute: typeof LinksRoute
   MerchRoute: typeof MerchRoute
   MusicRoute: typeof MusicRoute
+  PrivacyRoute: typeof PrivacyRoute
   VisualsRoute: typeof VisualsRoute
 }
 
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MusicRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/visuals': {
       id: '/visuals'
       path: '/visuals'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   LinksRoute: LinksRoute,
   MerchRoute: MerchRoute,
   MusicRoute: MusicRoute,
+  PrivacyRoute: PrivacyRoute,
   VisualsRoute: VisualsRoute,
 }
 export const routeTree = rootRouteImport
