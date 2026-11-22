@@ -1,10 +1,13 @@
 name: Build & Deploy (GitHub Pages)
 
+# HINWEIS: Die Seite wird aktuell über Railway ausgeliefert (siehe DEPLOY_CHECKLIST.md).
+# Dieser GitHub-Pages-Workflow läuft deshalb nur noch manuell. Zum Reaktivieren (nach Klärung der
+# GitHub-Abrechnung) die auskommentierten Trigger push/schedule wieder einschalten.
 on:
-  push:
-    branches: [main]
-  schedule:
-    - cron: "17 */6 * * *" # alle 6 Stunden: neueste Videos/Releases holen und neu deployen
+  # push:
+  #   branches: [main]
+  # schedule:
+  #   - cron: "17 */6 * * *" # alle 6 Stunden: neueste Videos/Releases holen und neu deployen
   workflow_dispatch:
     inputs:
       allow_placeholders:

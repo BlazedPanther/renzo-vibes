@@ -1,9 +1,8 @@
 name: CI
 
+# Nur manuell, solange das GitHub-Konto für Actions gesperrt ist (Abrechnung); sonst kommen bei jedem Push Fehler-Mails.
 on:
-  pull_request:
-  push:
-    branches-ignore: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read

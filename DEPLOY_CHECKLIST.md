@@ -44,3 +44,5 @@ Offizielle GitHub-Pages-IPs vor dem Eintrag gegen https://docs.github.com/pages/
 - DNS bei Infomaniak: `CNAME www → ovcg3rto.up.railway.app`, `TXT _railway-verify.www → railway-verify=ef029f12…` (genauer Wert im Railway-Dashboard unter Settings → Networking).
 - Feeds (Videos/Releases) werden bei jedem Railway-Build neu geholt (Fallback auf `data/*.json`). Für regelmässige Updates in Railway einen Cron-Redeploy einrichten oder einmal pro Woche „Redeploy“ klicken.
 - Kosten: Railway ist nach der Testphase kostenpflichtig (Hobby-Plan, ab ca. 5 $/Monat Nutzung).
+
+- GitHub-Actions-Workflows (`deploy.yml`, `ci.yml`) laufen nur noch **manuell** (`workflow_dispatch`), damit bei der gesperrten GitHub-Abrechnung keine Fehler-Mails mehr kommen. Zum Reaktivieren die Trigger in den Dateien wieder einschalten.
