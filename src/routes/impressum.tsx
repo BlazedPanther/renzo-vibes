@@ -4,7 +4,7 @@ import { siteConfig, isTodo } from "@/config/site.config";
 import { NotFoundComponent } from "@/components/not-found";
 
 export const Route = createFileRoute("/impressum")({
-  head: () => artistHead("Impressum | Renzo Vibes", "Anbieterkennzeichnung von Renzo Vibes."),
+  head: () => artistHead("Legal notice | Renzo Vibes", "Legal notice of Renzo Vibes."),
   component: Page,
 });
 
@@ -22,23 +22,23 @@ function Page() {
             <span />
             LEGAL
           </p>
-          <h2>IMPRESSUM</h2>
+          <h2>LEGAL NOTICE</h2>
           <p className="legal-draft">
-            ENTWURF – vor Veröffentlichung vom Betreiber zu prüfen und zu vervollständigen.
+            DRAFT – to be reviewed and completed by the operator before publication.
           </p>
-          <h3>Verantwortlich</h3>
+          <h3>Responsible person</h3>
           <p>
             <F v={i.responsiblePerson} />
             <br />
             <F v={i.address} />
           </p>
-          <h3>Kontakt</h3>
+          <h3>Contact</h3>
           <p>
-            E-Mail: <F v={i.email} />
+            Email: <F v={i.email} />
             <br />
-            Telefon: <F v={i.phone} />
+            Phone: <F v={i.phone} />
           </p>
-          <h3>Register / Steuernummer</h3>
+          <h3>Register / VAT number</h3>
           <p>
             <F v={i.registerOrVat} />
           </p>

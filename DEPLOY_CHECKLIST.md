@@ -12,7 +12,7 @@ Existiert der Name schon: nichts überschreiben, anderen Namen/Ort klären.
 
 ## 1. Angaben (Stand 21.11.2026)
 - [x] Bilder freigegeben (offizielle Künstlerseite) → `public/media/`
-- [x] Verantwortlich: Renzo Vibes, renzovibez@gmail.com, Schweiz (Adresse nach DSG nicht zwingend, nicht angegeben)
+- [x] Verantwortlich: Lorenzo Di Meo (Künstlername Renzo Vibes), renzovibez@gmail.com, Schweiz. Datenschutzerklärung nur auf Englisch unter /privacy, nach Schweizer DSG (FADP); Postadresse nicht angegeben. Rechtliche Prüfung empfohlen.
 - [x] Domain `renzovibes.com`, Spotify `7DOTyjrzC2XqXXD850bmxY`, Apple `1655332137` (live geprüft, CH-Store), YouTube `UCo0CiOUcsh9PwqbRslyGUsA` (live geprüft, „Renzo Vibes TV“), Instagram `renzovibez`
 - [x] Bürgerlicher Name als Verantwortlicher: Lorenzo Di Meo (Künstlername Renzo Vibes)
 - [x] renzovibes.ch-Link entfernt, ersetzt durch eigenen Linktree /links

@@ -53,14 +53,14 @@ export const siteConfig = {
    * bricht der Produktions-Build ab (scripts/check-config.mjs), ausser ALLOW_PLACEHOLDERS=true.
    */
   legal: {
-    operatorName: "Lorenzo Di Meo (Künstlername: Renzo Vibes)",
+    operatorName: "Lorenzo Di Meo (artist name: Renzo Vibes)",
     /** Optional nach DSG; `null` = wird nicht angezeigt. */
     operatorAddress: null as string | null,
     contactEmail: "renzovibez@gmail.com",
-    /** Land des Betreibers, relevant für DSG (CH) vs. DSGVO (EU/IT). */
-    operatorCountry: "Schweiz",
+    /** Land des Betreibers (Schweiz: revDSG/FADP). */
+    operatorCountry: "Switzerland",
     /** Stand der Datenschutzerklärung (ISO-Datum), vor Livegang aktualisieren. */
-    privacyUpdated: "2026-11-21",
+    privacyUpdated: "2026-11-22",
     /** /impressum nur aktivieren, wenn rechtlich nötig (siehe README). */
     impressum: {
       enabled: false,

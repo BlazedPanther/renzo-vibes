@@ -10,7 +10,7 @@ Alles zentral in **`src/config/site.config.ts`** (Links in **`src/config/links.c
 | `profiles.appleArtistName` | Name wie bei Apple | Text | Plausibilitätsprüfung gegen gleichnamige falsche Künstler |
 | `profiles.youtubeChannelId` | YouTube Studio → Einstellungen → Kanal → Erweitert, oder Kanalseite → „Mehr zu diesem Kanal“ → „Kanal-ID teilen“ | `UC` + 22 Zeichen | automatische neueste Videos (3–6) |
 | `profiles.instagramUrl` | offizielle Profil-URL | `https://www.instagram.com/…` | Instagram-Karte auf `/links` |
-| `legal.*` | Betreiber (Name, Anschrift, Kontakt-E-Mail, Sitzland) | Text | `/datenschutz` (und `/impressum`) |
+| `legal.*` | Betreiber (Name, Anschrift, Kontakt-E-Mail, Sitzland) | Text | `/privacy` (und `/impressum`) |
 | `legal.impressum.enabled` | rechtliche Prüfung | `true/false` | schaltet `/impressum` + Footer-Link frei |
 
 Prüfen: `npm run build` validiert Formate (ungültige IDs brechen den Build ab). Danach `npm run feeds` lokal oder Actions → *Run workflow*.

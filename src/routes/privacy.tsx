@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { artistHead } from "@/lib/artist";
 import { siteConfig, isTodo, spotifyArtistId } from "@/config/site.config";
 
@@ -49,9 +49,10 @@ function Page() {
               by the operator before publication.
             </p>
           )}
+          <p>Last updated: {formatDate(l.privacyUpdated)}</p>
           <p>
-            Last updated: {formatDate(l.privacyUpdated)} ·{" "}
-            <Link to="/datenschutz">Deutsche Version</Link>
+            This privacy policy explains how personal data is processed when you visit this website.
+            It is based on the Swiss Federal Act on Data Protection (FADP).
           </p>
 
           <h3>1. Controller</h3>
@@ -64,7 +65,12 @@ function Page() {
                 <br />
               </>
             )}
-            Email: <F v={l.contactEmail} />
+            Country: <F v={l.operatorCountry} />
+            <br />
+            Email:{" "}
+            <a href={`mailto:${l.contactEmail}`}>
+              <F v={l.contactEmail} />
+            </a>
           </p>
 
           <h3>2. What this website is about</h3>
@@ -83,9 +89,8 @@ function Page() {
             connection data, in particular your IP address, date and time, the page requested and
             browser and system information, in order to deliver the site and to ensure security.
             These access logs can be viewed by us in the Railway account for a limited time; we do
-            not analyse them and use them at most for troubleshooting. As Railway is a US company,
-            access from or a transfer to the USA is possible; details are provided in Railway's own
-            privacy policy.
+            not analyse them and use them at most for troubleshooting. The connection is encrypted
+            (HTTPS).
           </p>
 
           <h3>4. Cookies and local storage</h3>
@@ -122,10 +127,8 @@ function Page() {
           </ul>
           <p>
             The embeds exist so that the artist's music and videos can be played directly on the
-            website. For YouTube, your click counts as consent (Art. 6(1)(a) GDPR, where
-            applicable); the Spotify player is based on our interest in an appealing presentation of
-            the music (Art. 6(1)(f) GDPR, where applicable). If you do not want a connection to
-            Spotify, do not scroll to the Spotify section or use a content or tracking blocker.
+            website. For YouTube, your click counts as your consent. If you do not want a connection
+            to Spotify, do not scroll to the Spotify section or use a content or tracking blocker.
           </p>
 
           <h3>6. Links to other services</h3>
@@ -144,29 +147,39 @@ function Page() {
             process.
           </p>
 
-          <h3>8. Retention</h3>
+          <h3>8. Disclosure of data abroad</h3>
+          <p>
+            Where personal data (in particular your IP address) is transmitted to the providers
+            named above, this may happen in the following countries: the USA (Railway; Google LLC),
+            the Netherlands (Railway servers), Ireland (Google Ireland Limited) and Sweden (Spotify
+            AB). The Netherlands, Ireland and Sweden are in the EU/EEA and are recognised by
+            Switzerland as having an adequate level of data protection. For the USA, we rely on the
+            safeguards that the respective provider states in its privacy policy, such as
+            certification under the Swiss-US Data Privacy Framework or standard contractual clauses.
+          </p>
+
+          <h3>9. Retention</h3>
           <p>
             We do not store any personal data of visitors. For the retention period of the access
-            logs at Railway, please refer to Railway's information.
+            logs at Railway and for data processed by Google and Spotify, please refer to the
+            respective provider's information.
           </p>
 
-          <h3>9. Your rights</h3>
+          <h3>10. Your rights</h3>
           <p>
-            Depending on the applicable law, you have the right of access, rectification, erasure,
-            restriction of processing, data portability and objection, as well as the right to
-            withdraw any consent you have given. Please send requests to the contact address above.
-            Under the Swiss Federal Act on Data Protection (FADP) you can contact the Federal Data
-            Protection and Information Commissioner (FDPIC); if the GDPR applies, you have the right
-            to lodge a complaint with a data protection supervisory authority (in Italy: Garante per
-            la protezione dei dati personali).
+            Under the Swiss FADP you have the right to information about whether and which of your
+            personal data is processed (right of access), to have inaccurate data rectified, to
+            request deletion of your data, to object to processing, and, where applicable, to data
+            portability. You can withdraw a consent you have given at any time. Please send requests
+            to the contact address above. You also have the right to lodge a complaint with the
+            Federal Data Protection and Information Commissioner (FDPIC), www.edoeb.admin.ch.
           </p>
 
-          <h3>10. Applicable law</h3>
+          <h3>11. Applicable law</h3>
           <p>
-            Country of the operator: <F v={l.operatorCountry} />. Which provisions (Swiss FADP,
-            GDPR, Italian provider identification rules) apply in addition depends on the operator's
-            actual place of residence and the target audience of the website – not on the domain
-            ending.
+            This website is operated from Switzerland and is subject to Swiss law, in particular the
+            FADP. If you visit the website from the EU/EEA, additional rights under the GDPR may
+            apply to you; you can also use the contact address above in that case.
           </p>
         </div>
       </section>

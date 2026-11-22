@@ -9,7 +9,8 @@ export async function render(url: string) {
   await router.load();
   const html = renderToString(<RouterProvider router={router} />);
   const state = router.state;
-  const notFound = state.matches.some((m) => m.status === "notFound");
+  // Unbekannte Pfade matchen nur die Root-Route (kein Seiten-Match) -> als 404 erkennen
+  const notFound = state.matches.at(-1)?.routeId === "__root__";
   const head = collectHead(
     state.matches as never,
     state.location.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ""), "") || "/",

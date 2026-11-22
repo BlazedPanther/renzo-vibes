@@ -18,7 +18,6 @@ const routes = [
   "/connect",
   "/links",
   "/privacy",
-  "/datenschutz",
   ...(siteConfig.legal.impressum.enabled ? ["/impressum"] : []),
 ];
 const dist = "dist";

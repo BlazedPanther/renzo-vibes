@@ -20,6 +20,10 @@
 	@assets path /assets/* /media/* /thumbs/*
 	header @assets Cache-Control "public, max-age=604800"
 
+	# alte deutsche Adresse -> englische Datenschutzerklärung
+	redir /datenschutz /privacy permanent
+	redir /datenschutz/ /privacy permanent
+
 	# Ordner-Seiten: /music -> /music/index.html
 	try_files {path} {path}/index.html
 	file_server

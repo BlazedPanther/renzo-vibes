@@ -10,7 +10,7 @@ Statisch auslieferbare Version von [karl95l/renzo-vibes](https://github.com/karl
 - **Vite + React 19 + TanStack Router (SPA) + Prerendering.** TanStack Start brauchte SSR/Nitro/Cloudflare (Lovable-Kette). Stattdessen:
   jede Route wird beim Build zu statischem HTML (`dist/<route>/index.html`) gerendert und im Browser hydriert → Deep-Links und Reload
   funktionieren auf GitHub Pages ohne 404-Trick, SEO-Titel/Meta pro Seite sind im HTML. Unbekannte URLs liefern `404.html` (HTTP 404).
-- Routen: `/ /music /visuals /about /merch /connect` (wie Original) + `/links` (Bio-Seite) + `/privacy` (EN) und `/datenschutz` (DE) (+ optional `/impressum`).
+- Routen: `/ /music /visuals /about /merch /connect` (wie Original) + `/links` (Bio-Seite) + `/privacy` (englisch, Schweizer DSG/FADP; `/datenschutz` leitet dorthin um) (+ optional `/impressum`).
 - Komponenten (`src/components/artist/*`) und `styles.css` des Originals wurden weiterverwendet.
 - Schriften lokal (`@fontsource`, OFL). Keine Cookies, kein Tracking, kein Backend, kein Formular/Shop.
 - Externe Player (YouTube, Spotify) laden **erst nach Klick** (Zwei-Klick). Video-Vorschauen liegen lokal (`public/thumbs`).

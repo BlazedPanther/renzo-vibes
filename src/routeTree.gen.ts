@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ConnectRouteImport } from './routes/connect'
-import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as LinksRouteImport } from './routes/links'
 import { Route as MerchRouteImport } from './routes/merch'
@@ -33,11 +32,6 @@ const AboutRoute = AboutRouteImport.update({
 const ConnectRoute = ConnectRouteImport.update({
   id: '/connect',
   path: '/connect',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DatenschutzRoute = DatenschutzRouteImport.update({
-  id: '/datenschutz',
-  path: '/datenschutz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImpressumRoute = ImpressumRouteImport.update({
@@ -75,7 +69,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/connect': typeof ConnectRoute
-  '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
   '/links': typeof LinksRoute
   '/merch': typeof MerchRoute
@@ -87,7 +80,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/connect': typeof ConnectRoute
-  '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
   '/links': typeof LinksRoute
   '/merch': typeof MerchRoute
@@ -100,7 +92,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/connect': typeof ConnectRoute
-  '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
   '/links': typeof LinksRoute
   '/merch': typeof MerchRoute
@@ -114,7 +105,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/connect'
-    | '/datenschutz'
     | '/impressum'
     | '/links'
     | '/merch'
@@ -126,7 +116,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/connect'
-    | '/datenschutz'
     | '/impressum'
     | '/links'
     | '/merch'
@@ -138,7 +127,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/connect'
-    | '/datenschutz'
     | '/impressum'
     | '/links'
     | '/merch'
@@ -151,7 +139,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ConnectRoute: typeof ConnectRoute
-  DatenschutzRoute: typeof DatenschutzRoute
   ImpressumRoute: typeof ImpressumRoute
   LinksRoute: typeof LinksRoute
   MerchRoute: typeof MerchRoute
@@ -181,13 +168,6 @@ declare module '@tanstack/react-router' {
       path: '/connect'
       fullPath: '/connect'
       preLoaderRoute: typeof ConnectRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/datenschutz': {
-      id: '/datenschutz'
-      path: '/datenschutz'
-      fullPath: '/datenschutz'
-      preLoaderRoute: typeof DatenschutzRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/impressum': {
@@ -239,7 +219,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ConnectRoute: ConnectRoute,
-  DatenschutzRoute: DatenschutzRoute,
   ImpressumRoute: ImpressumRoute,
   LinksRoute: LinksRoute,
   MerchRoute: MerchRoute,
