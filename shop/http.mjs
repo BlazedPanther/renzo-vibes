@@ -79,26 +79,41 @@ export function createMerchHandler(
       const path = url.pathname;
       adminRequest = path === admin || path.startsWith(admin + "/");
       if (adminRequest) {
-        if (!authorize(req, adminHash))
+        if (!authorize(req, adminHash)) {
+          limit("admin-auth", 120);
+          const remote = req.headers["x-real-ip"];
+          if (typeof remote === "string" && isIP(remote)) limit("admin-auth:" + remote, 12);
           return reply(
             401,
             { error: "Authentication required." },
             { "WWW-Authenticate": 'Basic realm="Renzo Vibes Merch", charset="UTF-8"' },
           );
+        }
         if (req.method === "GET" && path === admin) {
           const rawPage = url.searchParams.get("page") ?? "0";
           if (!/^\d{1,6}$/.test(rawPage)) throw new ShopError(400, "Invalid page.");
           const page = Number(rawPage);
-          return reply(200, adminPage(orders.admin(page), page), {
-            "Content-Type": "text/html; charset=utf-8",
-          });
+          const status = url.searchParams.get("status") ?? "";
+          const reference = (url.searchParams.get("reference") ?? "").trim();
+          if (
+            !["", "pending", "paid", "expired"].includes(status) ||
+            !/^[a-f0-9-]{0,36}$/.test(reference)
+          )
+            throw new ShopError(400, "Invalid order filter.");
+          return reply(
+            200,
+            adminPage(orders.admin(page, status, reference), page, status, reference),
+            {
+              "Content-Type": "text/html; charset=utf-8",
+            },
+          );
         }
         if (req.method === "POST" && [admin + "/stock", admin + "/ship"].includes(path)) {
           if (req.headers.origin !== origin) throw new ShopError(403, "Origin is not allowed.");
           const body = await readBody(req, "application/x-www-form-urlencoded");
           if (path.endsWith("/stock"))
             orders.adjust(body.id, Number(body.delta), body.reason, body.mutation);
-          else orders.ship(body.id);
+          else orders.ship(body.id, body.tracking, body.state ?? "shipped", body.refundRef);
           return reply(303, undefined, { Location: admin });
         }
       }

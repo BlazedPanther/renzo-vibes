@@ -1,5 +1,12 @@
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
+import {
+  autographCard,
+  blackFridayActive,
+  blackFridayEnd,
+  blackFridayStart,
+  preorderNotice,
+} from "./campaign.mjs";
 
 export const testProduct = {
   name: "DEMO – Renzo Vibes hoodie",
@@ -83,12 +90,30 @@ export function openOrders({
 }) {
   const products = config?.products ?? [testProduct];
   const shipping = config?.shipping ?? 800;
-  const version = config && hash(JSON.stringify(config));
+  const stockMode = config?.stockMode ?? "tracked";
+  const unlimited = stockMode === "unlimited-test";
+  if (unlimited && config?.mode !== "sandbox")
+    throw new Error("Unlimited test stock requires sandbox mode");
+  const serializedConfig = JSON.stringify(config);
+  const version = config && hash(serializedConfig);
+  function quote(time) {
+    const promotion = !!config?.preorder && blackFridayActive(time);
+    return {
+      promotion,
+      version: config?.preorder ? hash(JSON.stringify([version, promotion])) : version,
+      price: (product) => (promotion ? (product.blackFridayPrice ?? product.price) : product.price),
+    };
+  }
   const variants = new Map(
     products.flatMap((product) =>
       product.variants.map((variant) => [
         variant.id,
-        { ...variant, name: product.name, price: product.price },
+        {
+          ...variant,
+          name: product.name,
+          price: product.price,
+          blackFridayPrice: product.blackFridayPrice,
+        },
       ]),
     ),
   );
@@ -137,6 +162,12 @@ export function openOrders({
         shipped: "INTEGER",
         checked: "INTEGER NOT NULL DEFAULT 0",
         payment: "TEXT",
+        reserved: "INTEGER NOT NULL DEFAULT 1",
+        preorder: "INTEGER NOT NULL DEFAULT 0",
+        gift: "INTEGER NOT NULL DEFAULT 0",
+        fulfillment: "TEXT",
+        tracking: "TEXT",
+        refundRef: "TEXT",
       })) {
         if (!columns.has(name)) db.exec(`ALTER TABLE orders ADD COLUMN ${name} ${type}`);
       }
@@ -156,6 +187,10 @@ export function openOrders({
       CREATE TABLE IF NOT EXISTS shop_metadata (mode TEXT PRIMARY KEY);
       CREATE TABLE IF NOT EXISTS shop_versions (id TEXT PRIMARY KEY, config TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS stock_mutations (id TEXT PRIMARY KEY);
+      CREATE TABLE IF NOT EXISTS fulfillment_events (
+        id INTEGER PRIMARY KEY, orderId TEXT NOT NULL REFERENCES orders(id),
+        state TEXT NOT NULL, tracking TEXT, refundRef TEXT, created INTEGER NOT NULL
+      );
     `);
       const mode = config ? (config.mode ?? "configured") : "legacy-sandbox";
       const existing = db.prepare("SELECT mode FROM shop_metadata").get();
@@ -183,6 +218,9 @@ export function openOrders({
   }
 
   function catalog() {
+    const time = now();
+    const pricing = quote(time);
+    const nextBoundary = [blackFridayStart, blackFridayEnd].find((boundary) => boundary > time);
     const stock = new Map(
       db
         .prepare("SELECT id, quantity FROM stock")
@@ -190,20 +228,46 @@ export function openOrders({
         .map(({ id, quantity }) => [id, quantity]),
     );
     const available = products.map((product) => ({
-      ...product,
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      front: product.front,
+      back: product.back,
+      frontAlt: product.frontAlt,
+      backAlt: product.backAlt,
+      imageNote: product.imageNote,
+      price: pricing.price(product),
+      color: product.color,
       variants: product.variants.map((variant) => ({
         ...variant,
-        stock: Math.min(stock.get(variant.id), 10),
+        stock: unlimited ? 10 : Math.min(stock.get(variant.id), 10),
       })),
     }));
     return config
-      ? { products: available, shipping, version, legal: config.legal }
+      ? {
+          products: available,
+          shipping,
+          version: pricing.version,
+          legal: config.legal,
+          stockMode,
+          preorder: !!config.preorder,
+          notice: config.preorder ? preorderNotice : null,
+          gift: pricing.promotion ? autographCard : null,
+          refreshIn: config.preorder && nextBoundary ? nextBoundary - time : null,
+        }
       : { product: available[0], shipping };
   }
 
   function getByToken(token) {
     if (!validToken(token)) return null;
     return db.prepare("SELECT * FROM orders WHERE tokenHash = ?").get(hash(token)) ?? null;
+  }
+
+  function requireCustomerAccess(order) {
+    if (!order || (order.created && now() - order.created >= 90 * 24 * 60 * 60_000)) {
+      throw new ShopError(404, "Order not found.");
+    }
+    return order;
   }
 
   function publicOrder(order) {
@@ -216,18 +280,34 @@ export function openOrders({
         payment: order.payment,
         shipping: order.shipping,
         items: JSON.parse(order.items),
+        preorder: !!order.preorder,
+        gift: order.gift ? autographCard : null,
+        fulfillment:
+          order.fulfillment ??
+          (order.shipped
+            ? "shipped"
+            : order.preorder
+              ? { paid: "paid_preorder", pending: "awaiting_payment", expired: "cancelled" }[
+                  order.status
+                ]
+              : null),
+        tracking: order.tracking,
       }),
     };
   }
 
   function queueMail(id, kind) {
     if (sendConfirmations) {
-      db.prepare("INSERT INTO mail (orderId, kind, due) VALUES (?, ?, ?)").run(id, kind, now());
+      db.prepare("INSERT OR IGNORE INTO mail (orderId, kind, due) VALUES (?, ?, ?)").run(
+        id,
+        kind,
+        now(),
+      );
     }
   }
 
   function release(order, reason) {
-    for (const { id, quantity } of JSON.parse(order.items)) {
+    for (const { id, quantity } of order.reserved ? JSON.parse(order.items) : []) {
       db.prepare("UPDATE stock SET quantity = quantity + ? WHERE id = ?").run(quantity, id);
     }
     db.prepare(
@@ -289,6 +369,10 @@ export function openOrders({
       shipped: order.shipped,
       expires: order.expires,
       providerId: order.providerId,
+      refundRef: order.refundRef,
+      events: db
+        .prepare("SELECT state, created FROM fulfillment_events WHERE orderId = ? ORDER BY id DESC")
+        .all(order.id),
     };
   }
 
@@ -308,22 +392,25 @@ export function openOrders({
       const { order, created } = atomic(() => {
         const existing = getByToken(token);
         if (existing) {
+          requireCustomerAccess(existing);
           if (existing.bodyHash !== bodyHash)
             throw new ShopError(409, "This checkout already exists.");
           return { order: existing, created: false };
         }
         if (!allowNew) throw new ShopError(503, "Ordering is currently closed.");
+        const time = now();
+        const pricing = quote(time);
         const total = items.reduce(
-          (sum, item) => sum + item.quantity * variants.get(item.id).price,
+          (sum, item) => sum + item.quantity * pricing.price(variants.get(item.id)),
           shipping,
         );
         if (
           config &&
-          (body.version !== version || body.total !== total || body.accepted !== true)
+          (body.version !== pricing.version || body.total !== total || body.accepted !== true)
         ) {
           throw new ShopError(409, "Review the current total and terms before submitting.");
         }
-        for (const { id, quantity } of items) {
+        for (const { id, quantity } of unlimited ? [] : items) {
           const change = db
             .prepare("UPDATE stock SET quantity = quantity - ? WHERE id = ? AND quantity >= ?")
             .run(quantity, id, quantity);
@@ -333,25 +420,38 @@ export function openOrders({
         const id = randomUUID();
         const lines = config
           ? items.map((item) => {
-              const { name, size, price } = variants.get(item.id);
-              return { ...item, name, size, price };
+              const variant = variants.get(item.id);
+              return {
+                ...item,
+                name: variant.name,
+                size: variant.size,
+                price: pricing.price(variant),
+              };
             })
           : items;
         db.prepare(
-          `INSERT INTO orders (id, tokenHash, bodyHash, items, total, expires, address, shipping, version, created)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          `INSERT INTO orders (id, tokenHash, bodyHash, items, total, expires, address, shipping, version, created, reserved, preorder, gift)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         ).run(
           id,
           hash(token),
           bodyHash,
           JSON.stringify(lines),
           total,
-          now() + 30 * 60_000,
+          time + 30 * 60_000,
           config ? JSON.stringify(address) : null,
           shipping,
-          version ?? null,
-          now(),
+          pricing.version ?? null,
+          time,
+          Number(!unlimited),
+          Number(!!config?.preorder),
+          Number(pricing.promotion),
         );
+        if (config?.preorder)
+          db.prepare("INSERT OR IGNORE INTO shop_versions VALUES (?, ?)").run(
+            pricing.version,
+            JSON.stringify({ ...config, promotion: pricing.promotion }),
+          );
         queueMail(id, "received");
         return { order: getByToken(token), created: true };
       });
@@ -372,14 +472,12 @@ export function openOrders({
       return publicOrder(getByToken(token));
     },
     async status(token) {
-      const order = getByToken(token);
-      if (!order) throw new ShopError(404, "Order not found.");
+      const order = requireCustomerAccess(getByToken(token));
       await refresh(order);
       return publicOrder(getByToken(token));
     },
     async cancel(token) {
-      const order = getByToken(token);
-      if (!order) throw new ShopError(404, "Order not found.");
+      const order = requireCustomerAccess(getByToken(token));
       await refresh(order, true);
       const latest = getByToken(token);
       if (latest.status === "pending" && latest.providerId) {
@@ -403,11 +501,13 @@ export function openOrders({
       const order = db.prepare("SELECT * FROM orders WHERE providerId = ?").get(providerId);
       if (order) await refresh(order, true);
     },
-    admin(page = 0) {
+    admin(page = 0, status = "", reference = "") {
       return {
         orders: db
-          .prepare("SELECT * FROM orders ORDER BY created DESC, id DESC LIMIT 51 OFFSET ?")
-          .all(page * 50)
+          .prepare(
+            "SELECT * FROM orders WHERE (? = '' OR status = ?) AND (? = '' OR id = ?) ORDER BY created DESC, id DESC LIMIT 51 OFFSET ?",
+          )
+          .all(status, status, reference, reference, page * 50)
           .map(adminOrder),
         stock: [...variants].map(([id, variant]) => ({
           ...variant,
@@ -415,9 +515,11 @@ export function openOrders({
         })),
         mailWaiting: db.prepare("SELECT count(*) AS count FROM mail WHERE sent IS NULL").get()
           .count,
+        stockMode,
       };
     },
     adjust(id, delta, reason, mutation = randomUUID()) {
+      if (unlimited) throw new ShopError(409, "Stock changes are disabled for this sandbox mode.");
       if (
         !/^[a-f0-9-]{36}$/.test(mutation ?? "") ||
         !variants.has(id) ||
@@ -442,18 +544,44 @@ export function openOrders({
         ).run(id, delta, reason, now());
       });
     },
-    ship(id) {
-      const change = db
-        .prepare(
-          "UPDATE orders SET shipped = COALESCE(shipped, ?) WHERE id = ? AND status = 'paid'",
-        )
-        .run(now(), id);
-      if (!change.changes) throw new ShopError(409, "Only paid orders can be marked as shipped.");
+    ship(id, tracking, state = "shipped", refundRef) {
+      const permitted = ["in_preparation", "ready_to_ship", "shipped", "delayed", "refunded"];
+      if (
+        !permitted.includes(state) ||
+        (tracking && (state !== "shipped" || !/^[a-zA-Z0-9 -]{1,80}$/.test(tracking))) ||
+        (state === "refunded" && !/^[a-zA-Z0-9-]{4,80}$/.test(refundRef ?? ""))
+      ) {
+        throw new ShopError(400, "Invalid fulfillment data.");
+      }
+      atomic(() => {
+        const current = db.prepare("SELECT * FROM orders WHERE id = ? AND status = 'paid'").get(id);
+        if (!current) throw new ShopError(409, "Only paid orders can be marked as shipped.");
+        const previous = current.fulfillment ?? (current.shipped ? "shipped" : null);
+        if (previous === state) return;
+        if (previous === "refunded" || (previous === "shipped" && state !== "refunded")) {
+          throw new ShopError(409, "This order has already passed that fulfillment step.");
+        }
+        const time = now();
+        db.prepare(
+          "UPDATE orders SET fulfillment = ?, shipped = COALESCE(shipped, ?), tracking = COALESCE(tracking, ?), refundRef = ? WHERE id = ?",
+        ).run(
+          state,
+          state === "shipped" ? time : null,
+          tracking || null,
+          state === "refunded" ? refundRef : null,
+          id,
+        );
+        db.prepare(
+          "INSERT INTO fulfillment_events (orderId, state, tracking, refundRef, created) VALUES (?, ?, ?, ?, ?)",
+        ).run(id, state, tracking || null, state === "refunded" ? refundRef : null, time);
+        if (current.preorder && state !== "ready_to_ship") queueMail(id, state);
+      });
     },
     async sendMail(send) {
       const waiting = db
         .prepare(
-          `SELECT mail.*, orders.address, orders.items, orders.total, orders.shipping
+          `SELECT mail.*, orders.address, orders.items, orders.total, orders.shipping,
+            orders.preorder, orders.gift, orders.tracking
         FROM mail JOIN orders ON orders.id = mail.orderId WHERE sent IS NULL AND due <= ?
         AND orders.address IS NOT NULL ORDER BY due LIMIT 10`,
         )
@@ -489,7 +617,8 @@ export function openOrders({
       if (!Number.isSafeInteger(days) || days < 1) throw new Error("Invalid retention period");
       db.prepare(
         `UPDATE orders SET address = NULL
-        WHERE address IS NOT NULL AND shipped <= ?
+        WHERE address IS NOT NULL AND COALESCE(shipped,
+          (SELECT MAX(created) FROM fulfillment_events WHERE orderId = orders.id AND state = 'refunded')) <= ?
         AND NOT EXISTS (SELECT 1 FROM mail WHERE orderId = orders.id AND sent IS NULL)`,
       ).run(now() - days * 24 * 60 * 60_000);
     },

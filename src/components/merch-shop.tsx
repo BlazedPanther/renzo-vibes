@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { merchLegalSections as legalSections, type MerchLegal } from "@/lib/merch-legal";
 import "./merch-sandbox.css";
 
 type Product = {
@@ -9,23 +10,26 @@ type Product = {
   price: number;
   front: string;
   back?: string;
+  frontAlt?: string;
+  backAlt?: string;
+  imageNote?: string;
   variants: { id: string; size: string; stock: number }[];
 };
-const legalSections = {
-  imprint: "Seller details",
-  privacy: "Shop privacy policy",
-  payment: "Payment terms",
-  delivery: "Delivery",
-  returns: "Cancellation, returns and defects",
-};
+type Gift = { name: string; image: string };
+export type ShopPresentation = "closed" | "standard" | "preorder";
 type Catalog = {
   products: Product[];
   shipping: number;
-  legal: Record<keyof typeof legalSections, string>;
+  legal: MerchLegal;
   version: string;
   allowNew: boolean;
   simulated: boolean;
   sandbox: boolean;
+  preorder?: boolean;
+  notice?: string;
+  gift?: Gift;
+  refreshIn?: number | null;
+  stockMode?: string;
 };
 type Order = {
   reference: string;
@@ -34,6 +38,10 @@ type Order = {
   shipping: number;
   total: number;
   checkoutUrl: string | null;
+  preorder?: boolean;
+  gift?: Gift;
+  fulfillment?: string;
+  tracking?: string;
   items: { id: string; name: string; size: string; price: number; quantity: number }[];
 };
 
@@ -63,10 +71,14 @@ async function api<T>(path: string, token?: string, body?: object): Promise<T> {
 
 function ProductCard({
   product,
+  preorder,
+  priority,
   cart,
   add,
 }: {
   product: Product;
+  preorder?: boolean;
+  priority?: boolean;
   cart: Record<string, number>;
   add: (id: string, quantity: number) => void;
 }) {
@@ -75,16 +87,29 @@ function ProductCard({
   const remaining = available ? Math.max(0, available.stock - (cart[size] ?? 0)) : 0;
   return (
     <article>
-      <div className="merch-sandbox-photos">
+      <div className={`merch-sandbox-photos${product.back ? "" : " merch-photo-single"}`}>
         <figure className="merch-image">
           <a href={photo(product.front)} target="_blank" rel="noreferrer">
-            <img src={photo(product.front)} alt={`${product.name} front view`} loading="lazy" />
+            <img
+              src={photo(product.front)}
+              alt={product.frontAlt ?? `${product.name} front view`}
+              width={900}
+              height={900}
+              loading={priority ? "eager" : "lazy"}
+              fetchPriority={priority ? "high" : "auto"}
+            />
           </a>
         </figure>
         {product.back && (
           <figure className="merch-image">
             <a href={photo(product.back)} target="_blank" rel="noreferrer">
-              <img src={photo(product.back)} alt={`${product.name} back view`} loading="lazy" />
+              <img
+                src={photo(product.back)}
+                alt={product.backAlt ?? `${product.name} back view`}
+                width={900}
+                height={900}
+                loading="lazy"
+              />
             </a>
           </figure>
         )}
@@ -92,6 +117,8 @@ function ProductCard({
       <h3>
         {product.name} · {money(product.price)}
       </h3>
+      {preorder && <p className="merch-preorder-label">Vorbestellung</p>}
+      {product.imageNote && <p className="merch-image-note">{product.imageNote}</p>}
       <p>{product.description}</p>
       {product.variants.some(({ stock }) => stock > 0) ? (
         <form
@@ -139,7 +166,11 @@ function ProductCard({
   );
 }
 
-export default function MerchShop({ onAvailability }: { onAvailability: (open: boolean) => void }) {
+export default function MerchShop({
+  onAvailability,
+}: {
+  onAvailability: (presentation: ShopPresentation) => void;
+}) {
   const [catalog, setCatalog] = useState<Catalog>();
   const [cart, setCart] = useState<Record<string, number>>({});
   const [token, setToken] = useState("");
@@ -153,7 +184,7 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
       (result) => {
         if (active) {
           setCatalog(result);
-          onAvailability(result.allowNew);
+          onAvailability(result.allowNew ? (result.preorder ? "preorder" : "standard") : "closed");
         }
       },
       () => {},
@@ -172,6 +203,17 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
       active = false;
     };
   }, [onAvailability]);
+
+  useEffect(() => {
+    if (catalog?.refreshIn == null) return;
+    const timer = window.setTimeout(
+      () => {
+        void api<Catalog>("catalog").then(setCatalog, () => {});
+      },
+      Math.min(catalog.refreshIn + 50, 2_147_000_000),
+    );
+    return () => window.clearTimeout(timer);
+  }, [catalog]);
 
   function reset() {
     sessionStorage.removeItem(storageKey);
@@ -289,6 +331,32 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
       <div className="section-inner">
         {catalog?.simulated && <p>Local simulation. No payment or shipment.</p>}
         {catalog?.sandbox && !catalog.simulated && <p>SumUp sandbox. Test orders only.</p>}
+        {catalog?.stockMode === "unlimited-test" && (
+          <p>Testverfügbarkeit · keine physischen Lagerzahlen</p>
+        )}
+        {catalog?.preorder && catalog.allowNew && !token && (
+          <header className="merch-campaign">
+            <p className="eyebrow">RENZO VIBES MERCH</p>
+            <h1>{catalog.gift ? "BLACK FRIDAY" : "WEAR THE VIBE"}</h1>
+            <p>{catalog.notice}</p>
+            {catalog.gift && (
+              <figure>
+                <img
+                  src={photo(catalog.gift.image)}
+                  alt="Originale Renzo Vibes Autogrammkarte"
+                  width={128}
+                  height={128}
+                />
+                <figcaption>
+                  Eine kostenlose Autogrammkarte pro bezahlter Black-Friday-Bestellung.
+                </figcaption>
+              </figure>
+            )}
+            <Button asChild variant="artistOutline">
+              <a href="#merch-products">Merch ansehen</a>
+            </Button>
+          </header>
+        )}
         {error && <p role="alert">{error}</p>}
         {token ? (
           <div className="merch-confirmation">
@@ -306,6 +374,7 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
             )}
             {order && (
               <>
+                {order.preorder && <p className="merch-preorder-label">Vorbestellung</p>}
                 <p>
                   Order number <strong>{order.reference}</strong>
                 </p>
@@ -319,6 +388,10 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
                 <p>
                   Shipping {money(order.shipping)} · Total {money(order.total)}
                 </p>
+                {order.gift && order.status !== "expired" && (
+                  <p>1 × {order.gift.name} · CHF 0.00</p>
+                )}
+                {order.tracking && <p>Tracking: {order.tracking}</p>}
                 {order.status === "pending" && (
                   <p role="status">
                     {order.payment === "FAILED"
@@ -380,11 +453,13 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
         ) : (
           catalog?.allowNew && (
             <div className="merch-sandbox-grid">
-              <div className="merch-products">
-                {catalog.products.map((product) => (
+              <div id="merch-products" className="merch-products">
+                {catalog.products.map((product, index) => (
                   <ProductCard
                     key={product.id}
                     product={product}
+                    preorder={!!catalog.preorder}
+                    priority={index === 0}
                     cart={cart}
                     add={(id, quantity) =>
                       setCart((previous) => ({
@@ -400,6 +475,7 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
               </div>
               <div>
                 <h3>Your cart</h3>
+                {catalog.preorder && <p className="merch-preorder-label">Vorbestellung</p>}
                 {!items.length && <p>Your cart is empty.</p>}
                 {items.map((item) => (
                   <div key={item.id} className="merch-sandbox-line">
@@ -435,11 +511,18 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
                       <dd>{money(subtotal)}</dd>
                       <dt>Swiss shipping</dt>
                       <dd>{money(catalog.shipping)}</dd>
+                      {catalog.gift && (
+                        <>
+                          <dt>1 × Autogrammkarte</dt>
+                          <dd>CHF 0.00</dd>
+                        </>
+                      )}
                       <dt>Total</dt>
                       <dd>{money(total)}</dd>
                     </dl>
                     <form onSubmit={checkout}>
                       <h4>Shipping address · Switzerland</h4>
+                      {catalog.preorder && <p>{catalog.notice}</p>}
                       <label>
                         Full name
                         <input name="name" autoComplete="name" required maxLength={120} />
@@ -488,7 +571,7 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
                         </span>
                       </label>
                       <Button variant="artistOutline" type="submit" disabled={busy}>
-                        Place order · {money(total)}
+                        {catalog.preorder ? "Vorbestellen" : "Place order"} · {money(total)}
                       </Button>
                     </form>
                   </>
@@ -500,11 +583,20 @@ export default function MerchShop({ onAvailability }: { onAvailability: (open: b
         {catalog && (
           <div id="shop-terms" className="merch-legal">
             {Object.entries(legalSections).map(([key, title]) => (
-              <details key={key}>
+              <details key={key} id={`shop-terms-${key}`}>
                 <summary>{title}</summary>
                 <p>{catalog.legal[key as keyof Catalog["legal"]]}</p>
               </details>
             ))}
+            <footer className="merch-legal-nav">
+              <nav aria-label="Shopinformationen">
+                {Object.entries(legalSections).map(([key, title]) => (
+                  <a key={key} href={`${import.meta.env.BASE_URL}merch-terms#${key}`}>
+                    {title}
+                  </a>
+                ))}
+              </nav>
+            </footer>
           </div>
         )}
       </div>

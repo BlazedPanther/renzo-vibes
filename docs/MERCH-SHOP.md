@@ -4,7 +4,9 @@ Der Shop nutzt die Renzo-Vibes-Website und ihren Warenkorb. SumUp verarbeitet di
 
 ## Katalog und Bestand
 
-Der SumUp-Katalogexport ordnet Dada & Renzo Merch dem violetten Hoodie zu. Der Shop verwendet dafür die vorhandenen Vorder- und Rückansichten. Renzo Pow Pow Kappe und RVP Kappe (Winter) sind jeweils mit ihrem vorhandenen Katalogfoto ergänzt. Für beide Kappen liefert der Export nur je eine Ansicht. Die Live-Konfiguration akzeptiert Artikel mit beiden Ansichten. Konfiguriert werden die vom Händler bestätigten Varianten und verfügbaren Stückzahlen. SumUp hatte die Inventarverfolgung für alle drei Artikel ausgeschaltet. Die exportierten Nullen belegen daher keinen physischen Lagerbestand.
+Die fünf Artikel, Varianten und Preise für die Kampagne kommen aus dem gelieferten Black-Friday-Paket. Dada & Renzo Merch aus dem älteren SumUp-Export zeigt dasselbe Hoodie-Motiv. Die Kampagne verwendet den Namen Purple Crew Hoodie und die neuen Preise aus dem Paket. Die beiden Kappen verwenden je eine Ansicht. Das RVP-Original bleibt farbgetreu, POW POW und Hoodie sind als Mockups gekennzeichnet. Das Bildmanifest unter `public/media/black-friday-2026` verknüpft WebP-Dateien mit den archivierten Bildquellen. Bei SumUp war die Inventarverfolgung ausgeschaltet. Die exportierten Nullen belegen keinen physischen Lagerbestand.
+
+Der Aktionspreis gilt vom 27.11.2026 00:00 Uhr bis zum 04.12.2026 00:00 Uhr exklusiv in Europe/Zurich. Der Server berechnet die Phase und speichert den Preis in Rappen, einmalig CHF 7.00 Versand und die Geschenkberechtigung mit der Bestellung. Innerhalb der bestehenden 30-minütigen Zahlungsfrist bleibt der beim Checkout akzeptierte Preis auch über den Phasenwechsel gültig. Der Browser zeigt den aktuell zahlbaren Preis. Vergleichspreise und Rabattprozente erfordern eine belegte Preisgeschichte. [SECO-Preisbekanntgabe](https://www.seco.admin.ch/de/faq-pbv)
 
 Die Shopdatenbank führt den Bestand der online angebotenen Artikel. Jede konfigurierte Variante startet bei null. Renzo bucht den bestätigten physischen Startbestand im Adminbereich ein. Eine Reservierung vermindert den verfügbaren Bestand innerhalb derselben Transaktion, die die Bestellung speichert. Bei Zahlung wird die Reservierung verbraucht. Bei verifiziertem Ablauf bzw. Abbruch wird die Menge genau einmal freigegeben. Ein fehlgeschlagener, erneut möglicher Zahlungsversuch hält den Bestand bis zum verifizierten Ablauf oder bis zur Deaktivierung.
 
@@ -20,6 +22,7 @@ Der Service `website` ist mit Branch `main` verbunden, bedient beide Domains auf
 | `MERCH_ACCEPT_ORDERS` | Erst nach der Freigabe auf `true` setzen. `false` pausiert neue Bestellungen und hält bestehende Bestellungen, Admin, Webhooks und Statusabgleich verfügbar. |
 | `MERCH_ORIGIN` | Kanonischer HTTPS-Origin, ohne Pfad oder abschliessenden Schrägstrich. |
 | `MERCH_CONFIG_JSON` | Händlergeprüfte Produktdaten, ein einheitlicher Schweizer Versandtarif und vollständige Texte. |
+| `MERCH_STOCK_MODE` | `tracked` führt Reservierungen auf dem tatsächlichen Webbestand. `unlimited-test` lässt Testbestellungen ohne physische Lagerzahlen zu und wird ausserhalb der Sandbox abgelehnt. |
 | `MERCH_SUMUP_KEY`, `MERCH_SUMUP_MERCHANT` | Schlüssel und Händlercode des jeweiligen Betriebsmodus. |
 | `MERCH_ADMIN_PASSWORD_HASH` | SHA-256-Hexdigest eines zufälligen 32-Byte-Passworts, dessen Passwortdarstellung aus 64 kleingeschriebenen Hexzeichen besteht. Benutzername ist `renzo`. |
 | `MERCH_WEBHOOK_TOKEN` | Von der Admin-Anmeldung unabhängiger Zufallswert aus 64 kleingeschriebenen Hexzeichen. |
@@ -30,6 +33,8 @@ Der Service `website` ist mit Branch `main` verbunden, bedient beide Domains auf
 Schlüssel und Callback-Token als geschützte Railway-Variablen hinterlegen. Der Adminzugang verwendet HTTP Basic über Railway-TLS mit zufällig generiertem Passwort und konstantzeitlichem Digest-Vergleich. Das Passwort Renzo über einen Passwortmanager zugänglich machen. Die Adminseiten und Kundendaten werden vom Server geschützt. Schreibaktionen verlangen denselben Origin. Bei Verdacht auf Zugriff den Admin-Digest rotieren. Den Callback-Token bei einer planmässigen Rotation erst wechseln, wenn die bisherigen Checkouts abgeschlossen sind. Der unabhängige Statusabgleich bleibt bei Callback-Ausfall aktiv.
 
 Der Betriebsmodus prüft Land, Währung, Art des SumUp-Händlerprofils und Lesezugriff. Die Live-Freigabe des konkreten Kontos und die Schreibberechtigung für Hosted Checkout separat bei SumUp bestätigen lassen. [Zugriffsrechte laut SumUp](https://developer.sumup.com/tools/authorization/)
+
+Der Admin unterscheidet Provider-Zahlungsstatus und Vorbestell-/Versandstatus. Vorbereitungs-, Verzögerungs-, Versand- und Erstattungsereignisse werden protokolliert. Das Feld für die Trackingnummer akzeptiert eine Kennung. Ein Rückerstattungsvermerk erfordert die Referenz der bereits in SumUp erfolgten Erstattung. Die Packliste weist pro bezahlter Aktionsbestellung eine Karte aus. Eine manuelle Bestandskorrektur bleibt ein eigener Vorgang.
 
 Railway dokumentiert den HTTPS-Mailversand als Option ohne SMTP. Die Resend-API erhält eine stabile Idempotenzkennung je Bestellnachricht. [Railway-Netzwerkdokumentation](https://docs.railway.com/networking/outbound-networking) [Resend-API](https://resend.com/docs/api-reference/emails/send-email)
 

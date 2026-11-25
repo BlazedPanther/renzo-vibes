@@ -13,7 +13,7 @@ FROM caddy:2-alpine AS caddy
 FROM node:24-alpine
 WORKDIR /app
 COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
-COPY shop/admin.mjs shop/config.mjs shop/http.mjs shop/mail.mjs shop/orders.mjs shop/serve.mjs shop/sumup.mjs shop/products.json ./shop/
+COPY shop/admin.mjs shop/campaign.mjs shop/config.mjs shop/http.mjs shop/mail.mjs shop/orders.mjs shop/serve.mjs shop/sumup.mjs shop/products.json ./shop/
 COPY Caddyfile /etc/caddy/Caddyfile
 COPY --from=build /app/dist /srv
 EXPOSE 8080

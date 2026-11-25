@@ -31,6 +31,13 @@ export function readShopConfig(env) {
   const mode = env.MERCH_MODE;
   if (!mode || mode === "off") return null;
   if (!["live", "sandbox"].includes(mode)) throw new Error("Invalid MERCH_MODE");
+  const stockMode = env.MERCH_STOCK_MODE ?? "tracked";
+  if (
+    !["tracked", "unlimited-test"].includes(stockMode) ||
+    (stockMode === "unlimited-test" && mode !== "sandbox")
+  ) {
+    throw new Error("Unlimited test stock requires sandbox mode");
+  }
   const data = JSON.parse(env.MERCH_CONFIG_JSON ?? "null");
   const legal = data?.legal;
   if (
@@ -41,14 +48,19 @@ export function readShopConfig(env) {
       (p) =>
         p &&
         Object.hasOwn(products, p.id) &&
-        (mode !== "live" || products[p.id].back) &&
         cents(p.price, 1) &&
+        (products[p.id].regularPrice === undefined || p.price === products[p.id].regularPrice) &&
         text(p.description, 500) &&
         Array.isArray(p.sizes) &&
         p.sizes.length > 0 &&
         p.sizes.length <= 20 &&
         new Set(p.sizes).size === p.sizes.length &&
-        p.sizes.every((size) => typeof size === "string" && /^[A-Z0-9-]{1,12}$/.test(size)),
+        p.sizes.every(
+          (size) =>
+            typeof size === "string" &&
+            /^[A-Z0-9-]{1,12}$/.test(size) &&
+            (mode !== "live" || size !== "TEST"),
+        ),
     ) ||
     new Set(data.products.map(({ id }) => id)).size !== data.products.length ||
     !legalSections.every(
@@ -59,6 +71,13 @@ export function readShopConfig(env) {
     throw new Error(
       "MERCH_CONFIG_JSON requires confirmed products, shipping and complete legal texts",
     );
+  }
+  const preorder = data.products.some(({ id }) => products[id].preorder);
+  if (
+    preorder &&
+    (data.shipping !== 700 || data.products.some(({ id }) => !products[id].preorder))
+  ) {
+    throw new Error("The pre-order campaign requires CHF 7.00 shipping and pre-order products");
   }
 
   const origin = new URL(env.MERCH_ORIGIN);
@@ -107,6 +126,8 @@ export function readShopConfig(env) {
     webhookToken: env.MERCH_WEBHOOK_TOKEN,
     config: {
       mode,
+      stockMode,
+      preorder,
       shipping: data.shipping,
       legal: Object.fromEntries(legalSections.map((key) => [key, legal[key].trim()])),
       products: data.products.map(({ id, price, description, sizes }) => ({

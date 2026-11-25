@@ -92,3 +92,42 @@
 .merch-shop .merch-confirmation {
   overflow-wrap: anywhere;
 }
+
+.merch-shop .merch-photo-single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 28rem;
+}
+.merch-shop .merch-campaign {
+  padding: clamp(1.5rem, 4vw, 4rem) 0;
+  border-bottom: 1px solid #666;
+}
+.merch-shop .merch-campaign h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 9vw, 6rem);
+  font-weight: 900;
+  line-height: 1;
+  margin: 0.4rem 0 1rem;
+}
+.merch-shop .merch-campaign figure {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.merch-shop .merch-campaign img {
+  width: clamp(4rem, 15vw, 8rem);
+  height: auto;
+}
+.merch-shop .merch-preorder-label {
+  color: var(--color-gold, #e5bd68);
+  font-weight: 700;
+}
+.merch-shop .merch-image-note {
+  opacity: 0.82;
+}
+.merch-shop .merch-legal-nav nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}

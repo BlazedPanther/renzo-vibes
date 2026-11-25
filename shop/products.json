@@ -24,5 +24,54 @@
   "rvp-winter-cap": {
     "name": "RVP Kappe (Winter)",
     "front": "merch-rvp-winter-cap.png"
+  },
+  "rvp-wintercap": {
+    "name": "RVP Winterkappe",
+    "regularPrice": 2000,
+    "blackFridayPrice": 1800,
+    "preorder": true,
+    "front": "black-friday-2026/rvp-wintercap-front.webp",
+    "frontAlt": "RVP Winterkappe, RR-Abzeichen auf der Krempe",
+    "imageNote": "Originalfoto. Der Farbton der Verkaufsversion ist noch zu bestätigen."
+  },
+  "powpow-wintercap": {
+    "name": "Renzo POW POW Winterkappe",
+    "regularPrice": 2500,
+    "blackFridayPrice": 2295,
+    "preorder": true,
+    "front": "black-friday-2026/powpow-wintercap-front.webp",
+    "frontAlt": "Schwarze POW POW Winterkappe, weisses RENZO POW POW Patch",
+    "imageNote": "Produkt-Mockup"
+  },
+  "zumba-tshirt": {
+    "name": "Renzo Vibes Zumba Remix T-Shirt",
+    "regularPrice": 2500,
+    "blackFridayPrice": 2295,
+    "preorder": true,
+    "front": "black-friday-2026/zumba-tshirt-front.webp",
+    "frontAlt": "Weisses Zumba Remix T-Shirt, kleines RR-Brustlogo",
+    "back": "black-friday-2026/zumba-tshirt-back.webp",
+    "backAlt": "Zumba Remix T-Shirt mit farbigem Zumba-Motiv auf dem Rücken"
+  },
+  "rr-classic-tshirt": {
+    "name": "Renzo Vibes RR Classic T-Shirt",
+    "regularPrice": 2500,
+    "blackFridayPrice": 2295,
+    "preorder": true,
+    "front": "black-friday-2026/rr-classic-tshirt-front.webp",
+    "frontAlt": "Weisses RR Classic T-Shirt, kleines RR-Brustlogo",
+    "back": "black-friday-2026/rr-classic-tshirt-back.webp",
+    "backAlt": "RR Classic T-Shirt mit grossem RR-Logo im blauen Ring"
+  },
+  "purple-crew-hoodie": {
+    "name": "Renzo Vibes Purple Crew Hoodie",
+    "regularPrice": 4950,
+    "blackFridayPrice": 3895,
+    "preorder": true,
+    "front": "black-friday-2026/purple-crew-hoodie-front.webp",
+    "frontAlt": "Violetter Purple Crew Hoodie mit RR-Brustlogo",
+    "back": "black-friday-2026/purple-crew-hoodie-back.webp",
+    "backAlt": "Violetter Purple Crew Hoodie mit Schwarzweiss-Gruppenmotiv",
+    "imageNote": "Produkt-Mockup"
   }
 }

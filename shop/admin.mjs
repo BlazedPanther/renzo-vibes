@@ -17,7 +17,14 @@ const date = (time) =>
     : "—";
 const admin = "/merch-admin";
 
-export function adminPage({ orders, stock, mailWaiting }, page) {
+export function adminPage(
+  { orders, stock, mailWaiting, stockMode },
+  page,
+  status = "",
+  reference = "",
+) {
+  const pageLink = (next) =>
+    `${admin}?${new URLSearchParams({ page: String(next), status, reference })}`;
   return `<!doctype html>
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>Merch administration | Renzo Vibes</title>
@@ -33,10 +40,17 @@ nav{display:flex;gap:1rem}
 <h1>Renzo Vibes Merch</h1>
 <section>
 <h2>Available stock</h2>
-<p>Record receipts and other-channel sales here. Available quantities exclude open reservations.</p>
-${stock
-  .map(
-    ({ id, name, size, stock: quantity }) => `
+<p>${
+    stockMode === "unlimited-test"
+      ? "Sandbox availability is unlimited. No physical stock is recorded here."
+      : "Record receipts and other-channel sales here. Available quantities exclude open reservations."
+  }</p>
+${
+  stockMode === "unlimited-test"
+    ? ""
+    : stock
+        .map(
+          ({ id, name, size, stock: quantity }) => `
 <form method="post" action="${admin}/stock">
   <input type="hidden" name="id" value="${html(id)}">
   <input type="hidden" name="mutation" value="${randomUUID()}">
@@ -48,17 +62,26 @@ ${stock
   </select></label>
   <button>Record stock change</button>
 </form>`,
-  )
-  .join("")}
+        )
+        .join("")
+}
 </section>
 <section>
 <h2>Orders</h2><p>Confirmation emails queued: ${mailWaiting}</p>
+<form method="get" action="${admin}">
+ <label>Payment <select name="status">
+ ${["", "pending", "paid", "expired"].map((value) => `<option value="${value}" ${value === status ? "selected" : ""}>${value || "All"}</option>`).join("")}
+ </select></label>
+ <label>Order reference <input name="reference" value="${html(reference)}" maxlength="36"></label>
+ <button>Filter orders</button>
+</form>
 ${
   orders
     .slice(0, 50)
     .map(
       (order) => `<article>
   <h3>${html(order.reference)}</h3>
+  ${order.preorder ? `<p><strong>VORBESTELLUNG</strong> · ${html(order.fulfillment?.replaceAll("_", " "))}</p>` : ""}
   <p>${date(order.created)} · ${money(order.total)} · Payment: ${html(
     order.status === "pending"
       ? order.payment === "FAILED"
@@ -76,8 +99,25 @@ ${
       : ""
   }
   <ul>${order.items.map(({ name, size, quantity }) => `<li>${quantity} × ${html(name)} · ${html(size)}</li>`).join("")}</ul>
+  ${order.gift && order.status === "paid" ? "<p>Packliste: 1 Gratis-Autogrammkarte · CHF 0.00</p>" : ""}
+  ${order.tracking ? `<p>Tracking: ${html(order.tracking)}</p>` : ""}
+  ${order.refundRef ? `<p>SumUp refund reference: ${html(order.refundRef)}</p>` : ""}
+  ${order.events?.length ? `<details><summary>Status history</summary><ul>${order.events.map(({ state, created }) => `<li>${date(created)} · ${html(state.replaceAll("_", " "))}</li>`).join("")}</ul></details>` : ""}
   ${
-    order.status === "paid" && !order.shipped
+    order.preorder && order.status === "paid" && order.fulfillment !== "refunded"
+      ? `
+    <form method="post" action="${admin}/ship">
+    <input type="hidden" name="id" value="${html(order.reference)}">
+    <label>Fulfillment <select name="state">${order.shipped ? "" : '<option value="in_preparation">In preparation</option><option value="ready_to_ship">Ready to ship</option><option value="delayed">Delayed</option><option value="shipped">Shipped</option>'}
+    <option value="refunded">Refund already completed in SumUp</option></select></label>
+    ${order.shipped ? "" : '<label>Tracking when shipping <input name="tracking" maxlength="80"></label>'}
+    <label>SumUp refund reference <input name="refundRef" maxlength="80"></label>
+    <button>Save fulfillment</button>
+    </form>`
+      : ""
+  }
+  ${
+    !order.preorder && order.status === "paid" && !order.shipped
       ? `<form method="post" action="${admin}/ship">
     <input type="hidden" name="id" value="${html(order.reference)}"><button>Mark as shipped</button>
   </form>`
@@ -87,7 +127,7 @@ ${
     )
     .join("") || "<p>No orders yet.</p>"
 }
-<nav>${page ? `<a href="${admin}?page=${page - 1}">Newer</a>` : ""}
-${orders.length > 50 ? `<a href="${admin}?page=${page + 1}">Older</a>` : ""}</nav>
+<nav>${page ? `<a href="${html(pageLink(page - 1))}">Newer</a>` : ""}
+${orders.length > 50 ? `<a href="${html(pageLink(page + 1))}">Older</a>` : ""}</nav>
 </section></main></html>`;
 }

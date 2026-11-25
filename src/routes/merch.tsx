@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense, useState } from "react";
-import MerchShop from "@/components/merch-shop";
+import MerchShop, { type ShopPresentation } from "@/components/merch-shop";
 import { MerchSection } from "@/components/artist/sections";
 import { artistHead } from "@/lib/artist";
 
@@ -17,11 +17,13 @@ export const Route = createFileRoute("/merch")({
   component: Page,
 });
 function Page() {
-  const [shopOpen, setShopOpen] = useState(false);
+  const [presentation, setPresentation] = useState<ShopPresentation>("closed");
   return (
     <main>
-      <MerchSection standalone shopOpen={shopOpen} />
-      {!Sandbox && <MerchShop onAvailability={setShopOpen} />}
+      {presentation !== "preorder" && (
+        <MerchSection standalone shopOpen={presentation === "standard"} />
+      )}
+      {!Sandbox && <MerchShop onAvailability={setPresentation} />}
       {Sandbox && (
         <Suspense fallback={<p role="status">Loading test shop…</p>}>
           <Sandbox />
