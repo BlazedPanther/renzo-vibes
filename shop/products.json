@@ -35,7 +35,10 @@
     "name": "Renzo POW POW Winter Cap",
     "regularPrice": 2500,
     "blackFridayPrice": 2295,
-    "preorder": true
+    "preorder": true,
+    "front": "black-friday-2026/powpow-wintercap-front.webp",
+    "frontAlt": "Black POW POW Winter Cap with a white RENZO POW POW patch",
+    "imageNote": "Product mockup"
   },
   "zumba-tshirt": {
     "name": "Renzo Vibes Zumba Remix T-Shirt",
@@ -61,6 +64,11 @@
     "name": "Renzo Vibes Purple Crew Hoodie",
     "regularPrice": 4950,
     "blackFridayPrice": 3895,
-    "preorder": true
+    "preorder": true,
+    "front": "black-friday-2026/purple-crew-hoodie-front.webp",
+    "frontAlt": "Purple Crew Hoodie with an RR logo on the chest",
+    "back": "black-friday-2026/purple-crew-hoodie-back.webp",
+    "backAlt": "Purple Crew Hoodie with a black-and-white crew print on the back",
+    "imageNote": "Product mockup"
   }
 }

@@ -313,3 +313,19 @@
     transition: none;
   }
 }
+
+.merch-drop-closed .merch-products {
+  margin-bottom: 2rem;
+}
+
+.merch-drop-closed .merch-products article {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+}
+
+@media (min-width: 62rem) {
+  .merch-drop-closed .merch-products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { merchLegalSections as legalSections, type MerchLegal } from "@/lib/merch-legal";
+import products from "../../shop/products.json";
 import "./merch-sandbox.css";
 import "./merch-campaign.css";
 
@@ -75,12 +76,14 @@ function ProductCard({
   product,
   preorder,
   priority,
+  readOnly = false,
   cart,
   add,
 }: {
   product: Product;
   preorder?: boolean;
   priority?: boolean;
+  readOnly?: boolean;
   cart: Record<string, number>;
   add: (id: string, quantity: number) => void;
 }) {
@@ -140,7 +143,9 @@ function ProductCard({
       {preorder && <p className="merch-preorder-label">Pre-order</p>}
       {product.imageNote && <p className="merch-image-note">{product.imageNote}</p>}
       <p>{product.description}</p>
-      {product.variants.some(({ stock }) => stock > 0) ? (
+      {readOnly ? (
+        <p>{product.variants.map(({ size }) => size).join(" / ")}</p>
+      ) : product.variants.some(({ stock }) => stock > 0) ? (
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -183,6 +188,130 @@ function ProductCard({
         <p>Sold out</p>
       )}
     </article>
+  );
+}
+
+function CampaignHero({
+  feature,
+  promo,
+  notice,
+}: {
+  feature: Pick<Product, "name" | "front" | "frontAlt" | "imageNote"> | undefined;
+  promo: boolean;
+  notice: string | undefined;
+}) {
+  return (
+    <header className="merch-drop-hero">
+      <div className="merch-drop-copy">
+        <p className="merch-drop-eyebrow">Renzo Vibes Merch</p>
+        <h1>
+          {promo ? (
+            <>
+              BLACK <span>FRIDAY</span>
+            </>
+          ) : (
+            <>
+              WEAR THE <span>VIBE</span>
+            </>
+          )}
+        </h1>
+        <p>{notice}</p>
+        <a className="merch-drop-cta" href="#merch-products">
+          Explore the collection <ArrowDown size={18} aria-hidden="true" />
+        </a>
+      </div>
+      {feature?.front && (
+        <figure className="merch-drop-art">
+          <img
+            src={photo(feature.front)}
+            alt={feature.frontAlt ?? feature.name}
+            width={900}
+            height={900}
+            fetchPriority="high"
+          />
+          <figcaption>
+            {feature.name}
+            {feature.imageNote ? ` · ${feature.imageNote}` : ""}
+          </figcaption>
+        </figure>
+      )}
+    </header>
+  );
+}
+
+function CampaignGift({ gift }: { gift: Gift }) {
+  return (
+    <aside className="merch-drop-gift">
+      <img
+        src={photo(gift.image)}
+        alt="Renzo Vibes autograph card"
+        width={128}
+        height={128}
+        loading="lazy"
+      />
+      <p>
+        <strong>Free autograph card</strong>
+        <br />
+        One with each paid Black Friday order.
+      </p>
+    </aside>
+  );
+}
+
+const campaignGift = {
+  name: "Free Renzo Vibes autograph card",
+  image: "black-friday-2026/autograph-card-front.webp",
+};
+const campaignProducts: Product[] = Object.entries(products).flatMap(([id, product]) => {
+  if (!("preorder" in product)) return [];
+  const sizes = id.endsWith("wintercap") ? ["One size"] : ["S", "M", "L"];
+  return [
+    {
+      ...product,
+      id,
+      price: product.blackFridayPrice,
+      description: "Black Friday price",
+      variants: sizes.map((size) => ({ id: size, size, stock: 0 })),
+    },
+  ];
+});
+
+export function ClosedMerchShop() {
+  return (
+    <section className="artist-section merch-shop merch-drop merch-drop-closed" lang="en">
+      <div className="section-inner">
+        <CampaignHero
+          promo
+          feature={products["purple-crew-hoodie"]}
+          notice="Black Friday prices run from 27 November to 3 December 2026, Swiss time. Orders and payments are closed."
+        />
+        <CampaignGift gift={campaignGift} />
+        <section
+          aria-label="Black Friday collection"
+          id="merch-products"
+          className="merch-products"
+        >
+          {campaignProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              preorder
+              readOnly
+              cart={{}}
+              add={() => {}}
+            />
+          ))}
+        </section>
+        <aside className="merch-drop-gift" aria-label="Shipping and returns">
+          <p>
+            <strong>Shipping and returns</strong>
+            <br />
+            CHF 7.00 per order within Switzerland. Voluntary returns within 14 days of delivery for
+            unworn, undamaged items.
+          </p>
+        </aside>
+      </div>
+    </section>
   );
 }
 
@@ -363,58 +492,9 @@ export default function MerchShop({
           <p>Unlimited test stock · no physical inventory</p>
         )}
         {catalog?.preorder && catalog.allowNew && !token && (
-          <header className="merch-drop-hero">
-            <div className="merch-drop-copy">
-              <p className="merch-drop-eyebrow">Renzo Vibes Merch</p>
-              <h1>
-                {catalog.gift ? (
-                  <>
-                    BLACK <span>FRIDAY</span>
-                  </>
-                ) : (
-                  <>
-                    WEAR THE <span>VIBE</span>
-                  </>
-                )}
-              </h1>
-              <p>{catalog.notice}</p>
-              <a className="merch-drop-cta" href="#merch-products">
-                Shop the collection <ArrowDown size={18} aria-hidden="true" />
-              </a>
-            </div>
-            {feature?.front && (
-              <figure className="merch-drop-art">
-                <img
-                  src={photo(feature.front)}
-                  alt={feature.frontAlt ?? feature.name}
-                  width={900}
-                  height={900}
-                  fetchPriority="high"
-                />
-                <figcaption>
-                  {feature.name}
-                  {feature.imageNote ? ` · ${feature.imageNote}` : ""}
-                </figcaption>
-              </figure>
-            )}
-          </header>
+          <CampaignHero feature={feature} promo={!!catalog.gift} notice={catalog.notice} />
         )}
-        {catalog?.gift && catalog.allowNew && !token && (
-          <aside className="merch-drop-gift">
-            <img
-              src={photo(catalog.gift.image)}
-              alt="Renzo Vibes autograph card"
-              width={128}
-              height={128}
-              loading="lazy"
-            />
-            <p>
-              <strong>Free autograph card</strong>
-              <br />
-              One with each paid Black Friday order.
-            </p>
-          </aside>
-        )}
+        {catalog?.gift && catalog.allowNew && !token && <CampaignGift gift={catalog.gift} />}
         {error && <p role="alert">{error}</p>}
         {token ? (
           <div className="merch-confirmation">
