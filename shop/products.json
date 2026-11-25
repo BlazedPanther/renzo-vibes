@@ -13,13 +13,10 @@
     "back": "merch-goat-tee-back.webp"
   },
   "purple-hoodie": {
-    "name": "Dada & Renzo Merch",
-    "front": "merch-purple-hoodie-front.webp",
-    "back": "merch-purple-hoodie-back.webp"
+    "name": "Dada & Renzo Merch"
   },
   "renzo-pow-pow-cap": {
-    "name": "Renzo Pow Pow Kappe",
-    "front": "merch-renzo-pow-pow-cap.png"
+    "name": "Renzo Pow Pow Kappe"
   },
   "rvp-winter-cap": {
     "name": "RVP Kappe (Winter)",
@@ -38,10 +35,7 @@
     "name": "Renzo POW POW Winter Cap",
     "regularPrice": 2500,
     "blackFridayPrice": 2295,
-    "preorder": true,
-    "front": "black-friday-2026/powpow-wintercap-front.webp",
-    "frontAlt": "Black POW POW Winter Cap with a white RENZO POW POW patch",
-    "imageNote": "Product mockup"
+    "preorder": true
   },
   "zumba-tshirt": {
     "name": "Renzo Vibes Zumba Remix T-Shirt",
@@ -67,11 +61,6 @@
     "name": "Renzo Vibes Purple Crew Hoodie",
     "regularPrice": 4950,
     "blackFridayPrice": 3895,
-    "preorder": true,
-    "front": "black-friday-2026/purple-crew-hoodie-front.webp",
-    "frontAlt": "Purple Crew Hoodie with an RR logo on the chest",
-    "back": "black-friday-2026/purple-crew-hoodie-back.webp",
-    "backAlt": "Purple Crew Hoodie with a black-and-white crew print on the back",
-    "imageNote": "Product mockup"
+    "preorder": true
   }
 }

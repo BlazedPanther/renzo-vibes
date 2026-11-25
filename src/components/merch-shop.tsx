@@ -10,7 +10,7 @@ type Product = {
   name: string;
   description: string;
   price: number;
-  front: string;
+  front?: string;
   back?: string;
   frontAlt?: string;
   backAlt?: string;
@@ -85,52 +85,55 @@ function ProductCard({
   add: (id: string, quantity: number) => void;
 }) {
   const [showBack, setShowBack] = useState(false);
+  const image = showBack && product.back ? product.back : product.front;
   const [size, select] = useState("");
   const available = product.variants.find(({ id }) => id === size);
   const remaining = available ? Math.max(0, available.stock - (cart[size] ?? 0)) : 0;
   return (
     <article>
-      <div className="merch-gallery">
-        <figure className="merch-image">
-          <a
-            href={photo(showBack && product.back ? product.back : product.front)}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Open ${product.name} ${showBack ? "back" : "front"} image at full size (new tab)`}
-          >
-            <img
-              key={String(showBack)}
-              src={photo(showBack && product.back ? product.back : product.front)}
-              alt={
-                showBack
-                  ? (product.backAlt ?? `${product.name} back view`)
-                  : (product.frontAlt ?? `${product.name} front view`)
-              }
-              width={900}
-              height={900}
-              loading={priority ? "eager" : "lazy"}
-              fetchPriority={priority ? "high" : "auto"}
-            />
-            <span className="merch-gallery-zoom" aria-hidden="true">
-              <ArrowUpRight size={18} />
-            </span>
-          </a>
-        </figure>
-        {product.back && (
-          <div
-            className="merch-gallery-views"
-            role="group"
-            aria-label={`Image views for ${product.name}`}
-          >
-            <button type="button" aria-pressed={!showBack} onClick={() => setShowBack(false)}>
-              Front
-            </button>
-            <button type="button" aria-pressed={showBack} onClick={() => setShowBack(true)}>
-              Back
-            </button>
-          </div>
-        )}
-      </div>
+      {image && (
+        <div className="merch-gallery">
+          <figure className="merch-image">
+            <a
+              href={photo(image)}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open ${product.name} ${showBack ? "back" : "front"} image at full size (new tab)`}
+            >
+              <img
+                key={String(showBack)}
+                src={photo(image)}
+                alt={
+                  showBack
+                    ? (product.backAlt ?? `${product.name} back view`)
+                    : (product.frontAlt ?? `${product.name} front view`)
+                }
+                width={900}
+                height={900}
+                loading={priority ? "eager" : "lazy"}
+                fetchPriority={priority ? "high" : "auto"}
+              />
+              <span className="merch-gallery-zoom" aria-hidden="true">
+                <ArrowUpRight size={18} />
+              </span>
+            </a>
+          </figure>
+          {product.back && (
+            <div
+              className="merch-gallery-views"
+              role="group"
+              aria-label={`Image views for ${product.name}`}
+            >
+              <button type="button" aria-pressed={!showBack} onClick={() => setShowBack(false)}>
+                Front
+              </button>
+              <button type="button" aria-pressed={showBack} onClick={() => setShowBack(true)}>
+                Back
+              </button>
+            </div>
+          )}
+        </div>
+      )}
       <h3>
         {product.name} · {money(product.price)}
       </h3>
@@ -335,8 +338,8 @@ export default function MerchShop({
   }
 
   const feature =
-    catalog?.products.find((product) => product.id === "purple-crew-hoodie") ??
-    catalog?.products[0];
+    catalog?.products.find((product) => product.id === "rr-classic-tshirt" && product.front) ??
+    catalog?.products.find((product) => product.front);
 
   async function checkStatus() {
     try {
@@ -379,7 +382,7 @@ export default function MerchShop({
                 Shop the collection <ArrowDown size={18} aria-hidden="true" />
               </a>
             </div>
-            {feature && (
+            {feature?.front && (
               <figure className="merch-drop-art">
                 <img
                   src={photo(feature.front)}
