@@ -81,7 +81,7 @@ ${
     .map(
       (order) => `<article>
   <h3>${html(order.reference)}</h3>
-  ${order.preorder ? `<p><strong>VORBESTELLUNG</strong> · ${html(order.fulfillment?.replaceAll("_", " "))}</p>` : ""}
+  ${order.preorder ? `<p><strong>PRE-ORDER</strong> · ${html(order.fulfillment?.replaceAll("_", " "))}</p>` : ""}
   <p>${date(order.created)} · ${money(order.total)} · Payment: ${html(
     order.status === "pending"
       ? order.payment === "FAILED"
@@ -99,7 +99,7 @@ ${
       : ""
   }
   <ul>${order.items.map(({ name, size, quantity }) => `<li>${quantity} × ${html(name)} · ${html(size)}</li>`).join("")}</ul>
-  ${order.gift && order.status === "paid" ? "<p>Packliste: 1 Gratis-Autogrammkarte · CHF 0.00</p>" : ""}
+  ${order.gift && order.status === "paid" ? "<p>Packing list: 1 free autograph card · CHF 0.00</p>" : ""}
   ${order.tracking ? `<p>Tracking: ${html(order.tracking)}</p>` : ""}
   ${order.refundRef ? `<p>SumUp refund reference: ${html(order.refundRef)}</p>` : ""}
   ${order.events?.length ? `<details><summary>Status history</summary><ul>${order.events.map(({ state, created }) => `<li>${date(created)} · ${html(state.replaceAll("_", " "))}</li>`).join("")}</ul></details>` : ""}

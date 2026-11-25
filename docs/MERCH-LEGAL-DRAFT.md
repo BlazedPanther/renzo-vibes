@@ -1,38 +1,38 @@
-# Renzo Vibes Shop – Rechtstexte zur Händlerfreigabe
+# Renzo Vibes Merch terms for seller approval
 
-Arbeitsentwurf für die Shop-Informationen. Eckige Klammern kennzeichnen die Angaben, die der Verkäufer bestätigen muss. Die Zeitpunkte für Bestellung, Vertragsschluss und Zahlung müssen in Shop, Bestellbestätigung und Verkaufsbedingungen übereinstimmen.
+Draft shop terms. Brackets mark information the seller needs to confirm. The shop, order confirmation and terms must describe the same steps for placing an order, forming a contract and paying.
 
-## Impressum
+## Seller information
 
-Nach Händlerangabe verkauft Lorenzo Di Meo im eigenen Namen unter Renzo Vibes Merchandise. Kontakt für Bestellungen, Beanstandungen und Datenschutz ist renzovibez@gmail.com. [Zustellfähige Schweizer Geschäftsanschrift und Berechtigung zu ihrer Nutzung bestätigen.] [Rechtliche Identität und MWST-Status bestätigen. Register- oder UID-Angaben ergänzen, soweit anwendbar.] Die am Standort genannten Firmen bleiben ausserhalb der Händlerangaben, solange ihre Rolle ungeklärt ist.
+According to the merchant’s information, Lorenzo Di Meo sells as Renzo Vibes Merchandise in his own name. For orders, complaints and privacy enquiries, email renzovibez@gmail.com. [Confirm the Swiss business address for correspondence and permission to use it.] [Confirm the seller’s legal identity and VAT status. Add commercial register or UID details where applicable.]
 
-## Datenschutzerklärung
+## Privacy policy
 
-Verantwortlich für Bestellungen ist der im Impressum genannte Verkäufer. Anfragen zur Bearbeitung Ihrer Daten richten Sie an [Datenschutzkontakt].
+The seller named above is responsible for processing order data. Contact [privacy contact] with questions about your data.
 
-Wir bearbeiten Ihren Namen, Ihre E-Mail-Adresse und Ihre Lieferadresse sowie Angaben zu Artikeln, Betrag, Zahlung und Versand. Wir verwenden diese Daten zur Bearbeitung, Bestätigung und Lieferung, für Anfragen und zur Erfüllung gesetzlicher Pflichten. Der Shop legt eine zufällige Bestellkennung im Browser-Tab ab, damit der Status nach der Rückkehr von SumUp angezeigt werden kann. Der Zugriff mit dieser Kennung endet nach 90 Tagen. Der Browser entfernt die Kennung beim Abschluss des Ablaufs oder beim Schliessen des Tabs, soweit er die Sitzung nicht wiederherstellt.
+We process your name, email address, delivery address, items, order total, payment status and shipping details. We use this information to fulfil and confirm orders, deliver goods, respond to enquiries and meet legal obligations. The shop stores a random order token in the browser tab so you can check the order after returning from SumUp. Access through this token expires after 90 days. The browser removes the token when the checkout flow ends or you close the tab, subject to browser session restoration.
 
-Die Zahlungsseite von [SumUp-Gesellschaft und Rolle] verarbeitet Ihre Zahlungsangaben. Das Shopsystem erhält zur Zahlungszuordnung die Referenz, den Betrag und den Status. Es speichert keine Kartenangaben. Der Shop läuft auf Railway [Vertragsgesellschaft, Hostingregion und Auftragsbedingungen]. [Bestätigter Versanddienst] erhält die für die Lieferung nötigen Adressdaten. [Bestätigte Resend-Gesellschaft und Rolle] erhält Ihre E-Mail-Adresse und die zur Bestätigung nötigen Bestellinformationen. Verbindungsdaten können zur Auslieferung und Absicherung der Website verarbeitet werden. [Empfängerländer und angemessene Garantien, falls erforderlich, sowie Kontakt für Auskunft zu diesen Garantien.]
+[SumUp legal entity and role] processes payment details on the SumUp payment page. The shop receives the reference, amount and status so it can match the payment with the order. Card details stay with the payment provider. Railway [contracting entity, hosting region and data processing terms] hosts the shop. [Confirmed carrier] receives the address data needed for delivery. [Confirmed Resend entity and role] receives your email address and the order details required to send confirmations. Connection data may be processed to deliver and secure the website. [Confirm destination countries, applicable safeguards and the contact for information about those safeguards.]
 
-Bei bestätigtem Ablauf oder Abbruch wird die Adresse aus der laufenden Bestelldatenbank entfernt. Bei abgeschlossenen Lieferungen gilt [bestätigte Löschfrist für Adress- und Kontaktdaten nach Versand, Berücksichtigung gesetzlicher Aufbewahrung und offener Fälle]. Sicherungskopien werden [bestätigte Dauer] aufbewahrt. Für Auskunft, Berichtigung und weitere Rechte nach DSG wenden Sie sich an [Datenschutzkontakt]. Aufsichtsbehörde ist der Eidgenössische Datenschutz- und Öffentlichkeitsbeauftragte.
+When expiry or cancellation is confirmed, we remove the delivery address from the active order database. After fulfilment, [confirm retention period for address and contact details, taking account of statutory retention and open cases]. Backups are kept for [confirmed retention period]. For access, corrections or other rights under the Swiss Federal Act on Data Protection, contact [privacy contact]. The supervisory authority is the Federal Data Protection and Information Commissioner.
 
-## Bestellung und Zahlung
+## Ordering and payment
 
-Wählen Sie Artikel, Grössen und Mengen aus und prüfen Sie im Warenkorb die Lieferadresse und den vollständigen Gesamtpreis. Mit der Bestellschaltfläche senden Sie die Bestellung an uns. Eine elektronische Eingangsbestätigung enthält die Bestellnummer. Bezahlen Sie anschliessend auf der SumUp-Zahlungsseite mit [tatsächlich freigeschaltete Zahlungsarten]. Der Shop zeigt nach der Überprüfung an, ob die Zahlung erfolgreich war. Der Kaufvertrag kommt [bestätigter Zeitpunkt und Verfahren, z. B. mit der Zahlungsbestätigung] zustande. Ein abgelaufener Checkout wird geschlossen. [Verfahren bei Zahlungsproblemen oder einer Bestätigung ohne Versand.]
+Choose your items, sizes and quantities. Review your delivery address and full total before placing the order. When you select the order button, we receive your order and send an electronic acknowledgement with your order number. You then pay on SumUp using [enabled payment methods]. Once we verify the payment, the shop displays the result. The sales contract is formed [confirmed timing and procedure, for example on payment confirmation]. Expired checkouts close automatically. [Confirm how customers should handle payment problems or confirmations followed by no dispatch.]
 
-Alle Produktpreise sind in CHF und enthalten alle zwingenden Preisbestandteile [Steuer- und MWST-Status in der Preisangabe ergänzen]. Die Versandgebühr und der Gesamtbetrag werden im Warenkorb vor Aufgabe der Bestellung angezeigt.
+Product prices are in CHF and include all mandatory price components [confirm how to present VAT and tax status]. The cart shows the shipping charge and the full total before you order.
 
-## Versand
+## Shipping
 
-Wir liefern ausschliesslich an Adressen in der Schweiz. Der Versand kostet pauschal CHF 7.00 je Bestellung. Sämtliche Artikel sind Vorbestellungen und nicht sofort lieferbar. Ein Versandtermin steht derzeit noch nicht fest. Wir informieren per E-Mail über den Status. [Verfahren bei längerer Verzögerung, Verlust oder nicht zustellbarer Sendung und Zusteller bestätigen.]
+We deliver to addresses in Switzerland for a flat fee of CHF 7.00 per order. All items are sold as pre-orders and are available for dispatch later. We’ll send updates by email. [Confirm the shipping timeframe or an approved description of timing, the carrier and the process for extended delays, losses or undeliverable parcels.]
 
-## Storno, Rückgabe und Mängel
+## Cancellations, returns and faulty goods
 
-Solange eine Zahlung offen ist, können Sie den Checkout auf der Merch-Seite abbrechen. Der Zahlungsdienst muss den Abbruch bestätigen. Nach Erhalt bieten wir 14 Tage freiwillige Rückgabe oder Umtausch für ungetragene und unbeschädigte Ware an. Normales Anprobieren ist erlaubt. Bei einer freiwilligen Retoure tragen Sie das Rückporto. Melden Sie die Rücksendung an renzovibez@gmail.com. [Rücksendeadresse und Berechtigung zu ihrer Nutzung bestätigen.] Ein Grössenwechsel setzt verfügbare oder beschaffbare Ersatzware voraus. [Ablauf und erneute Versandkosten beim Umtausch bestätigen.] Eine zugesagte Rückerstattung erfolgt über den ursprünglichen Zahlungsweg. Bei Mängeln, Falschlieferung, Verzug oder Nichtlieferung bleiben gesetzliche Ansprüche vorbehalten.
+You can cancel an unpaid checkout on the merch page. The payment provider must confirm the cancellation. You can return or exchange unworn, undamaged goods within 14 days of receiving them under our voluntary returns policy. Trying items on normally is allowed. For a voluntary return, you pay return postage. Email renzovibez@gmail.com to arrange the return. [Confirm the returns address and permission to use it.] Size exchanges depend on availability. [Confirm the exchange procedure and any shipping charges for the replacement.] Approved refunds go through the original payment method. Your statutory rights for faults, incorrect deliveries, delays or non-delivery remain in effect.
 
-Quellen
+## Sources
 
-- [SECO/KMU-Portal – Schweizer Vorschriften für E-Commerce](https://www.kmu.admin.ch/de/die-gesetze-der-schweiz-und-der-eu)
-- [SECO/KMU-Portal – Pflichtinformationen im Onlinehandel](https://www.kmu.admin.ch/de/wichtige-informationen-diese-informationen-sind-pflicht)
-- [EDÖB – Informationspflicht bei der Beschaffung von Personendaten](https://www.edoeb.admin.ch/en/duty-to-provide-information)
-- [EDÖB – Datenschutzerklärungen im Internet](https://www.edoeb.admin.ch/en/privacy-statements-on-the-internet)
+- [SECO SME Portal — Swiss e-commerce law](https://www.kmu.admin.ch/de/die-gesetze-der-schweiz-und-der-eu)
+- [SECO SME Portal — Required information for online sellers](https://www.kmu.admin.ch/de/wichtige-informationen-diese-informationen-sind-pflicht)
+- [FDPIC — Duty to provide information](https://www.edoeb.admin.ch/en/duty-to-provide-information)
+- [FDPIC — Website privacy statements](https://www.edoeb.admin.ch/en/privacy-statements-on-the-internet)

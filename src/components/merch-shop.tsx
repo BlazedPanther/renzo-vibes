@@ -1,7 +1,9 @@
 import { useEffect, useState, type FormEvent } from "react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { merchLegalSections as legalSections, type MerchLegal } from "@/lib/merch-legal";
 import "./merch-sandbox.css";
+import "./merch-campaign.css";
 
 type Product = {
   id: string;
@@ -47,7 +49,7 @@ type Order = {
 
 const storageKey = "renzo-merch-order";
 const money = (rappen: number) =>
-  new Intl.NumberFormat("de-CH", { style: "currency", currency: "CHF" }).format(rappen / 100);
+  new Intl.NumberFormat("en-CH", { style: "currency", currency: "CHF" }).format(rappen / 100);
 const photo = (file: string) => `${import.meta.env.BASE_URL}media/${file}`;
 
 async function api<T>(path: string, token?: string, body?: object): Promise<T> {
@@ -82,42 +84,57 @@ function ProductCard({
   cart: Record<string, number>;
   add: (id: string, quantity: number) => void;
 }) {
+  const [showBack, setShowBack] = useState(false);
   const [size, select] = useState("");
   const available = product.variants.find(({ id }) => id === size);
   const remaining = available ? Math.max(0, available.stock - (cart[size] ?? 0)) : 0;
   return (
     <article>
-      <div className={`merch-sandbox-photos${product.back ? "" : " merch-photo-single"}`}>
+      <div className="merch-gallery">
         <figure className="merch-image">
-          <a href={photo(product.front)} target="_blank" rel="noreferrer">
+          <a
+            href={photo(showBack && product.back ? product.back : product.front)}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Open ${product.name} ${showBack ? "back" : "front"} image at full size (new tab)`}
+          >
             <img
-              src={photo(product.front)}
-              alt={product.frontAlt ?? `${product.name} front view`}
+              key={String(showBack)}
+              src={photo(showBack && product.back ? product.back : product.front)}
+              alt={
+                showBack
+                  ? (product.backAlt ?? `${product.name} back view`)
+                  : (product.frontAlt ?? `${product.name} front view`)
+              }
               width={900}
               height={900}
               loading={priority ? "eager" : "lazy"}
               fetchPriority={priority ? "high" : "auto"}
             />
+            <span className="merch-gallery-zoom" aria-hidden="true">
+              <ArrowUpRight size={18} />
+            </span>
           </a>
         </figure>
         {product.back && (
-          <figure className="merch-image">
-            <a href={photo(product.back)} target="_blank" rel="noreferrer">
-              <img
-                src={photo(product.back)}
-                alt={product.backAlt ?? `${product.name} back view`}
-                width={900}
-                height={900}
-                loading="lazy"
-              />
-            </a>
-          </figure>
+          <div
+            className="merch-gallery-views"
+            role="group"
+            aria-label={`Image views for ${product.name}`}
+          >
+            <button type="button" aria-pressed={!showBack} onClick={() => setShowBack(false)}>
+              Front
+            </button>
+            <button type="button" aria-pressed={showBack} onClick={() => setShowBack(true)}>
+              Back
+            </button>
+          </div>
         )}
       </div>
       <h3>
         {product.name} · {money(product.price)}
       </h3>
-      {preorder && <p className="merch-preorder-label">Vorbestellung</p>}
+      {preorder && <p className="merch-preorder-label">Pre-order</p>}
       {product.imageNote && <p className="merch-image-note">{product.imageNote}</p>}
       <p>{product.description}</p>
       {product.variants.some(({ stock }) => stock > 0) ? (
@@ -317,6 +334,10 @@ export default function MerchShop({
     });
   }
 
+  const feature =
+    catalog?.products.find((product) => product.id === "purple-crew-hoodie") ??
+    catalog?.products[0];
+
   async function checkStatus() {
     try {
       return await api<Order>("order", token);
@@ -327,35 +348,69 @@ export default function MerchShop({
   }
 
   return (
-    <section id="shop" className="artist-section merch-sandbox merch-shop">
+    <section
+      id="shop"
+      className={`artist-section merch-sandbox merch-shop${catalog?.preorder && !token ? " merch-drop" : ""}`}
+      lang="en"
+    >
       <div className="section-inner">
         {catalog?.simulated && <p>Local simulation. No payment or shipment.</p>}
         {catalog?.sandbox && !catalog.simulated && <p>SumUp sandbox. Test orders only.</p>}
         {catalog?.stockMode === "unlimited-test" && (
-          <p>Testverfügbarkeit · keine physischen Lagerzahlen</p>
+          <p>Unlimited test stock · no physical inventory</p>
         )}
         {catalog?.preorder && catalog.allowNew && !token && (
-          <header className="merch-campaign">
-            <p className="eyebrow">RENZO VIBES MERCH</p>
-            <h1>{catalog.gift ? "BLACK FRIDAY" : "WEAR THE VIBE"}</h1>
-            <p>{catalog.notice}</p>
-            {catalog.gift && (
-              <figure>
+          <header className="merch-drop-hero">
+            <div className="merch-drop-copy">
+              <p className="merch-drop-eyebrow">Renzo Vibes Merch</p>
+              <h1>
+                {catalog.gift ? (
+                  <>
+                    BLACK <span>FRIDAY</span>
+                  </>
+                ) : (
+                  <>
+                    WEAR THE <span>VIBE</span>
+                  </>
+                )}
+              </h1>
+              <p>{catalog.notice}</p>
+              <a className="merch-drop-cta" href="#merch-products">
+                Shop the collection <ArrowDown size={18} aria-hidden="true" />
+              </a>
+            </div>
+            {feature && (
+              <figure className="merch-drop-art">
                 <img
-                  src={photo(catalog.gift.image)}
-                  alt="Originale Renzo Vibes Autogrammkarte"
-                  width={128}
-                  height={128}
+                  src={photo(feature.front)}
+                  alt={feature.frontAlt ?? feature.name}
+                  width={900}
+                  height={900}
+                  fetchPriority="high"
                 />
                 <figcaption>
-                  Eine kostenlose Autogrammkarte pro bezahlter Black-Friday-Bestellung.
+                  {feature.name}
+                  {feature.imageNote ? ` · ${feature.imageNote}` : ""}
                 </figcaption>
               </figure>
             )}
-            <Button asChild variant="artistOutline">
-              <a href="#merch-products">Merch ansehen</a>
-            </Button>
           </header>
+        )}
+        {catalog?.gift && catalog.allowNew && !token && (
+          <aside className="merch-drop-gift">
+            <img
+              src={photo(catalog.gift.image)}
+              alt="Renzo Vibes autograph card"
+              width={128}
+              height={128}
+              loading="lazy"
+            />
+            <p>
+              <strong>Free autograph card</strong>
+              <br />
+              One with each paid Black Friday order.
+            </p>
+          </aside>
         )}
         {error && <p role="alert">{error}</p>}
         {token ? (
@@ -374,7 +429,7 @@ export default function MerchShop({
             )}
             {order && (
               <>
-                {order.preorder && <p className="merch-preorder-label">Vorbestellung</p>}
+                {order.preorder && <p className="merch-preorder-label">Pre-order</p>}
                 <p>
                   Order number <strong>{order.reference}</strong>
                 </p>
@@ -473,9 +528,9 @@ export default function MerchShop({
                   />
                 ))}
               </div>
-              <div>
+              <div className="merch-cart">
                 <h3>Your cart</h3>
-                {catalog.preorder && <p className="merch-preorder-label">Vorbestellung</p>}
+                {catalog.preorder && <p className="merch-preorder-label">Pre-order</p>}
                 {!items.length && <p>Your cart is empty.</p>}
                 {items.map((item) => (
                   <div key={item.id} className="merch-sandbox-line">
@@ -513,7 +568,7 @@ export default function MerchShop({
                       <dd>{money(catalog.shipping)}</dd>
                       {catalog.gift && (
                         <>
-                          <dt>1 × Autogrammkarte</dt>
+                          <dt>1 × Autograph card</dt>
                           <dd>CHF 0.00</dd>
                         </>
                       )}
@@ -571,7 +626,7 @@ export default function MerchShop({
                         </span>
                       </label>
                       <Button variant="artistOutline" type="submit" disabled={busy}>
-                        {catalog.preorder ? "Vorbestellen" : "Place order"} · {money(total)}
+                        {catalog.preorder ? "Place pre-order" : "Place order"} · {money(total)}
                       </Button>
                     </form>
                   </>
@@ -589,7 +644,7 @@ export default function MerchShop({
               </details>
             ))}
             <footer className="merch-legal-nav">
-              <nav aria-label="Shopinformationen">
+              <nav aria-label="Shop information">
                 {Object.entries(legalSections).map(([key, title]) => (
                   <a key={key} href={`${import.meta.env.BASE_URL}merch-terms#${key}`}>
                     {title}

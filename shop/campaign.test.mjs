@@ -100,7 +100,7 @@ test("campaign rejects a stale price, preserves an existing quote, one gift and 
   assert.deepEqual(await orders.start(submitted, token), started);
   assert.equal(started.shipping, 700);
   assert.equal(started.items.length, 5);
-  assert.equal(started.gift.name, "Gratis Renzo Vibes Autogrammkarte");
+  assert.equal(started.gift.name, "Free Renzo Vibes autograph card");
   assert.equal(started.fulfillment, "awaiting_payment");
   provider.setStatus(started.reference, "PAID");
   await orders.reconcile();

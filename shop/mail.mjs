@@ -24,7 +24,7 @@ export function createMailer({ key, from, replyTo, testRecipient, fetcher = fetc
         from,
         to: [testRecipient ?? address.email],
         reply_to: replyTo,
-        subject: `${testRecipient ? "[Sandbox] " : ""}Renzo Vibes – ${preorder ? "Vorbestellung · " : ""}${subject}`,
+        subject: `${testRecipient ? "[Sandbox] " : ""}Renzo Vibes – ${preorder ? "Pre-order · " : ""}${subject}`,
         text: [
           `${subject} · ${orderId}`,
           ...(kind === "paid" ? ["Your payment has been verified."] : []),
@@ -36,7 +36,7 @@ export function createMailer({ key, from, replyTo, testRecipient, fetcher = fetc
               `${quantity} × ${name} (${size}) – ${money(price * quantity)}`,
           ),
           `Shipping: ${money(shipping)}`,
-          ...(gift ? ["1 × Gratis Renzo Vibes Autogrammkarte – CHF 0.00"] : []),
+          ...(gift ? ["1 × Free Renzo Vibes autograph card – CHF 0.00"] : []),
           `Total: ${money(total)}`,
           "",
           "Switzerland",

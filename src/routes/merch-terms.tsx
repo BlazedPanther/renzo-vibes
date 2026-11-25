@@ -6,10 +6,7 @@ import "@/components/merch-sandbox.css";
 
 export const Route = createFileRoute("/merch-terms")({
   head: () =>
-    artistHead(
-      "Shopinformationen | Renzo Vibes",
-      "Rechtliche Informationen zum Renzo Vibes Merch-Shop.",
-    ),
+    artistHead("Shop information | Renzo Vibes", "Terms and policies for Renzo Vibes Merch."),
   component: MerchTerms,
 });
 
@@ -39,13 +36,11 @@ function MerchTerms() {
   return (
     <main className="artist-section merch-shop">
       <div className="section-inner merch-legal">
-        <h1>Shopinformationen</h1>
-        <Link to="/merch">Zurück zu Merch</Link>
+        <h1>Shop information</h1>
+        <Link to="/merch">Back to merch</Link>
         {!legal ? (
           <p role="status">
-            {failed
-              ? "Die Shopinformationen sind derzeit nicht veröffentlicht."
-              : "Shopinformationen werden geladen."}
+            {failed ? "Shop information is currently unavailable." : "Loading shop information."}
           </p>
         ) : (
           Object.entries(merchLegalSections).map(([key, title]) => (
@@ -55,7 +50,7 @@ function MerchTerms() {
             </section>
           ))
         )}
-        <Link to="/privacy">Datenschutz der Künstlerseite</Link>
+        <Link to="/privacy">Artist website privacy policy</Link>
       </div>
     </main>
   );
