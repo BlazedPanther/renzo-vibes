@@ -4,7 +4,7 @@ Der Shop nutzt die Renzo-Vibes-Website und ihren Warenkorb. SumUp verarbeitet di
 
 ## Katalog und Bestand
 
-Die bestehende Galerie zeigt vier Motive. Vollständige Vorder- und Rückansichten sind im Repository für das Renzo Goat Tee und den Purple Hoodie vorhanden. Für die zwei POW-POW-Produkte fehlt je eine Rückansicht. Die Live-Konfiguration akzeptiert Artikel mit beiden Ansichten. Konfiguriert werden die vom Händler bestätigten Produkte, Beschreibungen, Grössen und CHF-Endpreise. Die drei im SumUp-Katalog sichtbaren Artikel liessen sich den Website-Motiven nicht eindeutig zuordnen.
+Der SumUp-Katalogexport ordnet Dada & Renzo Merch dem violetten Hoodie zu. Der Shop verwendet dafür die vorhandenen Vorder- und Rückansichten. Renzo Pow Pow Kappe und RVP Kappe (Winter) sind jeweils mit ihrem vorhandenen Katalogfoto ergänzt. Für beide Kappen liefert der Export nur je eine Ansicht. Die Live-Konfiguration akzeptiert Artikel mit beiden Ansichten. Konfiguriert werden die vom Händler bestätigten Varianten und verfügbaren Stückzahlen. SumUp hatte die Inventarverfolgung für alle drei Artikel ausgeschaltet. Die exportierten Nullen belegen daher keinen physischen Lagerbestand.
 
 Die Shopdatenbank führt den Bestand der online angebotenen Artikel. Jede konfigurierte Variante startet bei null. Renzo bucht den bestätigten physischen Startbestand im Adminbereich ein. Eine Reservierung vermindert den verfügbaren Bestand innerhalb derselben Transaktion, die die Bestellung speichert. Bei Zahlung wird die Reservierung verbraucht. Bei verifiziertem Ablauf bzw. Abbruch wird die Menge genau einmal freigegeben. Ein fehlgeschlagener, erneut möglicher Zahlungsversuch hält den Bestand bis zum verifizierten Ablauf oder bis zur Deaktivierung.
 

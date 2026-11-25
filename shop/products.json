@@ -13,8 +13,16 @@
     "back": "merch-goat-tee-back.webp"
   },
   "purple-hoodie": {
-    "name": "Purple Hoodie",
+    "name": "Dada & Renzo Merch",
     "front": "merch-purple-hoodie-front.webp",
     "back": "merch-purple-hoodie-back.webp"
+  },
+  "renzo-pow-pow-cap": {
+    "name": "Renzo Pow Pow Kappe",
+    "front": "merch-renzo-pow-pow-cap.png"
+  },
+  "rvp-winter-cap": {
+    "name": "RVP Kappe (Winter)",
+    "front": "merch-rvp-winter-cap.png"
   }
 }
