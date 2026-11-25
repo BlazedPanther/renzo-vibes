@@ -374,7 +374,13 @@ export function AboutSection({ standalone = false }: { standalone?: boolean }) {
     </section>
   );
 }
-export function MerchSection({ standalone = false }: { standalone?: boolean }) {
+export function MerchSection({
+  standalone = false,
+  shopOpen = false,
+}: {
+  standalone?: boolean;
+  shopOpen?: boolean;
+}) {
   return (
     <section className={`artist-section merch-section ${standalone ? "standalone" : ""}`}>
       <div className="section-inner merch-grid">
@@ -388,21 +394,35 @@ export function MerchSection({ standalone = false }: { standalone?: boolean }) {
             <br />
             THE VIBE<span className="gold-text">.</span>
           </h2>
-          <p className="merch-subtitle">Renzo Vibes merch is on the way.</p>
-          <p className="coming-soon">
-            COMING SOON. <span>↗</span>
+          <p className="merch-subtitle">
+            {shopOpen ? "The Renzo Vibes first drop." : "Renzo Vibes merch is on the way."}
           </p>
-          <Button asChild variant="artistOutline">
-            <Link to="/connect">
-              STAY TUNED <ArrowUpRight />
-            </Link>
-          </Button>
+          {shopOpen ? (
+            <Button asChild variant="artistOutline">
+              <a href="#shop">
+                Shop the drop <ArrowUpRight />
+              </a>
+            </Button>
+          ) : (
+            <>
+              <p className="coming-soon">
+                COMING SOON. <span>↗</span>
+              </p>
+              <Button asChild variant="artistOutline">
+                <Link to="/connect">
+                  STAY TUNED <ArrowUpRight />
+                </Link>
+              </Button>
+            </>
+          )}
         </div>
         <div className="merch-items">
           {merchItems.map((item) => (
             <figure className="merch-image" key={item.image.url}>
               <img src={item.image.url} alt={item.alt} loading="lazy" />
-              <figcaption>{item.caption}</figcaption>
+              <figcaption>
+                {shopOpen ? item.caption.replace(" · COMING SOON", "") : item.caption}
+              </figcaption>
             </figure>
           ))}
         </div>

@@ -10,4 +10,3 @@ source-media
 .env.*
 *.sqlite
 *.sqlite-*
-shop

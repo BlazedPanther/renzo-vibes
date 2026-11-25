@@ -7,7 +7,6 @@
 	root * /srv
 	encode zstd gzip
 
-	# Hauptadresse ist www.renzovibes.com (Railway terminiert HTTPS)
 	@apex host renzovibes.com
 	redir @apex https://www.renzovibes.com{uri} permanent
 
@@ -20,14 +19,17 @@
 	@assets path /assets/* /media/* /thumbs/*
 	header @assets Cache-Control "public, max-age=604800"
 
-	# alte deutsche Adresse -> englische Datenschutzerklärung
 	redir /datenschutz /privacy permanent
 	redir /datenschutz/ /privacy permanent
 
-	# Ordner-Seiten: /music -> /music/index.html
-	try_files {path} {path}/index.html
-	file_server
-
+	@merch path /api/merch/* /merch-admin /merch-admin/*
+	handle @merch {
+		reverse_proxy 127.0.0.1:8788
+	}
+	handle {
+		try_files {path} {path}/index.html
+		file_server
+	}
 	handle_errors {
 		rewrite * /404.html
 		file_server

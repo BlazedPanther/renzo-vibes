@@ -1,0 +1,20 @@
+{
+  "pow-pow-tee": {
+    "name": "POW POW Tee",
+    "front": "merch-pow-pow-tee.webp"
+  },
+  "pow-pow-hoodie": {
+    "name": "POW POW Hoodie",
+    "front": "merch-pow-pow-hoodie.webp"
+  },
+  "renzo-goat-tee": {
+    "name": "Renzo Goat Tee",
+    "front": "merch-goat-tee-front.webp",
+    "back": "merch-goat-tee-back.webp"
+  },
+  "purple-hoodie": {
+    "name": "Purple Hoodie",
+    "front": "merch-purple-hoodie-front.webp",
+    "back": "merch-purple-hoodie-back.webp"
+  }
+}

@@ -52,3 +52,43 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.merch-shop .merch-products {
+  display: grid;
+  gap: 2rem;
+}
+
+.merch-shop .merch-image img {
+  display: block;
+}
+
+.merch-shop .merch-accept {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.merch-shop input[type="checkbox"] {
+  width: auto;
+}
+
+.merch-shop a:not([data-slot="button"]) {
+  text-decoration: underline;
+}
+
+.merch-shop .merch-legal {
+  margin-top: 2rem;
+}
+
+.merch-shop .merch-legal details {
+  border-top: 1px solid #666;
+  padding: 0.75rem 0;
+}
+
+.merch-shop .merch-legal p {
+  white-space: pre-line;
+}
+
+.merch-shop .merch-confirmation {
+  overflow-wrap: anywhere;
+}

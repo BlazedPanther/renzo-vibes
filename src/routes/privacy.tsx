@@ -76,21 +76,20 @@ function Page() {
           <h3>2. What this website is about</h3>
           <p>
             This website provides information about the artist Renzo Vibes (music, videos,
-            biography, links to social media). There is no contact form, no registration, no shop,
-            no payment processing, no newsletter and no user accounts. The merch page is a preview
-            only.
+            biography, links to social media). The artist site has no newsletter or user accounts.
+            Shop availability and separate information about merchandise orders and payments are on
+            the <a href="/merch#shop-terms">merch page</a>.
           </p>
 
           <h3>3. Hosting with Railway and server log files</h3>
           <p>
-            The website is delivered as a static site by the hosting provider Railway (Railway
-            Corporation, USA). The servers are located in a data centre in the Netherlands (region
-            Europe West). When you visit the site, Railway processes technically necessary
-            connection data, in particular your IP address, date and time, the page requested and
-            browser and system information, in order to deliver the site and to ensure security.
-            These access logs can be viewed by us in the Railway account for a limited time; we do
-            not analyse them and use them at most for troubleshooting. The connection is encrypted
-            (HTTPS).
+            The website is hosted by Railway (Railway Corporation, USA). The servers are located in
+            a data centre in the Netherlands (region Europe West). When you visit the site, Railway
+            processes technically necessary connection data, in particular your IP address, date and
+            time, the page requested and browser and system information, in order to deliver the
+            site and to ensure security. These access logs can be viewed by us in the Railway
+            account for a limited time; we do not analyse them and use them at most for
+            troubleshooting. The connection is encrypted (HTTPS).
           </p>
 
           <h3>4. Cookies and local storage</h3>

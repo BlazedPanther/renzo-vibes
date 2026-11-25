@@ -1,21 +1,38 @@
-# Shop-Rechtstexte zur Prüfung
+# Renzo Vibes Shop – Rechtstexte zur Händlerfreigabe
 
-Arbeitsentwurf. Felder in eckigen Klammern vom Verkäufer bestätigen lassen und nach Auswahl des Shop-Backends ergänzen. Die bestehenden öffentlichen Routen wurden für den Testshop nicht geändert. Das Impressum ist im bestehenden Projekt deaktiviert. Die englische Datenschutzerklärung nennt die Merch-Seite eine Vorschau und entspricht damit weiterhin der öffentlich ausgelieferten Fassung.
+Arbeitsentwurf für die Shop-Informationen. Eckige Klammern kennzeichnen die Angaben, die der Verkäufer bestätigen muss. Die Zeitpunkte für Bestellung, Vertragsschluss und Zahlung müssen in Shop, Bestellbestätigung und Verkaufsbedingungen übereinstimmen.
 
 ## Impressum
 
-Verkäufer und Betreiber des Onlineshops ist [rechtlicher Name bzw. eingetragene Firma und Rechtsform], [Strasse und Hausnummer, PLZ, Ort, Schweiz]. Kontakt für Bestellungen, Beanstandungen und Datenschutz: [Kontakt-E-Mail]. Handelsregister, UID und MWST-Nummer: [Angaben soweit vorhanden und anwendbar]. Vor Publikation prüfen, ob Verantwortlichkeit und Adresse mit Checkout, Rechnung und Händlerkonto übereinstimmen.
+Verkäufer und Betreiber des Onlineshops ist [rechtlicher Name bzw. eingetragene Firma und Rechtsform], [Strasse und Hausnummer, PLZ und Ort, Schweiz]. Kontakt für Bestellungen, Beanstandungen und Datenschutz [geschäftliche E-Mail-Adresse]. [Handelsregister, UID und MWST-Nummer, soweit anwendbar.]
 
-## Ergänzung der Datenschutzerklärung
+## Datenschutzerklärung
 
-Verantwortlich für Bestellungen ist [rechtlicher Name und Adresse, Datenschutzkontakt]. Wir bearbeiten Name, E-Mail, Lieferadresse, Artikelpositionen, Mengen, Preise, Bestellreferenz, Zahlungsstatus und Versanddaten, um Bestellungen anzunehmen, zu bestätigen, zu versenden, Kundendienst zu leisten und gesetzliche Pflichten zu erfüllen. Angaben zu Zahlungskarten werden auf der Zahlungsseite des Zahlungsdienstleisters erfasst. Unsere Shop-Anwendung erhält die zur Zuordnung erforderlichen Zahlungsinformationen.
+Verantwortlich für Bestellungen ist der im Impressum genannte Verkäufer. Anfragen zur Bearbeitung Ihrer Daten richten Sie an [Datenschutzkontakt].
 
-Je nach freigegebenem Bestellweg erhalten [SumUp-Gesellschaft und Rolle], [Shop-Anbieter und Vertragsrolle], [Versanddienst], [E-Mail-Dienst] und [Hosting-Anbieter] die für ihre Leistung nötigen Angaben. Zugriffsprotokolle können IP-Adresse, Zeitpunkt und technische Verbindungsdaten enthalten. Railway, Spotify und YouTube in der bestehenden Datenschutzerklärung gegen die konkrete Konfiguration prüfen. Ergänzen: [verwendete Shop-Cookies bzw. Browser-Speicher und Dauer], [Empfängerländer, Verträge und Schutzmechanismen], [Löschfristen je Datenkategorie und Backup-Fristen]. Für Auskunft, Berichtigung oder weitere Rechte nach DSG wenden Sie sich an [Datenschutzkontakt]. Ergänzen: [Verfahren für Betroffenenanfragen und Hinweis auf den EDÖB].
+Wir bearbeiten Ihren Namen, Ihre E-Mail-Adresse und Ihre Lieferadresse sowie Angaben zu den bestellten Artikeln, zum Betrag, zum Zahlungsstatus und zum Versand. Wir verwenden diese Daten, um Bestellungen zu bearbeiten, zu bestätigen und zu versenden, Anfragen zu beantworten und gesetzliche Pflichten zu erfüllen. Der Shop legt eine zufällige Bestellkennung im Browser-Tab ab, damit der Zahlungsstatus nach dem Rücksprung von SumUp angezeigt werden kann. Die Kennung wird beim Abschluss des Ablaufs oder beim Schliessen des Browser-Tabs entfernt, soweit der Browser die Sitzung nicht wiederherstellt.
 
-## Verkaufsinformationen
+Die Zahlungsseite von [SumUp-Gesellschaft und Rolle] verarbeitet Ihre Zahlungsangaben. Das Shopsystem erhält zur Zahlungszuordnung die Referenz, den Betrag und den Status. Es speichert keine Kartenangaben. Der Shop läuft auf Railway [Vertragsgesellschaft, Hostingregion und Auftragsbedingungen]. [Bestätigter Versanddienst] erhält die für die Lieferung nötigen Adressdaten. [Bestätigte Resend-Gesellschaft und Rolle] erhält Ihre E-Mail-Adresse und die zur Bestätigung nötigen Bestellinformationen. Verbindungsdaten können zur Auslieferung und Absicherung der Website verarbeitet werden. [Empfängerländer und angemessene Garantien, falls erforderlich, sowie Kontakt für Auskunft zu diesen Garantien.]
 
-Der Shop liefert zu Beginn an Adressen in der Schweiz. Produktpreise sind in CHF und enthalten [anwendbare Steuern und obligatorische Zuschläge]. Vor dem verbindlichen Abschluss zeigen wir [Versandtarif oder Tarifregel] und den zu zahlenden Gesamtpreis. Voraussichtliche Zustellung: [realistische Lieferfrist, allfällige Abweichungen]. Zahlungsarten: [bestätigte Methoden]. Vor dem Absenden können Sie Ihre Angaben korrigieren. Mit [eindeutige Checkout-Schaltfläche und Zeitpunkt des Vertragsabschlusses] geben Sie Ihre Bestellung ab. Sie erhalten umgehend eine elektronische Eingangsbestätigung an die angegebene E-Mail-Adresse. [Versand-, Tracking- und Zahlungsstatus verständlich ausformulieren.]
+Bei bestätigtem Ablauf oder Abbruch wird die Adresse aus der laufenden Bestelldatenbank entfernt. Bei abgeschlossenen Lieferungen gilt [bestätigte Löschfrist für Adress- und Kontaktdaten nach Versand, Berücksichtigung gesetzlicher Aufbewahrung und offener Fälle]. Sicherungskopien werden [bestätigte Dauer] aufbewahrt. Für Auskunft, Berichtigung und weitere Rechte nach DSG wenden Sie sich an [Datenschutzkontakt]. Aufsichtsbehörde ist der Eidgenössische Datenschutz- und Öffentlichkeitsbeauftragte.
 
-Storno und freiwillige Rückgaben: [Fristen, Bedingungen, Kontakt, Rücksendeadresse, Kosten und Rückerstattungsweg]. Mängel: [Meldestelle und Verfahren unter Beachtung der anwendbaren gesetzlichen Mängelrechte]. Ergänzen: [Verfahren bei nicht zustellbaren Sendungen, vollständigen oder teilweisen Erstattungen und Versandverlust]. Vor einer späteren Freigabe für Auslandslieferungen gezielt Widerrufs-, Informations-, Steuer-, Zoll- und Datenschutzpflichten pro Zielmarkt prüfen.
+## Bestellung und Zahlung
 
-Quellen: [Schweizer und EU-Regeln für Onlinehandel](https://www.kmu.admin.ch/de/die-gesetze-der-schweiz-und-der-eu), [Pflichtinformationen im schweizerischen Onlinehandel](https://www.kmu.admin.ch/de/wichtige-informationen-diese-informationen-sind-pflicht), [Informationspflicht nach DSG](https://www.edoeb.admin.ch/en/duty-to-provide-information), [Datenschutzerklärungen im Internet](https://www.edoeb.admin.ch/en/privacy-statements-on-the-internet).
+Wählen Sie Artikel, Grössen und Mengen aus und prüfen Sie im Warenkorb die Lieferadresse und den vollständigen Gesamtpreis. Mit der Bestellschaltfläche senden Sie die Bestellung an uns. Eine elektronische Eingangsbestätigung enthält die Bestellnummer. Bezahlen Sie anschliessend auf der SumUp-Zahlungsseite mit [tatsächlich freigeschaltete Zahlungsarten]. Der Shop zeigt nach der Überprüfung an, ob die Zahlung erfolgreich war. Der Kaufvertrag kommt [bestätigter Zeitpunkt und Verfahren, z. B. mit der Zahlungsbestätigung] zustande. Ein abgelaufener Checkout wird geschlossen. [Verfahren bei Zahlungsproblemen oder einer Bestätigung ohne Versand.]
+
+Alle Produktpreise sind in CHF und enthalten alle zwingenden Preisbestandteile [Steuer- und MWST-Status in der Preisangabe ergänzen]. Die Versandgebühr und der Gesamtbetrag werden im Warenkorb vor Aufgabe der Bestellung angezeigt.
+
+## Versand
+
+Wir liefern an Adressen in der Schweiz. Der Versand kostet [CHF-Pauschale je Bestellung]. Die voraussichtliche Lieferzeit ab bestätigter Zahlung beträgt [realistische Anzahl Werktage und Abweichungen]. [Zusteller, Versandinformation und Vorgehen bei Verzögerung, Verlust oder nicht zustellbarer Sendung.]
+
+## Storno, Rückgabe und Mängel
+
+Solange eine Zahlung offen ist, können Sie den Checkout auf der Merch-Seite abbrechen. Der Zahlungsdienst muss den Abbruch bestätigen. Für Stornoanfragen nach Zahlung wenden Sie sich an [Kontakt und Bedingungen]. Im Schweizer Onlinehandel besteht grundsätzlich kein allgemeines gesetzliches Widerrufsrecht. [Händlerregel für freiwillige Rückgaben, Frist, Rücksendeadresse, Versandkosten und Erstattungsweg.] Die gesetzlichen Mängelrechte bleiben vorbehalten. Melden Sie einen Mangel an [Kontakt, Rücksendeadresse und Ablauf]. [Verfahren und Fristen anhand des konkreten Händlerangebots prüfen.]
+
+Quellen
+
+- [SECO/KMU-Portal – Schweizer Vorschriften für E-Commerce](https://www.kmu.admin.ch/de/die-gesetze-der-schweiz-und-der-eu)
+- [SECO/KMU-Portal – Pflichtinformationen im Onlinehandel](https://www.kmu.admin.ch/de/wichtige-informationen-diese-informationen-sind-pflicht)
+- [EDÖB – Informationspflicht bei der Beschaffung von Personendaten](https://www.edoeb.admin.ch/en/duty-to-provide-information)
+- [EDÖB – Datenschutzerklärungen im Internet](https://www.edoeb.admin.ch/en/privacy-statements-on-the-internet)
