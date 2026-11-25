@@ -6,3 +6,8 @@ dist-ssr
 neu-*.png
 vergleich-*.png
 source-media
+.env
+.env.*
+*.sqlite
+*.sqlite-*
+shop

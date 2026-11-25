@@ -6,9 +6,16 @@ import path from "node:path";
 
 // Statischer Build für GitHub Pages. Root-Pfad ("/") für eigene Domain;
 // BASE_PATH=/Rent2Wipes/ ermöglicht eine Vorschau unter github.io/<user>/Rent2Wipes/.
-export default defineConfig({
+export default defineConfig(({ command, mode }) => ({
   base: process.env["BASE_PATH"] ?? "/",
   plugins: [tanstackRouter({ target: "react", autoCodeSplitting: false }), react(), tailwindcss()],
   resolve: { alias: { "@": path.resolve(import.meta.dirname, "./src") } },
   build: { outDir: "dist", sourcemap: false },
-});
+  server: {
+    strictPort: mode === "merch-sandbox",
+    proxy:
+      command === "serve" && mode === "merch-sandbox"
+        ? { "/api/merch-sandbox": { target: "http://127.0.0.1:8787", changeOrigin: true } }
+        : {},
+  },
+}));
