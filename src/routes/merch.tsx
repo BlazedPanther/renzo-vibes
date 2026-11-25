@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 import { MerchSection } from "@/components/artist/sections";
 import { artistHead } from "@/lib/artist";
+
+const Sandbox =
+  import.meta.env.DEV && import.meta.env.MODE === "merch-sandbox"
+    ? lazy(() => import("@/components/merch-sandbox"))
+    : null;
 export const Route = createFileRoute("/merch")({
   head: () =>
     artistHead(
@@ -13,6 +19,11 @@ function Page() {
   return (
     <main>
       <MerchSection standalone />
+      {Sandbox && (
+        <Suspense fallback={<p role="status">Loading test shop…</p>}>
+          <Sandbox />
+        </Suspense>
+      )}
     </main>
   );
 }
