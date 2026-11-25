@@ -1,0 +1,83 @@
+[
+  {
+    "sku": "RVP-WINTERCAP",
+    "view": "front",
+    "source": "01_RVP_Winterkappe/front_original.png",
+    "original": "rvp-wintercap-front.png",
+    "webp": "rvp-wintercap-front.webp",
+    "kind": "original-photo",
+    "alt": "RVP Winterkappe, RR-Abzeichen auf der Krempe"
+  },
+  {
+    "sku": "POWPOW-WINTERCAP",
+    "view": "front",
+    "source": "02_Renzo_Pow_Pow_Winterkappe/front_mockup.png",
+    "original": "powpow-wintercap-front.png",
+    "webp": "powpow-wintercap-front.webp",
+    "kind": "generated-mockup",
+    "alt": "Schwarze POW POW Winterkappe, weisses RENZO POW POW Patch"
+  },
+  {
+    "sku": "ZUMBA-TSHIRT",
+    "view": "front",
+    "source": "03_Zumba_Remix_Tshirt/front_original.png",
+    "original": "zumba-tshirt-front.png",
+    "webp": "zumba-tshirt-front.webp",
+    "kind": "original-photo",
+    "alt": "Weisses Zumba Remix T-Shirt, kleines RR-Brustlogo"
+  },
+  {
+    "sku": "ZUMBA-TSHIRT",
+    "view": "back",
+    "source": "03_Zumba_Remix_Tshirt/back_original.png",
+    "original": "zumba-tshirt-back.png",
+    "webp": "zumba-tshirt-back.webp",
+    "kind": "original-photo",
+    "alt": "Zumba Remix T-Shirt mit farbigem Zumba-Motiv auf dem Rücken"
+  },
+  {
+    "sku": "RR-CLASSIC-TSHIRT",
+    "view": "front",
+    "source": "04_RR_Classic_Tshirt/front_original.png",
+    "original": "rr-classic-tshirt-front.png",
+    "webp": "rr-classic-tshirt-front.webp",
+    "kind": "original-photo",
+    "alt": "Weisses RR Classic T-Shirt, kleines RR-Brustlogo"
+  },
+  {
+    "sku": "RR-CLASSIC-TSHIRT",
+    "view": "back",
+    "source": "04_RR_Classic_Tshirt/back_original.png",
+    "original": "rr-classic-tshirt-back.png",
+    "webp": "rr-classic-tshirt-back.webp",
+    "kind": "original-photo",
+    "alt": "RR Classic T-Shirt mit grossem RR-Logo im blauen Ring"
+  },
+  {
+    "sku": "PURPLE-CREW-HOODIE",
+    "view": "front",
+    "source": "05_Purple_Crew_Hoodie/front_mockup.png",
+    "original": "purple-crew-hoodie-front.png",
+    "webp": "purple-crew-hoodie-front.webp",
+    "kind": "mockup",
+    "alt": "Violetter Purple Crew Hoodie mit RR-Brustlogo"
+  },
+  {
+    "sku": "PURPLE-CREW-HOODIE",
+    "view": "back",
+    "source": "05_Purple_Crew_Hoodie/back_mockup.png",
+    "original": "purple-crew-hoodie-back.png",
+    "webp": "purple-crew-hoodie-back.webp",
+    "kind": "mockup",
+    "alt": "Violetter Purple Crew Hoodie mit Schwarzweiss-Gruppenmotiv"
+  },
+  {
+    "sku": "AUTOGRAPH-CARD",
+    "view": "front",
+    "source": "06_Gratis_Autogrammkarte/karte_original.png",
+    "original": "autograph-card-front.png",
+    "webp": "autograph-card-front.webp",
+    "kind": "original-photo",
+    "alt": "Originale Renzo Vibes Autogrammkarte"
+  }
+]
