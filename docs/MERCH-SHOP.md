@@ -22,12 +22,14 @@ Der Service `website` ist mit Branch `main` verbunden, bedient beide Domains auf
 | `MERCH_ACCEPT_ORDERS` | Erst nach der Freigabe auf `true` setzen. `false` pausiert neue Bestellungen und hält bestehende Bestellungen, Admin, Webhooks und Statusabgleich verfügbar. |
 | `MERCH_ORIGIN` | Kanonischer HTTPS-Origin, ohne Pfad oder abschliessenden Schrägstrich. |
 | `MERCH_CONFIG_JSON` | Händlergeprüfte Produktdaten, ein einheitlicher Schweizer Versandtarif und vollständige Texte. |
-| `MERCH_STOCK_MODE` | `tracked` führt Reservierungen auf dem tatsächlichen Webbestand. `unlimited-test` lässt Testbestellungen ohne physische Lagerzahlen zu und wird ausserhalb der Sandbox abgelehnt. |
+| `MERCH_STOCK_MODE` | `tracked` führt Reservierungen auf dem tatsächlichen Webbestand. `unlimited-test` lässt Testbestellungen ohne physische Lagerzahlen zu und wird ausserhalb der Sandbox abgelehnt. `open-preorder` erlaubt im Livebetrieb bestätigte Vorbestellungen ohne globalen Bestandsdeckel und setzt `MERCH_PREORDER_SUPPLY_CONFIRMED=true` voraus. Das Limit pro Position und die Bestellabschaltung bleiben aktiv. |
+| `MERCH_PREORDER_SUPPLY_CONFIRMED` | Dokumentierte Lieferfähigkeitsfreigabe für den Modus `open-preorder`. |
 | `MERCH_SUMUP_KEY`, `MERCH_SUMUP_MERCHANT` | Schlüssel und Händlercode des jeweiligen Betriebsmodus. |
 | `MERCH_ADMIN_PASSWORD_HASH` | SHA-256-Hexdigest eines zufälligen 32-Byte-Passworts, dessen Passwortdarstellung aus 64 kleingeschriebenen Hexzeichen besteht. Benutzername ist `renzo`. |
 | `MERCH_WEBHOOK_TOKEN` | Von der Admin-Anmeldung unabhängiger Zufallswert aus 64 kleingeschriebenen Hexzeichen. |
 | `MERCH_RESEND_KEY`, `MERCH_MAIL_FROM`, `MERCH_MAIL_REPLY_TO` | Sendezugriff und bestätigte Adressen für Transaktionsmails. Das Backend nutzt die HTTPS-API. |
-| `MERCH_SANDBOX_MAIL_TO` | Optionales, fest freigegebenes Testpostfach für die Sandbox. Mit vollständiger Mail-Konfiguration gehen beide Testbestätigungen ausschliesslich dorthin. In Produktion muss diese Variable fehlen. |
+| `MERCH_MERCHANT_EMAIL` | Pflicht im Livebetrieb. Erhält eine separate Meldung pro verifiziert bezahlter Bestellung. Kundendaten bleiben im geschützten Adminbereich. |
+| `MERCH_SANDBOX_MAIL_TO` | Optionales, fest freigegebenes Testpostfach für die Sandbox. Mit vollständiger Mail-Konfiguration gehen alle Testbestätigungen und die optionale Händlermeldung ausschliesslich dorthin. In Produktion muss diese Variable fehlen. |
 | `MERCH_ADDRESS_RETENTION_DAYS` | Händlergeprüfte Löschfrist für Name, Adresse und E-Mail ab Versand. Offene Lieferungen und ungesendete Bestätigungen bleiben zur Bearbeitung erhalten. |
 
 Schlüssel und Callback-Token als geschützte Railway-Variablen hinterlegen. Der Adminzugang verwendet HTTP Basic über Railway-TLS mit zufällig generiertem Passwort und konstantzeitlichem Digest-Vergleich. Das Passwort Renzo über einen Passwortmanager zugänglich machen. Die Adminseiten und Kundendaten werden vom Server geschützt. Schreibaktionen verlangen denselben Origin. Bei Verdacht auf Zugriff den Admin-Digest rotieren. Den Callback-Token bei einer planmässigen Rotation erst wechseln, wenn die bisherigen Checkouts abgeschlossen sind. Der unabhängige Statusabgleich bleibt bei Callback-Ausfall aktiv.

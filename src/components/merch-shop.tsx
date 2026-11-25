@@ -16,7 +16,7 @@ type Product = {
   frontAlt?: string;
   backAlt?: string;
   imageNote?: string;
-  variants: { id: string; size: string; stock: number }[];
+  variants: { id: string; size: string; stock: number | null; maxQuantity?: number }[];
 };
 type Gift = { name: string; image: string };
 export type ShopPresentation = "closed" | "standard" | "preorder";
@@ -51,6 +51,8 @@ type Order = {
 const storageKey = "renzo-merch-order";
 const money = (rappen: number) =>
   new Intl.NumberFormat("en-CH", { style: "currency", currency: "CHF" }).format(rappen / 100);
+const quantityLimit = (variant?: Product["variants"][number]) =>
+  variant?.stock ?? variant?.maxQuantity ?? 0;
 const photo = (file: string) => `${import.meta.env.BASE_URL}media/${file}`;
 
 async function api<T>(path: string, token?: string, body?: object): Promise<T> {
@@ -91,7 +93,7 @@ function ProductCard({
   const image = showBack && product.back ? product.back : product.front;
   const [size, select] = useState("");
   const available = product.variants.find(({ id }) => id === size);
-  const remaining = available ? Math.max(0, available.stock - (cart[size] ?? 0)) : 0;
+  const remaining = available ? Math.max(0, quantityLimit(available) - (cart[size] ?? 0)) : 0;
   return (
     <article>
       {image && (
@@ -145,7 +147,7 @@ function ProductCard({
       <p>{product.description}</p>
       {readOnly ? (
         <p>{product.variants.map(({ size }) => size).join(" / ")}</p>
-      ) : product.variants.some(({ stock }) => stock > 0) ? (
+      ) : product.variants.some((variant) => quantityLimit(variant) > 0) ? (
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -159,10 +161,10 @@ function ProductCard({
             Size
             <select value={size} onChange={(event) => select(event.target.value)} required>
               <option value="">Choose a size</option>
-              {product.variants.map(({ id, size, stock }) => (
-                <option key={id} value={id} disabled={!stock}>
-                  {size}
-                  {stock ? "" : " · Sold out"}
+              {product.variants.map((variant) => (
+                <option key={variant.id} value={variant.id} disabled={!quantityLimit(variant)}>
+                  {variant.size}
+                  {quantityLimit(variant) ? "" : " · Sold out"}
                 </option>
               ))}
             </select>
@@ -411,6 +413,7 @@ export default function MerchShop({
         .filter(({ id }) => (cart[id] ?? 0) > 0)
         .map((variant) => ({
           ...variant,
+          maxQuantity: quantityLimit(variant),
           name: product.name,
           price: product.price,
           quantity: cart[variant.id] ?? 0,
@@ -449,7 +452,7 @@ export default function MerchShop({
           if (current) {
             setCatalog(current);
             const limits = new Map(
-              current.products.flatMap((p) => p.variants.map((v) => [v.id, v.stock])),
+              current.products.flatMap((p) => p.variants.map((v) => [v.id, quantityLimit(v)])),
             );
             setCart((previous) =>
               Object.fromEntries(
@@ -603,7 +606,7 @@ export default function MerchShop({
                       setCart((previous) => ({
                         ...previous,
                         [id]: Math.min(
-                          product.variants.find((variant) => variant.id === id)?.stock ?? 0,
+                          quantityLimit(product.variants.find((variant) => variant.id === id)),
                           (previous[id] ?? 0) + quantity,
                         ),
                       }))
@@ -623,11 +626,11 @@ export default function MerchShop({
                         aria-label={`${item.name} ${item.size} quantity in cart`}
                         type="number"
                         min={1}
-                        max={item.stock}
+                        max={item.maxQuantity}
                         value={item.quantity}
                         onChange={(event) => {
                           const number = event.target.valueAsNumber;
-                          if (Number.isInteger(number) && number >= 1 && number <= item.stock)
+                          if (Number.isInteger(number) && number >= 1 && number <= item.maxQuantity)
                             update(item.id, number);
                         }}
                       />

@@ -388,3 +388,41 @@ test("retention removes shipped addresses only after outstanding confirmations a
   assert.equal(orders.admin().orders[0].address, null);
   assert.equal(orders.admin().orders[0].total, 7400);
 });
+
+test("verified payments queue one private merchant alert with separate idempotency", async (t) => {
+  const calls = [];
+  const merchantRecipient = "seller@example.test";
+  const send = createMailer({
+    key: "test-placeholder",
+    from: "orders@example.test",
+    replyTo: "orders@example.test",
+    merchantRecipient,
+    fetcher: async (_url, { body, headers }) => {
+      calls.push({ ...JSON.parse(body), key: headers["Idempotency-Key"] });
+      return Response.json({ id: "test-delivery" });
+    },
+  });
+  const provider = createSimulator();
+  const orders = openOrders({
+    filename: ":memory:",
+    provider,
+    config,
+    sendConfirmations: true,
+    sendMerchantNotifications: true,
+  });
+  t.after(() => orders.close());
+  orders.adjust(sku, 1, "received");
+  const order = await orders.start(payload(orders), token());
+  assert.equal(orders.admin().mailWaiting, 1);
+  provider.setStatus(order.reference, "PAID");
+  const payment = await provider.get({ id: order.reference });
+  await Promise.all([orders.verifyNotification(payment.id), orders.verifyNotification(payment.id)]);
+  await orders.sendMail(send);
+  await orders.sendMail(send);
+  assert.equal(calls.length, 3);
+  const merchant = calls.filter(({ to }) => to.includes(merchantRecipient));
+  assert.equal(merchant.length, 1);
+  assert.match(merchant[0].key, /\/merchant_paid$/);
+  assert.doesNotMatch(merchant[0].text, /buyer@example\.test|Teststrasse/);
+  assert(calls.some(({ key, to }) => key.endsWith("/paid") && to.includes(address.email)));
+});

@@ -24,6 +24,7 @@ export const validEmail = (value) =>
   value.length <= 120 &&
   /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i.test(value);
 const hash = (value) => createHash("sha256").update(value).digest("hex");
+const maxQuantity = 10;
 const validToken = (value) => typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
 
 export class ShopError extends Error {
@@ -45,7 +46,7 @@ function normalize(body, variants, testOnly) {
         variants.has(item?.id) &&
         Number.isInteger(item.quantity) &&
         item.quantity >= 1 &&
-        item.quantity <= 10,
+        item.quantity <= maxQuantity,
     ) ||
     new Set(items.map(({ id }) => id)).size !== items.length ||
     address?.country !== "CH" ||
@@ -86,14 +87,17 @@ export function openOrders({
   provider,
   config,
   sendConfirmations = config?.mode === "live",
+  sendMerchantNotifications = false,
   now = Date.now,
 }) {
   const products = config?.products ?? [testProduct];
   const shipping = config?.shipping ?? 800;
   const stockMode = config?.stockMode ?? "tracked";
-  const unlimited = stockMode === "unlimited-test";
-  if (unlimited && config?.mode !== "sandbox")
+  const unlimited = stockMode === "unlimited-test" || stockMode === "open-preorder";
+  if (stockMode === "unlimited-test" && config?.mode !== "sandbox")
     throw new Error("Unlimited test stock requires sandbox mode");
+  if (stockMode === "open-preorder" && (config?.mode !== "live" || !config.preorder))
+    throw new Error("Open pre-orders require a live pre-order catalogue");
   const serializedConfig = JSON.stringify(config);
   const version = config && hash(serializedConfig);
   function quote(time) {
@@ -240,7 +244,9 @@ export function openOrders({
       color: product.color,
       variants: product.variants.map((variant) => ({
         ...variant,
-        stock: unlimited ? 10 : Math.min(stock.get(variant.id), 10),
+        ...(stockMode === "open-preorder"
+          ? { stock: null, maxQuantity }
+          : { stock: unlimited ? maxQuantity : Math.min(stock.get(variant.id), maxQuantity) }),
       })),
     }));
     return config
@@ -329,6 +335,7 @@ export function openOrders({
       if (result.status === "PAID") {
         db.prepare("UPDATE orders SET status = 'paid', url = NULL WHERE id = ?").run(order.id);
         queueMail(order.id, "paid");
+        if (sendMerchantNotifications) queueMail(order.id, "merchant_paid");
       }
       // FAILED is a payment attempt, not a terminal checkout state.
       if (result.status === "EXPIRED") release(latest, "EXPIRED");
@@ -519,7 +526,8 @@ export function openOrders({
       };
     },
     adjust(id, delta, reason, mutation = randomUUID()) {
-      if (unlimited) throw new ShopError(409, "Stock changes are disabled for this sandbox mode.");
+      if (unlimited)
+        throw new ShopError(409, "Stock changes are disabled in this availability mode.");
       if (
         !/^[a-f0-9-]{36}$/.test(mutation ?? "") ||
         !variants.has(id) ||

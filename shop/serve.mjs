@@ -33,7 +33,13 @@ async function bootstrap() {
     merchant: env.MERCH_SUMUP_MERCHANT,
     mode: config.mode,
   });
-  const orders = openOrders({ filename, provider, config, sendConfirmations: !!settings.mail });
+  const orders = openOrders({
+    filename,
+    provider,
+    config,
+    sendConfirmations: !!settings.mail,
+    sendMerchantNotifications: !!settings.mail?.merchantRecipient,
+  });
   handler = createMerchHandler(orders, settings);
   console.info(`Merch backend ready in ${config.mode} mode. Orders open: ${settings.allowNew}`);
 

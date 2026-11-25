@@ -43,10 +43,12 @@ nav{display:flex;gap:1rem}
 <p>${
     stockMode === "unlimited-test"
       ? "Sandbox availability is unlimited. No physical stock is recorded here."
-      : "Record receipts and other-channel sales here. Available quantities exclude open reservations."
+      : stockMode === "open-preorder"
+        ? "Pre-orders have no stock cap. Monitor the orders below against confirmed supply."
+        : "Record receipts and other-channel sales here. Available quantities exclude open reservations."
   }</p>
 ${
-  stockMode === "unlimited-test"
+  stockMode !== "tracked"
     ? ""
     : stock
         .map(

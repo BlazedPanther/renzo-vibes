@@ -9,13 +9,15 @@ export const legalSections = ["imprint", "privacy", "payment", "delivery", "retu
 
 export function readMailSettings(env, mode) {
   const testRecipient = env.MERCH_SANDBOX_MAIL_TO;
+  const merchantRecipient = env.MERCH_MERCHANT_EMAIL;
   if (mode === "sandbox" && !testRecipient) return null;
   if (
     !env.MERCH_RESEND_KEY ||
     !validEmail(env.MERCH_MAIL_FROM) ||
     !validEmail(env.MERCH_MAIL_REPLY_TO) ||
     (mode === "sandbox" && !validEmail(testRecipient)) ||
-    (mode === "live" && testRecipient)
+    (mode === "live" && (testRecipient || !validEmail(merchantRecipient))) ||
+    (merchantRecipient && !validEmail(merchantRecipient))
   ) {
     throw new Error("Invalid merch mail configuration for this operating mode");
   }
@@ -24,6 +26,7 @@ export function readMailSettings(env, mode) {
     from: env.MERCH_MAIL_FROM,
     replyTo: env.MERCH_MAIL_REPLY_TO,
     testRecipient,
+    merchantRecipient,
   };
 }
 
@@ -32,12 +35,15 @@ export function readShopConfig(env) {
   if (!mode || mode === "off") return null;
   if (!["live", "sandbox"].includes(mode)) throw new Error("Invalid MERCH_MODE");
   const stockMode = env.MERCH_STOCK_MODE ?? "tracked";
-  if (
-    !["tracked", "unlimited-test"].includes(stockMode) ||
-    (stockMode === "unlimited-test" && mode !== "sandbox")
-  ) {
+  if (!["tracked", "unlimited-test", "open-preorder"].includes(stockMode))
+    throw new Error("Invalid stock mode");
+  if (stockMode === "unlimited-test" && mode !== "sandbox")
     throw new Error("Unlimited test stock requires sandbox mode");
-  }
+  if (
+    stockMode === "open-preorder" &&
+    (mode !== "live" || env.MERCH_PREORDER_SUPPLY_CONFIRMED !== "true")
+  )
+    throw new Error("Open pre-orders require live mode and confirmation of pre-order supply");
   const data = JSON.parse(env.MERCH_CONFIG_JSON ?? "null");
   const legal = data?.legal;
   if (
@@ -73,6 +79,9 @@ export function readShopConfig(env) {
     );
   }
   const preorder = data.products.some(({ id }) => products[id].preorder);
+  if (stockMode === "open-preorder" && !preorder) {
+    throw new Error("Open pre-orders require a pre-order catalogue");
+  }
   if (
     preorder &&
     (data.shipping !== 700 || data.products.some(({ id }) => !products[id].preorder))

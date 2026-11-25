@@ -4,17 +4,17 @@ Draft shop terms. Brackets mark information the seller needs to confirm. The sho
 
 ## Seller information
 
-According to the merchant’s information, Lorenzo Di Meo sells as Renzo Vibes Merchandise in his own name. For orders, complaints and privacy enquiries, email renzovibez@gmail.com. [Confirm the Swiss business address for correspondence and permission to use it.] [Confirm the seller’s legal identity and VAT status. Add commercial register or UID details where applicable.]
+Lorenzo Di Meo sells in his own name as Renzo Vibes Merchandise. The correspondence and returns address is Erlenstrasse 2A, 2555 Brügg BE, Switzerland. For orders, complaints and privacy enquiries, email renzovibez@gmail.com. The seller has stated that he is not VAT-registered. [Verify the right to use the address, the live SumUp account holder and the applicable tax treatment.]
 
 ## Privacy policy
 
-The seller named above is responsible for processing order data. Contact [privacy contact] with questions about your data.
+The seller named above is responsible for processing order data. Contact renzovibez@gmail.com with questions about your data.
 
 We process your name, email address, delivery address, items, order total, payment status and shipping details. We use this information to fulfil and confirm orders, deliver goods, respond to enquiries and meet legal obligations. The shop stores a random order token in the browser tab so you can check the order after returning from SumUp. Access through this token expires after 90 days. The browser removes the token when the checkout flow ends or you close the tab, subject to browser session restoration.
 
-[SumUp legal entity and role] processes payment details on the SumUp payment page. The shop receives the reference, amount and status so it can match the payment with the order. Card details stay with the payment provider. Railway [contracting entity, hosting region and data processing terms] hosts the shop. [Confirmed carrier] receives the address data needed for delivery. [Confirmed Resend entity and role] receives your email address and the order details required to send confirmations. Connection data may be processed to deliver and secure the website. [Confirm destination countries, applicable safeguards and the contact for information about those safeguards.]
+[SumUp legal entity and role] processes payment details on the SumUp payment page. The shop receives the reference, amount and status so it can match the payment with the order. Card details stay with the payment provider. Railway [contracting entity, hosting region and data processing terms] hosts the shop. [Confirmed carrier] receives the address data needed for delivery. [Confirmed Resend entity and role] receives your email address and the order details required to send confirmations. Connection data may be processed to deliver and secure the website. The artist website privacy policy describes the separate Spotify and YouTube integrations. [Confirm destination countries, applicable safeguards and the contact for information about those safeguards.]
 
-When expiry or cancellation is confirmed, we remove the delivery address from the active order database. After fulfilment, [confirm retention period for address and contact details, taking account of statutory retention and open cases]. Backups are kept for [confirmed retention period]. For access, corrections or other rights under the Swiss Federal Act on Data Protection, contact [privacy contact]. The supervisory authority is the Federal Data Protection and Information Commissioner.
+When expiry or cancellation is confirmed, we remove the delivery address from the active order database. After fulfilment, [confirm retention period for address and contact details, taking account of statutory retention and open cases]. Backups are kept for [confirmed retention period]. For access, corrections or other rights under the Swiss Federal Act on Data Protection, contact renzovibez@gmail.com. The supervisory authority is the Federal Data Protection and Information Commissioner.
 
 ## Ordering and payment
 
@@ -24,11 +24,11 @@ Product prices are in CHF and include all mandatory price components [confirm ho
 
 ## Shipping
 
-We deliver to addresses in Switzerland for a flat fee of CHF 7.00 per order. All items are sold as pre-orders and are available for dispatch later. We’ll send updates by email. [Confirm the shipping timeframe or an approved description of timing, the carrier and the process for extended delays, losses or undeliverable parcels.]
+We deliver to addresses in Switzerland for a flat fee of CHF 7.00 per order. All items are pre-orders and are unavailable for immediate dispatch. A confirmed dispatch date is currently unavailable. We’ll email the dispatch date once confirmed and notify you of changes. If dispatch is delayed, contact renzovibez@gmail.com. Your statutory rights relating to delayed or undelivered goods remain in effect. [Confirm carrier and procedures for extended delays, losses and undeliverable parcels.]
 
 ## Cancellations, returns and faulty goods
 
-You can cancel an unpaid checkout on the merch page. The payment provider must confirm the cancellation. You can return or exchange unworn, undamaged goods within 14 days of receiving them under our voluntary returns policy. Trying items on normally is allowed. For a voluntary return, you pay return postage. Email renzovibez@gmail.com to arrange the return. [Confirm the returns address and permission to use it.] Size exchanges depend on availability. [Confirm the exchange procedure and any shipping charges for the replacement.] Approved refunds go through the original payment method. Your statutory rights for faults, incorrect deliveries, delays or non-delivery remain in effect.
+You can cancel an unpaid checkout on the merch page. The payment provider must confirm the cancellation. You can return or exchange unworn, undamaged goods within 14 days of receiving them under our voluntary returns policy. Trying items on normally is allowed. For a voluntary return, you pay return postage. Email renzovibez@gmail.com to arrange the return. The returns address is Lorenzo Di Meo, Erlenstrasse 2A, 2555 Brügg BE, Switzerland. Size exchanges depend on availability. [Confirm the exchange procedure and any shipping charges for the replacement.] Approved refunds go through the original payment method. Your statutory rights for faults, incorrect deliveries, delays or non-delivery remain in effect.
 
 ## Sources
 

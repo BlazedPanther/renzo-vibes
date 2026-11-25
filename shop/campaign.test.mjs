@@ -188,3 +188,40 @@ test("a database restore preserves the quote and never restocks an unlimited tes
     restored.close();
   }
 });
+
+test("confirmed open pre-orders use no fabricated inventory or reservations", async (t) => {
+  assert.throws(
+    () => readShopConfig({ MERCH_MODE: "live", MERCH_STOCK_MODE: "open-preorder" }),
+    /confirmation of pre-order supply/,
+  );
+  const provider = createSimulator();
+  const orders = openOrders({
+    filename: ":memory:",
+    provider,
+    config: { ...config, mode: "live", stockMode: "open-preorder" },
+    sendConfirmations: false,
+  });
+  t.after(() => orders.close());
+  const catalog = orders.catalog();
+  assert(
+    catalog.products.every((product) =>
+      product.variants.every((variant) => variant.stock === null && variant.maxQuantity === 10),
+    ),
+  );
+  const [paid, cancelled] = await Promise.all([
+    orders.start(checkout(catalog), key()),
+    (async () => {
+      const customerKey = key();
+      await orders.start(checkout(catalog), customerKey);
+      return orders.cancel(customerKey);
+    })(),
+  ]);
+  provider.setStatus(paid.reference, "PAID");
+  await orders.verifyNotification((await provider.get({ id: paid.reference })).id);
+  assert.equal(cancelled.status, "expired");
+  assert(orders.admin().stock.every((variant) => variant.stock === 0));
+  assert.equal(
+    orders.admin().orders.find(({ reference }) => reference === paid.reference).status,
+    "paid",
+  );
+});
