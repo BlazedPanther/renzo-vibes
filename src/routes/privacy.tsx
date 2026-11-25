@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { artistHead } from "@/lib/artist";
 import { siteConfig, isTodo, spotifyArtistId } from "@/config/site.config";
+import { merchRelease, nativeMerchShop } from "@/config/merch-release";
 
 export const Route = createFileRoute("/privacy")({
   head: () =>
@@ -76,9 +77,12 @@ function Page() {
           <h3>2. What this website is about</h3>
           <p>
             This website provides information about the artist Renzo Vibes (music, videos,
-            biography, links to social media). There is no contact form, no registration, no shop,
-            no payment processing, no newsletter and no user accounts. The merch page is a preview
-            only.
+            biography, links to social media).
+            {nativeMerchShop
+              ? " The merch page links to an external SumUp store. Orders and payments are processed there after you follow the link."
+              : merchRelease
+                ? " The merch page lets you prepare an email enquiry. The website itself does not accept or store enquiries or payment information."
+                : " There is no contact form, no registration, no shop, no payment processing, no newsletter and no user accounts. The merch page is a preview only."}
           </p>
 
           <h3>3. Hosting with Railway and server log files</h3>
@@ -160,9 +164,11 @@ function Page() {
 
           <h3>9. Retention</h3>
           <p>
-            We do not store any personal data of visitors. For the retention period of the access
-            logs at Railway and for data processed by Google and Spotify, please refer to the
-            respective provider's information.
+            {merchRelease
+              ? "For merch enquiries, see the separate information below. "
+              : "We do not store any personal data of visitors. "}
+            For the retention period of the access logs at Railway and for data processed by Google
+            and Spotify, please refer to the respective provider's information.
           </p>
 
           <h3>10. Your rights</h3>
@@ -181,6 +187,32 @@ function Page() {
             FADP. If you visit the website from the EU/EEA, additional rights under the GDPR may
             apply to you; you can also use the contact address above in that case.
           </p>
+          {merchRelease && (
+            <section id="merch-privacy" lang="de-CH">
+              <h3>Datenschutz bei Merch-Anfragen</h3>
+              <p>
+                Verantwortlich ist {merchRelease.seller.name}, {merchRelease.seller.address}. Für
+                Datenschutzanfragen erreichst du uns unter {merchRelease.seller.privacy}.
+              </p>
+              <p>
+                Die Website stellt deine Auswahl auf deinem Gerät zusammen. Du versendest die
+                Anfrage selbst per E-Mail. Wir bearbeiten die E-Mail-Adresse, die angefragten
+                Artikel sowie bei einer Bestellung Name, Lieferadresse, Bestell- und Zahlungsstatus,
+                um deine Anfrage zu beantworten, die Bestellung abzuwickeln und gesetzliche
+                Pflichten zu erfüllen.
+              </p>
+              <p>
+                Zahlungsdaten gibst du auf der Zahlungsseite von SumUp ein. Für den Versand erhält
+                der beauftragte Versanddienst die erforderlichen Lieferdaten.
+              </p>
+              <p>{merchRelease.mailProcessing}</p>
+              <p>{merchRelease.retention}</p>
+              <p>
+                Für Auskunft, Berichtigung oder andere Anliegen nach Schweizer Datenschutzrecht
+                wende dich an die oben genannte Datenschutzadresse.
+              </p>
+            </section>
+          )}
         </div>
       </section>
     </main>

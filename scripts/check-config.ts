@@ -10,6 +10,16 @@ import {
   APPLE_ID_RE,
   YT_CHANNEL_RE,
 } from "../src/config/site.config.ts";
+import {
+  checkMerchRelease,
+  checkNativeMerchShop,
+  merchRelease,
+  nativeMerchShop,
+} from "../src/config/merch-release.ts";
+
+if (merchRelease) checkMerchRelease(merchRelease);
+if (nativeMerchShop) checkNativeMerchShop(nativeMerchShop);
+if (merchRelease && nativeMerchShop) throw new Error("Merch: einen Bestellweg freigeben.");
 
 const warn = (m: string) => console.log(`::warning title=Konfiguration::${m}`);
 const l = siteConfig.legal;
