@@ -9,6 +9,7 @@ import { test } from "node:test";
 import { openOrders, createSimulator } from "./orders.mjs";
 import { createMerchHandler } from "./http.mjs";
 import { createMailer } from "./mail.mjs";
+import { readMailSettings } from "./config.mjs";
 import { createSumUpProvider } from "./sumup.mjs";
 
 const token = () => randomBytes(32).toString("hex");
@@ -329,6 +330,47 @@ test("documented provider rejection releases the reservation and leaves no shipp
   assert.equal(orders.admin().stock[0].stock, 1);
   assert.equal(orders.admin().orders[0].address, null);
   assert.deepEqual(await orders.start(payload(orders), key), order);
+});
+
+test("sandbox confirmations use the configured test mailbox for both events", async (t) => {
+  const env = {
+    MERCH_RESEND_KEY: "test-placeholder",
+    MERCH_MAIL_FROM: "orders@example.test",
+    MERCH_MAIL_REPLY_TO: "support@example.test",
+  };
+  assert.equal(readMailSettings(env, "sandbox"), null);
+  assert.throws(() => readMailSettings({ ...env, MERCH_SANDBOX_MAIL_TO: "invalid" }, "sandbox"));
+  const testRecipient = "delivery-test@example.test";
+  const testEnv = { ...env, MERCH_SANDBOX_MAIL_TO: testRecipient };
+  assert.throws(() => readMailSettings(testEnv, "live"));
+
+  const sent = [];
+  const send = createMailer({
+    ...readMailSettings(testEnv, "sandbox"),
+    fetcher: async (_url, { body }) => {
+      sent.push(JSON.parse(body));
+      return Response.json({ id: "test-delivery" });
+    },
+  });
+  const provider = createSimulator();
+  const orders = openOrders({
+    filename: ":memory:",
+    provider,
+    config: { ...config, mode: "sandbox" },
+    sendConfirmations: true,
+  });
+  t.after(() => orders.close());
+  orders.adjust(sku, 1, "received");
+  const order = await orders.start(payload(orders), token());
+  provider.setStatus(order.reference, "PAID");
+  await orders.reconcile();
+  await orders.sendMail(send);
+  assert.equal(sent.length, 2);
+  for (const message of sent) {
+    assert.deepEqual(message.to, [testRecipient]);
+    assert.match(message.subject, /^\[Sandbox\]/);
+    assert.doesNotMatch(message.text, /buyer@example\.test|Teststrasse/);
+  }
 });
 
 test("retention removes shipped addresses only after outstanding confirmations are delivered", async (t) => {

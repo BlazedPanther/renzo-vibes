@@ -1,6 +1,6 @@
 const money = (cents) => `CHF ${(cents / 100).toFixed(2)}`;
 
-export function createMailer({ key, from, replyTo, fetcher = fetch }) {
+export function createMailer({ key, from, replyTo, testRecipient, fetcher = fetch }) {
   return async ({ kind, orderId, address, items, total, shipping }) => {
     const subject = kind === "paid" ? "Payment confirmed" : "Order received";
     const response = await fetcher("https://api.resend.com/emails", {
@@ -12,9 +12,9 @@ export function createMailer({ key, from, replyTo, fetcher = fetch }) {
       },
       body: JSON.stringify({
         from,
-        to: [address.email],
+        to: [testRecipient ?? address.email],
         reply_to: replyTo,
-        subject: `Renzo Vibes – ${subject}`,
+        subject: `${testRecipient ? "[Sandbox] " : ""}Renzo Vibes – ${subject}`,
         text: [
           `${subject} · ${orderId}`,
           kind === "paid"

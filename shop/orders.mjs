@@ -74,7 +74,13 @@ function normalize(body, variants, testOnly) {
   };
 }
 
-export function openOrders({ filename, provider, config, now = Date.now }) {
+export function openOrders({
+  filename,
+  provider,
+  config,
+  sendConfirmations = config?.mode === "live",
+  now = Date.now,
+}) {
   const products = config?.products ?? [testProduct];
   const shipping = config?.shipping ?? 800;
   const version = config && hash(JSON.stringify(config));
@@ -215,7 +221,7 @@ export function openOrders({ filename, provider, config, now = Date.now }) {
   }
 
   function queueMail(id, kind) {
-    if (config?.mode === "live") {
+    if (sendConfirmations) {
       db.prepare("INSERT INTO mail (orderId, kind, due) VALUES (?, ?, ?)").run(id, kind, now());
     }
   }

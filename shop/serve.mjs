@@ -33,12 +33,7 @@ async function bootstrap() {
     merchant: env.MERCH_SUMUP_MERCHANT,
     mode: config.mode,
   });
-  const orders = openOrders({ filename, provider, config });
-  const send = createMailer({
-    key: env.MERCH_RESEND_KEY,
-    from: env.MERCH_MAIL_FROM,
-    replyTo: env.MERCH_MAIL_REPLY_TO,
-  });
+  const orders = openOrders({ filename, provider, config, sendConfirmations: !!settings.mail });
   handler = createMerchHandler(orders, settings);
   console.info(`Merch backend ready in ${config.mode} mode. Orders open: ${settings.allowNew}`);
 
@@ -55,8 +50,11 @@ async function bootstrap() {
     void run();
   }
   repeat(() => orders.reconcile(), 15_000);
-  if (config.mode === "live") {
+  if (settings.mail) {
+    const send = createMailer(settings.mail);
     repeat(() => orders.sendMail(send), 2_000);
+  }
+  if (config.mode === "live") {
     repeat(() => orders.pruneAddresses(settings.addressRetentionDays), 60 * 60_000);
   }
 }

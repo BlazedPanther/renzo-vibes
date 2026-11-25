@@ -7,6 +7,26 @@ const text = (value, max) =>
 const cents = (value, min) => Number.isSafeInteger(value) && value >= min && value <= 100_000;
 export const legalSections = ["imprint", "privacy", "payment", "delivery", "returns"];
 
+export function readMailSettings(env, mode) {
+  const testRecipient = env.MERCH_SANDBOX_MAIL_TO;
+  if (mode === "sandbox" && !testRecipient) return null;
+  if (
+    !env.MERCH_RESEND_KEY ||
+    !validEmail(env.MERCH_MAIL_FROM) ||
+    !validEmail(env.MERCH_MAIL_REPLY_TO) ||
+    (mode === "sandbox" && !validEmail(testRecipient)) ||
+    (mode === "live" && testRecipient)
+  ) {
+    throw new Error("Invalid merch mail configuration for this operating mode");
+  }
+  return {
+    key: env.MERCH_RESEND_KEY,
+    from: env.MERCH_MAIL_FROM,
+    replyTo: env.MERCH_MAIL_REPLY_TO,
+    testRecipient,
+  };
+}
+
 export function readShopConfig(env) {
   const mode = env.MERCH_MODE;
   if (!mode || mode === "off") return null;
@@ -56,13 +76,7 @@ export function readShopConfig(env) {
   ) {
     throw new Error("Missing or invalid merch admin digest or callback token");
   }
-  if (
-    mode === "live" &&
-    (!env.MERCH_RESEND_KEY ||
-      !validEmail(env.MERCH_MAIL_FROM) ||
-      !validEmail(env.MERCH_MAIL_REPLY_TO))
-  )
-    throw new Error("Live checkout requires transactional email");
+  const mail = readMailSettings(env, mode);
 
   const addressRetentionDays = Number(env.MERCH_ADDRESS_RETENTION_DAYS);
   if (
@@ -85,6 +99,7 @@ export function readShopConfig(env) {
 
   return {
     origin: origin.origin,
+    mail,
     addressRetentionDays,
     filename: `${mount}/merch-${mode}.sqlite`,
     allowNew: env.MERCH_ACCEPT_ORDERS === "true",
