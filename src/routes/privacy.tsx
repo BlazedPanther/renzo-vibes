@@ -209,9 +209,9 @@ function Page() {
               receives the data needed for delivery (name, address).
             </li>
             <li>
-              For each paid order the seller receives an email with the items and the delivery
-              details (name, address, email) in his mailbox (Gmail, Google), so that the parcel can
-              be prepared.
+              For each paid order the seller receives an internal notification email with the items
+              and the delivery details (name, address, email) so that the parcel can be prepared.
+              The seller's own mailbox is hosted by Google. Customers can use any email address.
             </li>
           </ul>
           <p>
