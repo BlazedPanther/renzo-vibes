@@ -203,8 +203,8 @@ function Page() {
               <strong>Railway</strong> hosts the shop and stores the order data.
             </li>
             <li>
-              The <strong>carrier</strong> chosen for delivery receives the data needed to deliver
-              the parcel (name, address).
+              <strong>Swiss Post</strong> (Die Schweizerische Post AG) delivers the parcels and
+              receives the data needed for delivery (name, address).
             </li>
           </ul>
           <p>
