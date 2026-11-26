@@ -71,8 +71,11 @@ async function bootstrap() {
 async function start() {
   try {
     await bootstrap();
-  } catch {
-    console.warn("Merch unavailable: check configuration, persistent mount and SumUp permissions.");
+  } catch (error) {
+    const reason = error instanceof Error ? error.message.slice(0, 160) : "unknown error";
+    console.warn(
+      `Merch unavailable (${reason}): check configuration, persistent mount and SumUp permissions.`,
+    );
     setTimeout(start, 60_000).unref();
   }
 }
