@@ -67,5 +67,20 @@ test("admin requires both a valid Access assertion for Renzo and the existing pa
 
 test("partial admin Access configuration is rejected", () => {
   assert.equal(readAdminAccess({}), null);
+  const two = readAdminAccess({
+    MERCH_ACCESS_TEAM: "merch-test",
+    MERCH_ACCESS_AUDIENCE: "a".repeat(64),
+    MERCH_ACCESS_EMAIL: "One@example.test, two@example.test",
+  });
+  assert.deepEqual(two.emails, ["one@example.test", "two@example.test"]);
+  assert.throws(
+    () =>
+      readAdminAccess({
+        MERCH_ACCESS_TEAM: "merch-test",
+        MERCH_ACCESS_AUDIENCE: "a".repeat(64),
+        MERCH_ACCESS_EMAIL: "one@example.test,not-an-email",
+      }),
+    /Invalid Cloudflare/,
+  );
   assert.throws(() => readAdminAccess({ MERCH_ACCESS_TEAM: "merch-test" }), /Invalid Cloudflare/);
 });

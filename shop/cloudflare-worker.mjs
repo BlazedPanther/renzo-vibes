@@ -1,6 +1,6 @@
 const shop = "https://www.renzovibes.com";
 const admin = "/merch-admin";
-const owner = "renzovibez@gmail.com";
+const admins = ["renzovibez@gmail.com", "simonmetlicovec@gmail.com"];
 
 const stop = (status, message) =>
   new Response(message, { status, headers: { "Cache-Control": "no-store" } });
@@ -9,7 +9,7 @@ export default {
   async fetch(request, _env, ctx) {
     if (!ctx.access) return stop(403, "Access authentication required.");
     const identity = await ctx.access.getIdentity();
-    if (identity?.email?.toLowerCase() !== owner) return stop(403, "Access denied.");
+    if (!admins.includes(identity?.email?.toLowerCase())) return stop(403, "Access denied.");
 
     const url = new URL(request.url);
     const method = request.method;
