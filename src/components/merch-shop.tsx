@@ -320,8 +320,8 @@ export function ClosedMerchShop() {
           <p>
             <strong>Shipping and returns</strong>
             <br />
-            {preorderInfo.deliveryEstimate} CHF 7.00 per order within Switzerland. Voluntary returns within
-            14 days of delivery for unworn, undamaged items.
+            {preorderInfo.deliveryEstimate} CHF 7.00 per order within Switzerland. Voluntary returns
+            within 14 days of delivery for unworn, undamaged items.
           </p>
         </aside>
       </div>
