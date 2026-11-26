@@ -59,6 +59,10 @@ export function createMerchHandler(
     minuteLimits.set(key, count);
     if (count > max) throw new ShopError(429, "Too many requests. Please try again in a minute.");
   }
+  function ensureNotLimited(key, max) {
+    if (minute === Math.floor(Date.now() / 60_000) && (minuteLimits.get(key) ?? 0) >= max)
+      throw new ShopError(429, "Too many requests. Please try again in a minute.");
+  }
   return async (req, res) => {
     const reply = (status, data, headers = {}) => {
       res.writeHead(status, { "Content-Type": "application/json; charset=utf-8", ...headers });
@@ -84,10 +88,14 @@ export function createMerchHandler(
         if (verifyAccess && !(await verifyAccess(req.headers["cf-access-jwt-assertion"]))) {
           throw new ShopError(403, "Cloudflare Access authentication required.");
         }
+        const remote = req.headers["x-real-ip"];
+        const remoteKey =
+          typeof remote === "string" && isIP(remote) ? "admin-auth:" + remote : null;
+        ensureNotLimited("admin-auth", 120);
+        if (remoteKey) ensureNotLimited(remoteKey, 12);
         if (!authorize(req, adminHash)) {
           limit("admin-auth", 120);
-          const remote = req.headers["x-real-ip"];
-          if (typeof remote === "string" && isIP(remote)) limit("admin-auth:" + remote, 12);
+          if (remoteKey) limit(remoteKey, 12);
           return reply(
             401,
             { error: "Authentication required." },

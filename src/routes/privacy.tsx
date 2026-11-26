@@ -77,8 +77,8 @@ function Page() {
           <p>
             This website provides information about the artist Renzo Vibes (music, videos,
             biography, links to social media). The artist site has no newsletter or user accounts.
-            Shop availability and separate information about merchandise orders and payments are on
-            the <a href="/merch#shop-terms">merch page</a>.
+            If you order merchandise, the shop processes the personal data described in section 12.
+            Terms for orders are on the <a href="/merch#shop-terms">merch page</a>.
           </p>
 
           <h3>3. Hosting with Railway and server log files</h3>
@@ -159,9 +159,9 @@ function Page() {
 
           <h3>9. Retention</h3>
           <p>
-            We do not store any personal data of visitors. For the retention period of the access
-            logs at Railway and for data processed by Google and Spotify, please refer to the
-            respective provider's information.
+            We do not store any personal data of mere visitors (merchandise orders: see section 12).
+            For the retention period of the access logs at Railway and for data processed by Google
+            and Spotify, please refer to the respective provider's information.
           </p>
 
           <h3>10. Your rights</h3>
@@ -179,6 +179,40 @@ function Page() {
             This website is operated from Switzerland and is subject to Swiss law, in particular the
             FADP. If you visit the website from the EU/EEA, additional rights under the GDPR may
             apply to you; you can also use the contact address above in that case.
+          </p>
+          <h3>12. Merchandise orders</h3>
+          <p>
+            If you place an order in the shop, we process your name, email address, delivery
+            address, the items ordered, the order total, the payment status and shipping details. We
+            use this data to confirm and fulfil your order, to deliver the goods, to answer
+            enquiries and returns and to meet legal obligations. The shop stores a random order
+            token in your browser tab so that you can check your order after returning from the
+            payment page; access with this token expires after 90 days.
+          </p>
+          <ul>
+            <li>
+              <strong>SumUp</strong> processes the payment on its own payment page. Card details are
+              entered there and are not received by us. We receive the order reference, amount and
+              payment status.
+            </li>
+            <li>
+              <strong>Resend</strong> sends the order emails. It receives your email address and the
+              content of the confirmation.
+            </li>
+            <li>
+              <strong>Railway</strong> hosts the shop and stores the order data.
+            </li>
+            <li>
+              The <strong>carrier</strong> chosen for delivery receives the data needed to deliver
+              the parcel (name, address).
+            </li>
+          </ul>
+          <p>
+            These providers may process data outside Switzerland, including in the EU/EEA and the
+            USA; section 8 applies accordingly. If an order expires or is cancelled, the delivery
+            address is removed from the active order database. After fulfilment we keep order and
+            address data only as long as needed for returns, complaints, accounting and other legal
+            obligations. Your rights are described in section 10.
           </p>
         </div>
       </section>
