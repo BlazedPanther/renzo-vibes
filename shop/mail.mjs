@@ -44,6 +44,13 @@ export function createMailer({
             ? [
                 "Open the protected shop admin to fulfil this order.",
                 ...(adminUrl ? [`${adminUrl}?reference=${encodeURIComponent(orderId)}`] : []),
+                "",
+                "Deliver to:",
+                address.name,
+                address.street,
+                `${address.postcode} ${address.city}`,
+                "Switzerland",
+                `Customer email: ${address.email}`,
               ]
             : []),
           ...(preorder && ["received", "paid", "delayed"].includes(kind) ? [preorderNotice] : []),
