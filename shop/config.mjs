@@ -106,6 +106,14 @@ export function readShopConfig(env) {
     throw new Error("Missing or invalid merch admin digest or callback token");
   }
   const mail = readMailSettings(env, mode);
+  const adminAccess = readAdminAccess(env);
+  const adminOrigin = env.MERCH_ADMIN_ORIGIN ?? origin.origin;
+  if (
+    adminOrigin !== origin.origin &&
+    (!adminAccess || !/^https:\/\/[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev$/.test(adminOrigin))
+  ) {
+    throw new Error("A separate merch admin origin requires Cloudflare Access and a Workers URL");
+  }
 
   const addressRetentionDays = Number(env.MERCH_ADDRESS_RETENTION_DAYS);
   if (
@@ -128,12 +136,13 @@ export function readShopConfig(env) {
 
   return {
     origin: origin.origin,
+    adminOrigin,
     mail,
     addressRetentionDays,
     filename: `${mount}/merch-${mode}.sqlite`,
     allowNew: env.MERCH_ACCEPT_ORDERS === "true",
     adminHash: env.MERCH_ADMIN_PASSWORD_HASH,
-    adminAccess: readAdminAccess(env),
+    adminAccess,
     webhookToken: env.MERCH_WEBHOOK_TOKEN,
     config: {
       mode,

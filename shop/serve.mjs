@@ -59,7 +59,7 @@ async function bootstrap() {
   if (settings.mail) {
     const send = createMailer({
       ...settings.mail,
-      adminUrl: new URL("/merch-admin", settings.origin).href,
+      adminUrl: new URL("/merch-admin", settings.adminOrigin).href,
     });
     repeat(() => orders.sendMail(send), 2_000);
   }
