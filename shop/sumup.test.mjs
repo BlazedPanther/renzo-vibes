@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { createSumUpSandboxProvider } from "./sumup.mjs";
+import { createSumUpProvider, createSumUpSandboxProvider } from "./sumup.mjs";
 
 const merchant = "M1234567";
 const order = { id: "local-order", total: 5300, expires: Date.UTC(2027, 0, 1) };
@@ -73,4 +73,25 @@ test("SumUp adapter rejects mismatched payment totals, references, merchants and
     });
     await assert.rejects(provider.create(order), /does not match|Unexpected/);
   }
+});
+
+test("SumUp live mode accepts a profile without a sandbox flag and rejects a sandbox profile", async () => {
+  const live = { merchant_code: merchant, country: "CH", default_currency: "CHF" };
+  const fetcherFor = (profile) => async (url) =>
+    Response.json(url.includes("/v1/merchants/") ? profile : {});
+  await createSumUpProvider({
+    key: "test-key",
+    merchant,
+    mode: "live",
+    fetcher: fetcherFor(live),
+  });
+  await assert.rejects(
+    createSumUpProvider({
+      key: "test-key",
+      merchant,
+      mode: "live",
+      fetcher: fetcherFor({ ...live, sandbox: true }),
+    }),
+    /verified as a live/,
+  );
 });
