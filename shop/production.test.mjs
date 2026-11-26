@@ -429,6 +429,9 @@ test("verified payments queue one private merchant alert with separate idempoten
       `https://www.renzovibes.com/merch-admin?reference=${order.reference}`,
     ),
   );
-  assert.doesNotMatch(merchant[0].text, /buyer@example\.test|Teststrasse/);
+  assert.match(merchant[0].text, /Deliver to:/);
+  assert.match(merchant[0].text, new RegExp(address.street));
+  assert.match(merchant[0].text, new RegExp(`${address.postcode} ${address.city}`));
+  assert.match(merchant[0].text, new RegExp(address.email.replace(".", "\.")));
   assert(calls.some(({ key, to }) => key.endsWith("/paid") && to.includes(address.email)));
 });
