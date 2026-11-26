@@ -2,6 +2,7 @@ import { createHash, timingSafeEqual } from "node:crypto";
 import { isIP } from "node:net";
 import { ShopError } from "./orders.mjs";
 import { adminPage } from "./admin.mjs";
+import { createAdminAccessVerifier } from "./access.mjs";
 
 const api = "/api/merch";
 const admin = "/merch-admin";
@@ -39,9 +40,10 @@ function authorize(req, hash) {
 
 export function createMerchHandler(
   orders,
-  { origin, adminHash, webhookToken, allowNew, config, simulator },
+  { origin, adminHash, adminAccess, webhookToken, allowNew, config, simulator },
 ) {
   const host = new URL(origin).host;
+  const verifyAccess = adminAccess && createAdminAccessVerifier(adminAccess);
   const callbackRoot = api + "/notify/";
   const callbackUrl = origin + callbackRoot + webhookToken;
   const minuteLimits = new Map();
@@ -79,6 +81,9 @@ export function createMerchHandler(
       const path = url.pathname;
       adminRequest = path === admin || path.startsWith(admin + "/");
       if (adminRequest) {
+        if (verifyAccess && !(await verifyAccess(req.headers["cf-access-jwt-assertion"]))) {
+          throw new ShopError(403, "Cloudflare Access authentication required.");
+        }
         if (!authorize(req, adminHash)) {
           limit("admin-auth", 120);
           const remote = req.headers["x-real-ip"];

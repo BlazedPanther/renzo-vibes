@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import products from "./products.json" with { type: "json" };
 import { validEmail } from "./orders.mjs";
+import { readAdminAccess } from "./access.mjs";
 
 const text = (value, max) =>
   typeof value === "string" && value.trim().length > 0 && value.length <= max;
@@ -132,6 +133,7 @@ export function readShopConfig(env) {
     filename: `${mount}/merch-${mode}.sqlite`,
     allowNew: env.MERCH_ACCEPT_ORDERS === "true",
     adminHash: env.MERCH_ADMIN_PASSWORD_HASH,
+    adminAccess: readAdminAccess(env),
     webhookToken: env.MERCH_WEBHOOK_TOKEN,
     config: {
       mode,
