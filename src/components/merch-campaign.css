@@ -917,3 +917,49 @@
   color: var(--merch-light);
   font-size: 0.9rem;
 }
+
+/* Open shop polish: primary add-to-cart, cart that stays in view on desktop. */
+.merch-drop .merch-products form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.merch-drop .merch-products form label {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.merch-drop .merch-add {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 62rem) {
+  .merch-drop .merch-cart {
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow: auto;
+  }
+}
+
+.merch-drop .merch-cart > h3 {
+  margin: 0 0 0.5rem;
+}
+
+.merch-drop .merch-sandbox-totals {
+  margin: 0.8rem 0 1rem;
+  padding-block: 0.7rem;
+  border-block: 1px solid var(--merch-edge);
+}
+
+.merch-drop .merch-sandbox-totals dt:last-of-type,
+.merch-drop .merch-sandbox-totals dd:last-of-type {
+  font-weight: 800;
+  color: var(--merch-light);
+}
+
+.merch-drop .merch-cart form {
+  display: grid;
+  gap: 0.6rem;
+}

@@ -58,6 +58,8 @@ const money = (rappen: number) =>
 const discountPercent = (regular: number, price: number) =>
   Math.floor(((regular - price) * 1000) / regular) / 10;
 const percentLabel = (value: number) => `${Number.isInteger(value) ? value : value.toFixed(1)}%`;
+/** Customer-facing size label; the catalog uses ONE-SIZE as its id. */
+const sizeLabel = (size: string) => (size === "ONE-SIZE" ? "One size" : size);
 const quantityLimit = (variant?: Product["variants"][number]) =>
   variant?.stock ?? variant?.maxQuantity ?? 0;
 const photo = (file: string) => `${import.meta.env.BASE_URL}media/${file}`;
@@ -99,7 +101,9 @@ function ProductCard({
   const [showBack, setShowBack] = useState(false);
   const regular = readOnly ? product.regularPrice : product.futurePrice;
   const image = showBack && product.back ? product.back : product.front;
-  const [size, select] = useState("");
+  const only = product.variants.length === 1 ? product.variants[0] : undefined;
+  const [size, select] = useState(only && quantityLimit(only) > 0 ? only.id : "");
+  const [added, setAdded] = useState(false);
   const available = product.variants.find(({ id }) => id === size);
   const remaining = available ? Math.max(0, quantityLimit(available) - (cart[size] ?? 0)) : 0;
   return (
@@ -180,7 +184,9 @@ function ProductCard({
       </div>
       {product.description && <p className="merch-description">{product.description}</p>}
       {readOnly ? (
-        <p className="merch-sizes">Sizes: {product.variants.map(({ size }) => size).join(" / ")}</p>
+        <p className="merch-sizes">
+          Sizes: {product.variants.map(({ size }) => sizeLabel(size)).join(" / ")}
+        </p>
       ) : product.variants.some((variant) => quantityLimit(variant) > 0) ? (
         <form
           onSubmit={(event) => {
@@ -188,6 +194,8 @@ function ProductCard({
             if (remaining) {
               const quantity = Number(new FormData(event.currentTarget).get("quantity"));
               add(size, quantity);
+              setAdded(true);
+              window.setTimeout(() => setAdded(false), 1800);
             }
           }}
         >
@@ -197,7 +205,7 @@ function ProductCard({
               <option value="">Choose a size</option>
               {product.variants.map((variant) => (
                 <option key={variant.id} value={variant.id} disabled={!quantityLimit(variant)}>
-                  {variant.size}
+                  {sizeLabel(variant.size)}
                   {quantityLimit(variant) ? "" : " · Sold out"}
                 </option>
               ))}
@@ -216,8 +224,8 @@ function ProductCard({
               required
             />
           </label>
-          <Button variant="artistOutline" disabled={!remaining}>
-            Add to cart
+          <Button variant="artist" className="merch-add" disabled={!remaining}>
+            {added ? "Added to cart ✓" : size ? "Add to cart" : "Choose a size first"}
           </Button>
         </form>
       ) : (
@@ -556,7 +564,7 @@ export default function MerchShop({
                 <ul>
                   {order.items.map((item) => (
                     <li key={item.id}>
-                      {item.quantity} × {item.name} · {item.size}
+                      {item.quantity} × {item.name} · {sizeLabel(item.size)}
                     </li>
                   ))}
                 </ul>
@@ -655,7 +663,7 @@ export default function MerchShop({
                 {items.map((item) => (
                   <div key={item.id} className="merch-sandbox-line">
                     <label>
-                      {item.name} · {item.size}
+                      {item.name} · {sizeLabel(item.size)}
                       <input
                         aria-label={`${item.name} ${item.size} quantity in cart`}
                         type="number"
