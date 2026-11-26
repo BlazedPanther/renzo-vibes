@@ -55,20 +55,21 @@ export const siteConfig = {
   legal: {
     operatorName: "Lorenzo Di Meo (artist name: Renzo Vibes)",
     /** Optional nach DSG; `null` = wird nicht angezeigt. */
-    operatorAddress: null as string | null,
+    operatorAddress: "c/o DMG Armaturen, Erlenstrasse 2A, 2555 Brügg BE, Switzerland" as
+      string | null,
     contactEmail: "renzovibez@gmail.com",
     /** Land des Betreibers (Schweiz: revDSG/FADP). */
     operatorCountry: "Switzerland",
     /** Stand der Datenschutzerklärung (ISO-Datum), vor Livegang aktualisieren. */
-    privacyUpdated: "2026-11-22",
+    privacyUpdated: "2026-11-26",
     /** /impressum nur aktivieren, wenn rechtlich nötig (siehe README). */
     impressum: {
-      enabled: false,
-      responsiblePerson: `${TODO} Verantwortliche Person`,
-      address: `${TODO} Anschrift`,
-      email: `${TODO} E-Mail`,
-      phone: `${TODO} Telefon (optional)`,
-      registerOrVat: `${TODO} Handelsregister / UID / USt-IdNr. (falls vorhanden)`,
+      enabled: true,
+      responsiblePerson: "Lorenzo Di Meo (artist name: Renzo Vibes)",
+      address: "c/o DMG Armaturen, Erlenstrasse 2A, 2555 Brügg BE, Switzerland",
+      email: "renzovibez@gmail.com",
+      phone: "Not provided",
+      registerOrVat: "Not entered in the commercial register. Not VAT-registered.",
     },
   },
 } as const;

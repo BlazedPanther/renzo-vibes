@@ -1,0 +1,842 @@
+.merch-drop {
+  --merch-light: #f5d7ff;
+  --merch-neon: #df9aff;
+  --merch-edge: color-mix(in oklab, var(--primary) 37%, transparent);
+  background: radial-gradient(ellipse at 80% 0%, var(--accent), transparent 47%), var(--background);
+}
+
+.merch-drop-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: clamp(1.25rem, 5vw, 4rem);
+  min-height: clamp(25rem, 48vw, 40rem);
+  border: 1px solid var(--merch-edge);
+  background: radial-gradient(ellipse at 75% 45%, #3f1b60, #161021 60%, var(--hero-ink) 83%);
+}
+
+.merch-drop-hero::before,
+.merch-drop-hero::after {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+}
+
+.merch-drop-hero::before {
+  inset: 0;
+  background: repeating-linear-gradient(102deg, #c16de615 0 1px, transparent 1px 45px);
+  mask-image: linear-gradient(110deg, transparent 4%, #000 92%);
+}
+
+.merch-drop-hero::after {
+  inset: -55%;
+  background: conic-gradient(
+    from 95deg at 68% 50%,
+    transparent 0 7%,
+    #b365e866 9%,
+    transparent 14% 40%,
+    #9f61e452 43%,
+    transparent 50%
+  );
+  animation: merch-spotlights 4.5s ease-in-out;
+}
+
+.merch-drop-copy {
+  position: relative;
+  z-index: 1;
+  animation: merch-reveal 0.68s cubic-bezier(0.18, 0.85, 0.27, 1) both;
+}
+
+.merch-drop-eyebrow {
+  color: var(--merch-light);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.merch-drop-hero h1 {
+  margin: 0.22em 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.75rem, 9vw, 9rem);
+  font-weight: 900;
+  line-height: 0.86;
+  letter-spacing: -0.025em;
+  color: #fff9ff;
+}
+
+.merch-drop-hero h1 span {
+  display: block;
+  color: var(--merch-neon);
+  background: linear-gradient(114deg, #fff 8%, #ebb5ff 27%, #b885ff 65%, #f8cdff 90%);
+  background-size: 180%;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 24px #b847ee68);
+  animation: merch-title-light 2s 2 alternate ease-in-out;
+}
+
+.merch-drop-copy > p:not(.merch-drop-eyebrow) {
+  max-width: 42ch;
+  color: #f3e7f8;
+}
+
+.merch-drop-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  background: var(--merch-light);
+  color: #1a1023;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 0 26px #ba72dd69;
+  transition:
+    box-shadow 220ms,
+    transform 220ms;
+}
+
+.merch-drop-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 38px #e4a7fcaa;
+}
+
+.merch-drop-art {
+  position: relative;
+  margin: 0;
+  animation: merch-reveal 0.85s 0.09s cubic-bezier(0.18, 0.85, 0.27, 1) both;
+}
+
+.merch-drop-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.merch-drop-art figcaption {
+  text-align: center;
+  color: #efe0f4;
+  margin-top: 0.55rem;
+  font-size: 0.8rem;
+}
+
+.merch-drop-gift {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 1rem 2rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--merch-edge);
+  background: linear-gradient(100deg, #352046a8, #17121c52 68%);
+}
+
+.merch-drop-gift img {
+  width: clamp(3rem, 8vw, 5rem);
+  height: auto;
+  border-radius: 0.25rem;
+}
+
+.merch-drop-gift strong {
+  color: var(--merch-light);
+  font-size: 1.15rem;
+}
+
+.merch-gallery .merch-image {
+  margin: 0;
+  overflow: hidden;
+}
+
+.merch-gallery a {
+  display: block;
+  position: relative;
+}
+
+.merch-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: merch-image-in 280ms ease-out;
+  transition: scale 370ms cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.merch-gallery a:hover img {
+  scale: 1.045;
+}
+
+.merch-gallery-zoom {
+  position: absolute;
+  inset: 0.65rem 0.65rem auto auto;
+  padding: 0.4rem;
+  background: #140e1a;
+  color: #fff;
+}
+
+.merch-gallery-views {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  padding-block: 0.55rem;
+}
+
+.merch-gallery-views button {
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  border: 1px solid #a98bb080;
+  color: inherit;
+  cursor: pointer;
+}
+
+.merch-gallery-views button[aria-pressed="true"] {
+  color: #1b1023;
+  background: #edd2fc;
+  border-color: #edd2fc;
+}
+
+.merch-drop .merch-products article,
+.merch-drop .merch-cart {
+  border: 1px solid var(--merch-edge);
+  background: linear-gradient(155deg, #25192eaa, #100e1280 72%);
+  box-shadow: inset 0 1px #ffffff13;
+}
+
+.merch-drop .merch-products article {
+  padding: clamp(0.7rem, 1.5vw, 1.1rem);
+  min-width: 0;
+  transition:
+    border-color 240ms,
+    box-shadow 240ms;
+}
+
+.merch-drop .merch-products article:hover,
+.merch-drop .merch-products article:focus-within {
+  border-color: #d297ef;
+  box-shadow: 0 0 30px #b257dc38;
+}
+
+.merch-drop .merch-preorder-label {
+  width: fit-content;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid currentColor;
+  color: var(--merch-light);
+  animation: merch-reveal 0.55s both;
+}
+
+.merch-drop .merch-cart {
+  padding: clamp(0.8rem, 2vw, 1.25rem);
+}
+
+.merch-shop :is(.merch-gallery, .merch-drop-hero) :focus-visible {
+  outline: 2px solid #eccaff;
+  outline-offset: 3px;
+}
+
+@keyframes merch-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes merch-image-in {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes merch-title-light {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: 100%;
+  }
+}
+
+@keyframes merch-spotlights {
+  from {
+    transform: rotate(-12deg);
+  }
+  to {
+    transform: rotate(12deg);
+  }
+}
+
+@media (min-width: 62rem) {
+  .merch-drop .merch-sandbox-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.44fr);
+    align-items: start;
+  }
+
+  .merch-drop .merch-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem;
+  }
+}
+
+@media (max-width: 46rem) {
+  .merch-drop-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .merch-drop-hero h1 {
+    font-size: clamp(3.35rem, 13vw, 6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .merch-shop
+    :is(
+      .merch-drop-hero,
+      .merch-drop-hero *,
+      .merch-preorder-label,
+      .merch-gallery *,
+      .merch-products article
+    ),
+  .merch-drop-hero::after {
+    animation: none;
+    transition: none;
+  }
+}
+
+.merch-drop-closed .merch-products {
+  margin-bottom: 2rem;
+}
+
+.merch-drop-closed .merch-products article {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+}
+
+@media (min-width: 62rem) {
+  .merch-drop-closed .merch-products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.merch-introductory-advantage {
+  color: var(--merch-light);
+  margin-block: 0.5rem;
+}
+
+.merch-introductory-advantage strong {
+  color: var(--merch-neon);
+}
+
+/* Silhouettes follow the supplied photos and leave the original gallery files intact. */
+.merch-drop .merch-gallery .merch-image {
+  background: radial-gradient(ellipse at 50% 55%, #58357485, transparent 72%);
+}
+
+.merch-drop-art,
+.merch-drop .merch-gallery a {
+  filter: drop-shadow(0 0.75rem 0.9rem #050208a8);
+}
+
+.merch-drop img[src$="purple-crew-hoodie-front.webp"] {
+  clip-path: polygon(
+    52.2% 15.9%,
+    50.9% 15.8%,
+    44.7% 19.7%,
+    44.2% 22.6%,
+    43.4% 24.1%,
+    42.9% 32.9%,
+    41.8% 33.8%,
+    39.4% 34.0%,
+    33.6% 36.8%,
+    32.8% 37.8%,
+    28.9% 40.9%,
+    28.8% 42.4%,
+    27.8% 44.1%,
+    26.0% 48.9%,
+    25.1% 50.0%,
+    23.0% 56.2%,
+    21.0% 59.8%,
+    21.3% 63.0%,
+    22.7% 66.4%,
+    22.7% 67.4%,
+    23.7% 68.9%,
+    23.9% 70.1%,
+    24.6% 70.8%,
+    24.7% 72.0%,
+    26.0% 73.8%,
+    26.6% 76.1%,
+    31.6% 75.7%,
+    31.6% 72.4%,
+    32.1% 71.2%,
+    32.1% 66.9%,
+    30.4% 56.0%,
+    32.3% 54.8%,
+    32.9% 54.7%,
+    33.4% 55.1%,
+    32.9% 60.8%,
+    33.0% 64.6%,
+    34.6% 73.8%,
+    34.6% 76.0%,
+    35.3% 80.9%,
+    39.3% 80.1%,
+    63.0% 80.1%,
+    65.1% 81.1%,
+    65.7% 81.0%,
+    66.3% 77.8%,
+    66.9% 77.0%,
+    66.9% 74.7%,
+    67.4% 72.7%,
+    68.0% 56.0%,
+    68.6% 55.6%,
+    70.2% 55.9%,
+    70.8% 56.6%,
+    70.9% 57.7%,
+    69.1% 68.9%,
+    69.2% 71.2%,
+    69.8% 72.0%,
+    69.6% 75.3%,
+    69.9% 75.6%,
+    74.6% 76.1%,
+    75.7% 72.6%,
+    76.3% 71.8%,
+    76.9% 69.4%,
+    80.3% 62.8%,
+    80.4% 59.7%,
+    76.2% 50.9%,
+    75.9% 49.2%,
+    75.3% 48.7%,
+    73.9% 45.2%,
+    72.9% 42.0%,
+    72.2% 41.0%,
+    66.1% 36.2%,
+    58.8% 33.3%,
+    58.8% 27.1%,
+    59.6% 23.9%,
+    59.2% 21.1%,
+    57.6% 18.9%
+  );
+}
+
+.merch-drop img[src$="purple-crew-hoodie-back.webp"] {
+  clip-path: polygon(
+    40.0% 19.3%,
+    39.4% 19.8%,
+    39.2% 20.9%,
+    39.3% 26.0%,
+    34.2% 28.7%,
+    31.1% 31.9%,
+    29.2% 35.4%,
+    29.1% 36.4%,
+    27.4% 39.9%,
+    25.3% 46.1%,
+    23.3% 56.2%,
+    22.9% 61.1%,
+    22.4% 62.3%,
+    22.4% 64.6%,
+    21.7% 68.6%,
+    21.4% 76.1%,
+    21.8% 77.0%,
+    21.8% 80.9%,
+    25.0% 81.0%,
+    26.6% 81.4%,
+    27.6% 81.1%,
+    28.0% 80.7%,
+    28.4% 78.0%,
+    29.3% 77.0%,
+    30.9% 72.8%,
+    31.7% 71.8%,
+    32.2% 71.7%,
+    32.7% 72.0%,
+    33.0% 76.7%,
+    33.8% 78.6%,
+    34.1% 81.2%,
+    34.6% 81.7%,
+    38.8% 80.9%,
+    45.2% 80.7%,
+    57.7% 80.8%,
+    65.8% 81.9%,
+    66.2% 81.6%,
+    66.9% 77.7%,
+    67.6% 76.4%,
+    68.0% 71.7%,
+    68.6% 71.3%,
+    69.4% 72.0%,
+    69.4% 72.7%,
+    70.8% 74.9%,
+    71.3% 77.3%,
+    72.2% 78.4%,
+    73.0% 81.4%,
+    74.0% 81.9%,
+    76.3% 81.1%,
+    78.4% 81.1%,
+    78.8% 80.7%,
+    78.7% 76.4%,
+    79.1% 76.1%,
+    78.9% 71.2%,
+    78.1% 67.4%,
+    78.1% 65.0%,
+    77.8% 64.8%,
+    77.9% 63.3%,
+    76.2% 54.0%,
+    76.0% 51.0%,
+    74.1% 43.3%,
+    72.6% 39.3%,
+    72.3% 37.9%,
+    70.2% 33.0%,
+    66.2% 28.8%,
+    61.4% 26.1%,
+    60.9% 19.3%,
+    51.7% 18.4%
+  );
+}
+
+.merch-drop img[src$="powpow-wintercap-front.webp"] {
+  clip-path: polygon(
+    37.3% 8.2%,
+    30.9% 12.9%,
+    25.7% 18.6%,
+    22.0% 24.3%,
+    18.6% 32.4%,
+    17.7% 36.7%,
+    17.3% 55.6%,
+    16.9% 56.0%,
+    15.4% 56.3%,
+    14.9% 57.4%,
+    16.1% 64.8%,
+    15.9% 81.3%,
+    15.4% 85.4%,
+    15.8% 89.1%,
+    16.6% 89.9%,
+    17.8% 90.3%,
+    26.2% 90.7%,
+    72.9% 90.8%,
+    81.7% 90.4%,
+    83.0% 90.1%,
+    84.1% 89.0%,
+    84.6% 87.3%,
+    83.8% 77.8%,
+    83.8% 67.4%,
+    84.9% 57.2%,
+    84.2% 56.3%,
+    83.0% 56.1%,
+    82.4% 55.6%,
+    81.9% 48.2%,
+    81.6% 35.0%,
+    80.0% 28.9%,
+    77.2% 22.7%,
+    73.2% 16.6%,
+    69.0% 12.0%,
+    65.3% 9.2%,
+    59.9% 6.8%,
+    54.8% 5.7%,
+    46.2% 5.8%,
+    40.9% 6.8%
+  );
+}
+
+.merch-drop img[src$="rvp-wintercap-front.webp"] {
+  clip-path: polygon(
+    25.2% 13.4%,
+    21.6% 17.1%,
+    17.1% 23.8%,
+    15.0% 28.6%,
+    14.2% 31.7%,
+    14.0% 35.3%,
+    12.1% 40.4%,
+    11.3% 46.3%,
+    11.1% 52.2%,
+    10.2% 57.2%,
+    9.7% 57.9%,
+    9.1% 60.7%,
+    9.1% 63.0%,
+    8.7% 63.6%,
+    7.2% 63.8%,
+    6.8% 64.3%,
+    7.0% 77.1%,
+    6.1% 87.3%,
+    6.1% 90.6%,
+    6.8% 91.8%,
+    7.8% 92.3%,
+    13.7% 92.6%,
+    18.4% 93.2%,
+    31.7% 93.7%,
+    35.7% 94.3%,
+    45.9% 94.8%,
+    53.7% 94.7%,
+    62.4% 93.4%,
+    67.1% 93.2%,
+    76.3% 93.3%,
+    82.0% 92.3%,
+    87.8% 91.9%,
+    92.9% 92.0%,
+    93.7% 91.2%,
+    93.9% 88.1%,
+    93.2% 86.1%,
+    92.6% 80.7%,
+    91.7% 78.0%,
+    91.6% 74.9%,
+    91.2% 74.6%,
+    91.3% 64.1%,
+    90.8% 63.1%,
+    89.2% 63.0%,
+    88.1% 61.8%,
+    87.9% 58.0%,
+    87.2% 56.0%,
+    87.0% 52.7%,
+    86.3% 51.3%,
+    85.9% 48.4%,
+    85.4% 47.9%,
+    85.2% 44.6%,
+    83.9% 40.7%,
+    83.9% 39.3%,
+    83.0% 35.7%,
+    82.3% 34.8%,
+    81.4% 32.2%,
+    80.1% 30.6%,
+    79.7% 28.7%,
+    78.2% 26.8%,
+    76.4% 22.8%,
+    73.6% 18.7%,
+    73.4% 17.7%,
+    71.9% 16.0%,
+    71.7% 15.1%,
+    70.0% 13.4%,
+    69.6% 12.4%,
+    68.2% 11.6%,
+    67.9% 10.7%,
+    64.3% 8.2%,
+    59.0% 6.0%,
+    52.0% 5.0%,
+    45.6% 4.7%,
+    44.7% 5.3%,
+    39.3% 6.8%,
+    37.2% 6.9%,
+    35.7% 7.7%,
+    32.9% 8.3%,
+    30.7% 9.4%
+  );
+}
+
+.merch-drop img[src$="rr-classic-tshirt-front.webp"] {
+  clip-path: polygon(
+    3.6% 22.9%,
+    6.4% 28%,
+    11.1% 33.3%,
+    12.3% 36.9%,
+    13% 37.6%,
+    15.3% 37.2%,
+    19.7% 39.3%,
+    18.4% 55.1%,
+    14.2% 82.8%,
+    14% 87.8%,
+    29.8% 88.6%,
+    39.3% 89.6%,
+    64.9% 90.1%,
+    74.6% 90.9%,
+    81.4% 90.6%,
+    80.9% 86.6%,
+    79.9% 64.9%,
+    79.9% 41.4%,
+    81.7% 39.8%,
+    87.2% 41.7%,
+    88.3% 41.1%,
+    89.9% 36.9%,
+    93.4% 33.4%,
+    95.4% 30.8%,
+    96.2% 28.4%,
+    96.1% 26.2%,
+    95.7% 25.4%,
+    91.7% 23.8%,
+    78.7% 16.4%,
+    65.1% 11.1%,
+    63.9% 10.1%,
+    60.6% 11.3%,
+    54.2% 11.2%,
+    51.9% 10.6%,
+    46.3% 10.6%,
+    41.1% 9%,
+    34% 10.4%,
+    20.6% 14.3%
+  );
+}
+
+.merch-drop img[src$="rr-classic-tshirt-back.webp"] {
+  clip-path: polygon(
+    3.6% 21.4%,
+    9% 31.8%,
+    11.7% 38%,
+    12.8% 39.6%,
+    19.2% 39.3%,
+    19.7% 39.7%,
+    18.8% 47.7%,
+    18.3% 60.3%,
+    16.4% 69.7%,
+    15.6% 86.8%,
+    14.9% 89.1%,
+    15.1% 89.9%,
+    27.3% 91.2%,
+    45.9% 91.7%,
+    76.9% 91.7%,
+    79.3% 91.3%,
+    82.3% 89.9%,
+    81% 83.6%,
+    81.7% 77%,
+    81.7% 71.6%,
+    81% 61.9%,
+    81% 45.4%,
+    80.3% 40.1%,
+    81.8% 38.6%,
+    88% 40.3%,
+    88.9% 40.1%,
+    91.4% 34.8%,
+    92.8% 33.3%,
+    94.9% 29.3%,
+    95.4% 26.4%,
+    96.2% 25.3%,
+    96.1% 22.8%,
+    92.1% 20.6%,
+    87.8% 19%,
+    87.2% 15.8%,
+    86.3% 15.2%,
+    84.8% 15.1%,
+    83.9% 15.6%,
+    83% 16.8%,
+    63.9% 9.3%,
+    59.7% 8.9%,
+    55.8% 9.6%,
+    47.7% 9.7%,
+    43.6% 9.3%,
+    39.9% 8.1%,
+    31.6% 9.8%,
+    26.7% 11.2%,
+    23.1% 12.9%,
+    13% 16.4%
+  );
+}
+
+.merch-drop img[src$="zumba-tshirt-front.webp"] {
+  clip-path: polygon(
+    3.6% 22.9%,
+    6.4% 28%,
+    11.1% 33.3%,
+    12.3% 36.9%,
+    13% 37.6%,
+    15.3% 37.2%,
+    19.7% 39.3%,
+    18.4% 55.1%,
+    14.2% 82.8%,
+    14% 87.8%,
+    29.8% 88.6%,
+    39.3% 89.6%,
+    64.9% 90.1%,
+    74.6% 90.9%,
+    81.4% 90.6%,
+    80.9% 86.6%,
+    79.9% 64.9%,
+    79.9% 41.4%,
+    81.7% 39.8%,
+    87.2% 41.7%,
+    88.3% 41.1%,
+    89.9% 36.9%,
+    93.4% 33.4%,
+    95.4% 30.8%,
+    96.2% 28.4%,
+    96.1% 26.2%,
+    95.7% 25.4%,
+    91.7% 23.8%,
+    78.7% 16.4%,
+    65.1% 11.1%,
+    63.9% 10.1%,
+    60.6% 11.3%,
+    54.2% 11.2%,
+    51.9% 10.6%,
+    46.3% 10.6%,
+    41.1% 9%,
+    34% 10.4%,
+    20.6% 14.3%
+  );
+}
+
+.merch-drop img[src$="zumba-tshirt-back.webp"] {
+  clip-path: polygon(
+    3.6% 24.4%,
+    3.6% 28%,
+    10% 38.1%,
+    12.6% 41.1%,
+    14.6% 40.7%,
+    16.6% 39.3%,
+    18% 39%,
+    21.7% 40%,
+    20.7% 62.2%,
+    18.6% 76.8%,
+    18.2% 84.1%,
+    17.4% 87.3%,
+    17.8% 87.8%,
+    27% 89.1%,
+    58.6% 89.8%,
+    76.7% 89.6%,
+    82% 89%,
+    83.8% 88%,
+    83.9% 86.2%,
+    82.7% 82.7%,
+    82.6% 76%,
+    80% 51.6%,
+    79.8% 42.1%,
+    80% 41%,
+    81.2% 39.9%,
+    85.8% 41.4%,
+    89.1% 41.6%,
+    91.4% 41.1%,
+    92.3% 39.1%,
+    93.3% 38%,
+    95.2% 33.1%,
+    96.2% 31.7%,
+    96.2% 25.8%,
+    86.9% 20.9%,
+    63% 12.4%,
+    62% 12.4%,
+    60.4% 11.3%,
+    57.1% 11.9%,
+    46.6% 12.1%,
+    44.6% 11.6%,
+    41.8% 10%,
+    40.4% 10.8%,
+    34.4% 12.1%,
+    30% 13.7%,
+    22% 17.4%,
+    12.7% 20.7%,
+    9.4% 22.3%,
+    5.8% 23.2%
+  );
+}
+
+.merch-drop-gift img[src$="autograph-card-front.webp"] {
+  clip-path: inset(3% 15% 3% 15%);
+}
+
+.merch-drop .merch-product-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.1rem 0.8rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.2vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.04;
+}
+
+.merch-drop .merch-product-title strong {
+  color: var(--merch-light);
+  white-space: nowrap;
+  font-weight: 700;
+}

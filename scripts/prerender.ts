@@ -15,6 +15,7 @@ const routes = [
   "/visuals",
   "/about",
   "/merch",
+  "/merch-terms",
   "/connect",
   "/links",
   "/privacy",

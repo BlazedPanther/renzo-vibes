@@ -1,0 +1,76 @@
+{
+  "pow-pow-tee": {
+    "name": "POW POW Tee",
+    "front": "merch-pow-pow-tee.webp"
+  },
+  "pow-pow-hoodie": {
+    "name": "POW POW Hoodie",
+    "front": "merch-pow-pow-hoodie.webp"
+  },
+  "renzo-goat-tee": {
+    "name": "Renzo Goat Tee",
+    "front": "merch-goat-tee-front.webp",
+    "back": "merch-goat-tee-back.webp"
+  },
+  "purple-hoodie": {
+    "name": "Dada & Renzo Merch"
+  },
+  "renzo-pow-pow-cap": {
+    "name": "Renzo Pow Pow Kappe"
+  },
+  "rvp-winter-cap": {
+    "name": "RVP Kappe (Winter)",
+    "front": "merch-rvp-winter-cap.png"
+  },
+  "rvp-wintercap": {
+    "name": "RVP Winter Cap",
+    "regularPrice": 2000,
+    "blackFridayPrice": 1800,
+    "preorder": true,
+    "front": "black-friday-2026/rvp-wintercap-front.webp",
+    "frontAlt": "RVP Winter Cap with an RR badge on the cuff",
+    "imageNote": "Product may differ from the image."
+  },
+  "powpow-wintercap": {
+    "name": "Renzo POW POW Winter Cap",
+    "regularPrice": 2500,
+    "blackFridayPrice": 2295,
+    "preorder": true,
+    "front": "black-friday-2026/powpow-wintercap-front.webp",
+    "frontAlt": "Black POW POW Winter Cap with a white RENZO POW POW patch",
+    "imageNote": "Product may differ from the image."
+  },
+  "zumba-tshirt": {
+    "name": "Renzo Vibes Zumba Remix T-Shirt",
+    "regularPrice": 2500,
+    "blackFridayPrice": 2295,
+    "preorder": true,
+    "front": "black-friday-2026/zumba-tshirt-front.webp",
+    "frontAlt": "White Zumba Remix T-shirt with a small RR logo on the chest",
+    "back": "black-friday-2026/zumba-tshirt-back.webp",
+    "backAlt": "Zumba Remix T-shirt with the full-colour Zumba graphic on the back",
+    "imageNote": "Product may differ from the image."
+  },
+  "rr-classic-tshirt": {
+    "name": "Renzo Vibes RR Classic T-Shirt",
+    "regularPrice": 2500,
+    "blackFridayPrice": 2295,
+    "preorder": true,
+    "front": "black-friday-2026/rr-classic-tshirt-front.webp",
+    "frontAlt": "White RR Classic T-shirt with a small RR logo on the chest",
+    "back": "black-friday-2026/rr-classic-tshirt-back.webp",
+    "backAlt": "RR Classic T-shirt with a large RR logo inside a blue ring on the back",
+    "imageNote": "Product may differ from the image."
+  },
+  "purple-crew-hoodie": {
+    "name": "Renzo Vibes Purple Crew Hoodie",
+    "regularPrice": 4950,
+    "blackFridayPrice": 3895,
+    "preorder": true,
+    "front": "black-friday-2026/purple-crew-hoodie-front.webp",
+    "frontAlt": "Purple Crew Hoodie with an RR logo on the chest",
+    "back": "black-friday-2026/purple-crew-hoodie-back.webp",
+    "backAlt": "Purple Crew Hoodie with a black-and-white crew print on the back",
+    "imageNote": "Product may differ from the image."
+  }
+}
