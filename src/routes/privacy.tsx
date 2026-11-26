@@ -97,8 +97,9 @@ function Page() {
             We do not set any cookies and do not use analytics, marketing or tracking tools. For
             technical reasons the site stores your scroll position in the browser's{" "}
             <em>sessionStorage</em> while you navigate (no personal data; it is deleted when you
-            close the tab). Fonts are served from this website itself; no fonts are loaded from
-            Google servers.
+            close the tab). If you order merchandise, a random order token is also kept there (see
+            section 12). Fonts are served from this website itself; no fonts are loaded from Google
+            servers.
           </p>
 
           <h3>5. Embedded content (Spotify, YouTube)</h3>
@@ -149,12 +150,13 @@ function Page() {
           <h3>8. Disclosure of data abroad</h3>
           <p>
             Where personal data (in particular your IP address) is transmitted to the providers
-            named above, this may happen in the following countries: the USA (Railway; Google LLC),
-            the Netherlands (Railway servers), Ireland (Google Ireland Limited) and Sweden (Spotify
-            AB). The Netherlands, Ireland and Sweden are in the EU/EEA and are recognised by
-            Switzerland as having an adequate level of data protection. For the USA, we rely on the
-            safeguards that the respective provider states in its privacy policy, such as
-            certification under the Swiss-US Data Privacy Framework or standard contractual clauses.
+            named above, this may happen in the following countries: the USA (Railway; Google LLC;
+            Resend), the Netherlands (Railway servers), Ireland (Google Ireland Limited; SumUp) and
+            Sweden (Spotify AB). The Netherlands, Ireland and Sweden are in the EU/EEA and are
+            recognised by Switzerland as having an adequate level of data protection. For the USA,
+            we rely on the safeguards that the respective provider states in its privacy policy,
+            such as certification under the Swiss-US Data Privacy Framework or standard contractual
+            clauses.
           </p>
 
           <h3>9. Retention</h3>
@@ -206,13 +208,19 @@ function Page() {
               <strong>Swiss Post</strong> (Die Schweizerische Post AG) delivers the parcels and
               receives the data needed for delivery (name, address).
             </li>
+            <li>
+              For each paid order the seller receives an email with the items and the delivery
+              details (name, address, email) in his mailbox (Gmail, Google), so that the parcel can
+              be prepared.
+            </li>
           </ul>
           <p>
             These providers may process data outside Switzerland, including in the EU/EEA and the
             USA; section 8 applies accordingly. If an order expires or is cancelled, the delivery
-            address is removed from the active order database. After fulfilment we keep order and
-            address data only as long as needed for returns, complaints, accounting and other legal
-            obligations. Your rights are described in section 10.
+            address is removed from the active order database. After shipment, name, address and
+            email are deleted from the shop after 90 days, unless a legal obligation or an open case
+            requires longer; order emails in the seller's mailbox are deleted after the same period.
+            Your rights are described in section 10.
           </p>
         </div>
       </section>
