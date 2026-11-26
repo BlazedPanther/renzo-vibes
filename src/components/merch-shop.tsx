@@ -479,13 +479,18 @@ export default function MerchShop({
     setToken(key);
     void run(async () => {
       try {
-        return await api<Order>("order", key, {
+        const created = await api<Order>("order", key, {
           items: items.map(({ id, quantity }) => ({ id, quantity })),
           address: { ...Object.fromEntries(form), accepted: undefined, country: "CH" },
           total,
           version: catalog.version,
           accepted: form.get("accepted") === "yes",
         });
+        // Go straight to the SumUp payment page; the order page stays available on return.
+        if (created.status === "pending" && created.checkoutUrl && !catalog.simulated) {
+          window.location.assign(created.checkoutUrl);
+        }
+        return created;
       } catch (failure) {
         if ([400, 409, 429, 503].includes((failure as { status?: number }).status ?? 0)) {
           sessionStorage.removeItem(storageKey);
@@ -548,9 +553,11 @@ export default function MerchShop({
                 ? "Payment confirmed"
                 : order?.status === "expired"
                   ? "Checkout closed"
-                  : order
-                    ? "Order received"
-                    : "Checking order"}
+                  : order?.status === "pending"
+                    ? "Complete your payment"
+                    : order
+                      ? "Order received"
+                      : "Checking order"}
             </h2>
             {order?.payment === "REJECTED" && (
               <p>SumUp could not open the payment page. No payment was taken.</p>
@@ -586,7 +593,7 @@ export default function MerchShop({
             )}
             <div className="merch-sandbox-order">
               {order?.checkoutUrl && (
-                <Button asChild variant="artistOutline">
+                <Button asChild variant="artist">
                   <a href={order.checkoutUrl} referrerPolicy="no-referrer">
                     Pay {money(order.total)} with SumUp
                   </a>
