@@ -140,8 +140,8 @@ function ProductCard({
           )}
         </div>
       )}
-      <h3>
-        {product.name} · {money(product.price)}
+      <h3 className="merch-product-title">
+        <span>{product.name}</span> <strong>{money(product.price)}</strong>
       </h3>
       {preorder && <p className="merch-preorder-label">Pre-order</p>}
       {!readOnly && product.futurePrice && (
