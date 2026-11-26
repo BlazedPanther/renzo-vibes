@@ -169,7 +169,7 @@ function ProductCard({
             <span className="merch-sale-badge">
               Black Friday −{percentLabel(discountPercent(regular, product.price))}
             </span>
-            You save {money(regular - product.price)} · regular price {money(regular)} from 7
+            You save {money(regular - product.price)} · regular price {money(regular)} from 5
             December 2026
           </p>
         )}
@@ -319,7 +319,7 @@ export function ClosedMerchShop() {
         <CampaignHero
           promo
           feature={products["purple-crew-hoodie"]}
-          notice="Black Friday prices run from 27 November to 6 December 2026, Swiss time. Orders and payments are closed."
+          notice="Black Friday prices run from 27 November to 4 December 2026, Swiss time. Orders and payments are closed."
         />
         <CampaignGift gift={campaignGift} />
         <section
