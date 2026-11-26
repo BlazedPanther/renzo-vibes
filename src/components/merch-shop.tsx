@@ -98,7 +98,7 @@ function ProductCard({
   cart: Record<string, number>;
   add: (id: string, quantity: number) => void;
 }) {
-  const [showBack, setShowBack] = useState(false);
+  const [showBack, setShowBack] = useState(Boolean(product.back));
   const regular = readOnly ? product.regularPrice : product.futurePrice;
   const image = showBack && product.back ? product.back : product.front;
   const only = product.variants.length === 1 ? product.variants[0] : undefined;
@@ -110,7 +110,11 @@ function ProductCard({
     <article>
       {image && (
         <div className="merch-gallery">
-          <figure className="merch-image">
+          <figure
+            className="merch-image"
+            onMouseEnter={() => product.back && setShowBack(false)}
+            onMouseLeave={() => product.back && setShowBack(true)}
+          >
             <a
               href={photo(image)}
               target="_blank"
@@ -240,7 +244,8 @@ function CampaignHero({
   promo,
   notice,
 }: {
-  feature: Pick<Product, "name" | "front" | "frontAlt" | "imageNote"> | undefined;
+  feature:
+    Pick<Product, "name" | "front" | "frontAlt" | "back" | "backAlt" | "imageNote"> | undefined;
   promo: boolean;
   notice: string | undefined;
 }) {
@@ -265,16 +270,33 @@ function CampaignHero({
         </a>
       </div>
       {feature?.front && (
-        <figure className="merch-drop-art">
+        <figure
+          className={`merch-drop-art${feature.back ? " merch-drop-art-flip" : ""}`}
+          tabIndex={0}
+        >
+          <span className="merch-drop-glow" aria-hidden="true" />
+          {feature.back && (
+            <img
+              className="merch-drop-art-back"
+              src={photo(feature.back)}
+              alt={feature.backAlt ?? `${feature.name} back view`}
+              width={900}
+              height={900}
+              fetchPriority="high"
+            />
+          )}
           <img
+            className="merch-drop-art-front"
             src={photo(feature.front)}
             alt={feature.frontAlt ?? feature.name}
             width={900}
             height={900}
-            fetchPriority="high"
+            fetchPriority={feature.back ? "auto" : "high"}
           />
+          <span className="merch-drop-sweep" aria-hidden="true" />
           <figcaption>
             {feature.name}
+            {feature.back ? " · Hover or tap for the front" : ""}
             {feature.imageNote ? ` · ${feature.imageNote}` : ""}
           </figcaption>
         </figure>
@@ -306,7 +328,12 @@ const campaignGift = {
   name: "Free Renzo Vibes autograph card",
   image: "black-friday-2026/autograph-card-front.webp",
 };
-const campaignProducts: Product[] = Object.entries(products).flatMap(([id, product]) => {
+/** The Purple Crew Hoodie leads the collection. */
+const leadFirst = <T extends [string, unknown]>(entries: T[]) =>
+  [...entries].sort(
+    ([a], [b]) => Number(b === "purple-crew-hoodie") - Number(a === "purple-crew-hoodie"),
+  );
+const campaignProducts: Product[] = leadFirst(Object.entries(products)).flatMap(([id, product]) => {
   if (!("preorder" in product)) return [];
   const sizes = id.endsWith("wintercap") ? ["One size"] : ["S", "M", "L"];
   return [
@@ -517,7 +544,7 @@ export default function MerchShop({
   }
 
   const feature =
-    catalog?.products.find((product) => product.id === "rr-classic-tshirt" && product.front) ??
+    catalog?.products.find((product) => product.id === "purple-crew-hoodie" && product.front) ??
     catalog?.products.find((product) => product.front);
 
   async function checkStatus() {
@@ -644,24 +671,29 @@ export default function MerchShop({
           catalog?.allowNew && (
             <div className="merch-sandbox-grid">
               <div id="merch-products" className="merch-products">
-                {catalog.products.map((product, index) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    preorder={!!catalog.preorder}
-                    priority={index === 0}
-                    cart={cart}
-                    add={(id, quantity) =>
-                      setCart((previous) => ({
-                        ...previous,
-                        [id]: Math.min(
-                          quantityLimit(product.variants.find((variant) => variant.id === id)),
-                          (previous[id] ?? 0) + quantity,
-                        ),
-                      }))
-                    }
-                  />
-                ))}
+                {[...catalog.products]
+                  .sort(
+                    (a, b) =>
+                      Number(b.id === "purple-crew-hoodie") - Number(a.id === "purple-crew-hoodie"),
+                  )
+                  .map((product, index) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      preorder={!!catalog.preorder}
+                      priority={index === 0}
+                      cart={cart}
+                      add={(id, quantity) =>
+                        setCart((previous) => ({
+                          ...previous,
+                          [id]: Math.min(
+                            quantityLimit(product.variants.find((variant) => variant.id === id)),
+                            (previous[id] ?? 0) + quantity,
+                          ),
+                        }))
+                      }
+                    />
+                  ))}
               </div>
               <div className="merch-cart">
                 <h3>Your cart</h3>
