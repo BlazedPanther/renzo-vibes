@@ -963,3 +963,206 @@
   display: grid;
   gap: 0.6rem;
 }
+
+/* ---------- Cinematic opening ---------- */
+.merch-drop-hero {
+  animation: merch-cinema-open 1.25s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+.merch-drop-copy {
+  animation: merch-cinema-copy 1.1s 0.55s cubic-bezier(0.18, 0.85, 0.27, 1) both;
+}
+
+.merch-drop-hero h1 {
+  animation: merch-cinema-title 1.4s 0.6s cubic-bezier(0.18, 0.85, 0.27, 1) both;
+}
+
+.merch-drop-art {
+  isolation: isolate;
+  animation: merch-cinema-art 1.6s 0.35s cubic-bezier(0.16, 0.84, 0.3, 1) both;
+}
+
+/* Hoodie: back first, front fades in on hover or keyboard focus. */
+.merch-drop-art-flip {
+  display: grid;
+  cursor: zoom-in;
+  outline: none;
+}
+
+.merch-drop-art-flip > img {
+  grid-area: 1 / 1;
+  transition:
+    opacity 650ms ease,
+    transform 900ms cubic-bezier(0.16, 0.84, 0.3, 1),
+    filter 650ms ease;
+}
+
+.merch-drop-art-flip > figcaption {
+  grid-area: 2 / 1;
+}
+
+.merch-drop-art-flip .merch-drop-art-front {
+  opacity: 0;
+  transform: scale(0.96) rotateY(12deg);
+}
+
+.merch-drop-art-flip:is(:hover, :focus-visible) .merch-drop-art-front {
+  opacity: 1;
+  transform: scale(1.02) rotateY(0);
+}
+
+.merch-drop-art-flip:is(:hover, :focus-visible) .merch-drop-art-back {
+  opacity: 0;
+  transform: scale(0.96) rotateY(-12deg);
+  filter: blur(4px);
+}
+
+.merch-drop-art img {
+  animation: merch-float 7s 1.9s ease-in-out infinite;
+}
+
+.merch-drop-glow {
+  position: absolute;
+  inset: 8% 6% 14%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #b45cf0aa, #7a2bc055 45%, transparent 70%);
+  filter: blur(28px);
+  animation: merch-glow 5s 1.6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.merch-drop-sweep {
+  position: absolute;
+  inset: 0 0 2.2rem;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, #ffffff40 50%, transparent 65%);
+  background-size: 250% 100%;
+  mix-blend-mode: soft-light;
+  animation: merch-sweep 1.8s 1.3s ease-out both;
+}
+
+/* Product cards: smooth swap between back and front views. */
+.merch-drop .merch-gallery img {
+  animation: merch-swap 420ms ease both;
+}
+
+@keyframes merch-cinema-open {
+  from {
+    clip-path: inset(50% 0 50% 0);
+    filter: brightness(0.15);
+  }
+  45% {
+    clip-path: inset(18% 0 18% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes merch-cinema-copy {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes merch-cinema-title {
+  from {
+    opacity: 0;
+    letter-spacing: 0.18em;
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: -0.025em;
+    filter: blur(0);
+  }
+}
+
+@keyframes merch-cinema-art {
+  from {
+    opacity: 0;
+    transform: scale(1.14);
+    filter: blur(12px) brightness(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: none;
+  }
+}
+
+@keyframes merch-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -0.45rem;
+  }
+}
+
+@keyframes merch-glow {
+  from {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes merch-sweep {
+  from {
+    background-position: 120% 0;
+    opacity: 1;
+  }
+  to {
+    background-position: -40% 0;
+    opacity: 0;
+  }
+}
+
+@keyframes merch-swap {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .merch-drop-hero,
+  .merch-drop-hero *,
+  .merch-drop .merch-gallery img {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Keep the glow unclipped: shadows sit on the images, not on the hero figure. */
+.merch-drop-art.merch-drop-art-flip {
+  filter: none;
+}
+
+.merch-drop-art-flip > img {
+  width: 116%;
+  max-width: none;
+  margin-inline: -8%;
+  filter: drop-shadow(0 1.2rem 1.4rem #050208c0);
+}
+
+.merch-drop-art-flip:is(:hover, :focus-visible) .merch-drop-art-back {
+  filter: blur(4px) drop-shadow(0 1.2rem 1.4rem #050208c0);
+}
