@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { artistHead } from "@/lib/artist";
 import { siteConfig, isTodo, spotifyArtistId } from "@/config/site.config";
+import { openCookieSettings } from "@/lib/analytics";
 
 export const Route = createFileRoute("/privacy")({
   head: () =>
@@ -92,10 +93,22 @@ function Page() {
             troubleshooting. The connection is encrypted (HTTPS).
           </p>
 
-          <h3>4. Cookies and local storage</h3>
+          <h3 id="cookies">4. Cookies and local storage</h3>
           <p>
-            We do not set any cookies and do not use analytics, marketing or tracking tools. For
-            technical reasons the site stores your scroll position in the browser's{" "}
+            A first-party preference cookie stores your analytics choice for up to 180 days. If you
+            allow analytics, a separate random browser cookie (up to 30 days) counts page views and
+            returning browsers across this site. We store a hashed identifier, a calendar date and a
+            page-view total. The analytics records contain no IP address, page address, referral
+            information or purchase details. Analytics totals are visible only in our protected
+            administration area. We do not use this data for advertising.
+          </p>
+          <p>
+            <button className="cookie-settings-link" type="button" onClick={openCookieSettings}>
+              Change analytics cookie settings
+            </button>
+          </p>
+          <p>
+            For technical reasons the site stores your scroll position in the browser's{" "}
             <em>sessionStorage</em> while you navigate (no personal data; it is deleted when you
             close the tab). If you order merchandise, a random order token is also kept there (see
             section 12). Fonts are served from this website itself; no fonts are loaded from Google
@@ -161,9 +174,11 @@ function Page() {
 
           <h3>9. Retention</h3>
           <p>
-            We do not store any personal data of mere visitors (merchandise orders: see section 12).
-            For the retention period of the access logs at Railway and for data processed by Google
-            and Spotify, please refer to the respective provider's information.
+            We retain opted-in analytics records in the active database for up to 30 days. If you
+            withdraw your consent, we remove the analytics cookie and stop recording visits. For
+            merchandise order data, see section 12. For the retention period of the access logs at
+            Railway and for data processed by Google and Spotify, please refer to the respective
+            provider's information.
           </p>
 
           <h3>10. Your rights</h3>

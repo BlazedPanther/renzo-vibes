@@ -39,6 +39,7 @@ async function bootstrap() {
     config,
     sendConfirmations: !!settings.mail,
     sendMerchantNotifications: !!settings.mail?.merchantRecipient,
+    enableAnalytics: config.mode === "live",
   });
   handler = createMerchHandler(orders, settings);
   console.info(`Merch backend ready in ${config.mode} mode. Orders open: ${settings.allowNew}`);
@@ -65,6 +66,7 @@ async function bootstrap() {
   }
   if (config.mode === "live") {
     repeat(() => orders.pruneAddresses(settings.addressRetentionDays), 60 * 60_000);
+    repeat(() => orders.analytics.clearOld(), 60 * 60_000);
   }
 }
 

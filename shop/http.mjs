@@ -3,6 +3,7 @@ import { isIP } from "node:net";
 import { ShopError } from "./orders.mjs";
 import { adminPage } from "./admin.mjs";
 import { createAdminAccessVerifier } from "./access.mjs";
+import { readAnalyticsCookies } from "./analytics.mjs";
 
 const api = "/api/merch";
 const admin = "/merch-admin";
@@ -115,7 +116,13 @@ export function createMerchHandler(
             throw new ShopError(400, "Invalid order filter.");
           return reply(
             200,
-            adminPage(orders.admin(page, status, reference), page, status, reference),
+            adminPage(
+              orders.admin(page, status, reference),
+              page,
+              status,
+              reference,
+              orders.analytics?.summary(),
+            ),
             {
               "Content-Type": "text/html; charset=utf-8",
             },
@@ -151,6 +158,27 @@ export function createMerchHandler(
       }
       if (req.headers.origin && req.headers.origin !== origin)
         throw new ShopError(403, "Origin is not allowed.");
+      if (req.method === "POST" && path === "/api/site-analytics" && orders.analytics) {
+        if (req.headers.origin !== origin || req.headers["sec-fetch-site"] !== "same-origin") {
+          throw new ShopError(403, "Origin is not allowed.");
+        }
+        limit("analytics", 1200);
+        const event = await readBody(req, "application/json");
+        const cookie = readAnalyticsCookies(req.headers.cookie, webhookToken);
+        if (event?.type === "withdraw") {
+          return reply(204, undefined, { "Set-Cookie": cookie.clear });
+        }
+        if (event?.type !== "view") throw new ShopError(400, "Unknown site event.");
+        if (!cookie.allowed) return reply(204);
+        if (cookie.id) {
+          limit("analytics:" + cookie.id, 60);
+          orders.analytics.view(cookie.id);
+          return reply(204);
+        }
+        const { visitor, cookie: value } = cookie.create();
+        orders.analytics.view(visitor);
+        return reply(204, undefined, { "Set-Cookie": value });
+      }
       const token = req.headers.authorization?.match(/^Bearer ([a-f0-9]{64})$/)?.[1];
       if (req.method === "GET" && path === api + "/catalog") {
         return reply(200, {

@@ -36,6 +36,7 @@ export function adminPage(
   page,
   status = "",
   reference = "",
+  analytics,
 ) {
   const pageLink = (next) =>
     `${admin}?${new URLSearchParams({ page: String(next), status, reference })}`;
@@ -56,9 +57,29 @@ button{background:#e5bd68;color:#111;border:0;font-weight:700;cursor:pointer}
 .paid{background:#2f7d32;color:#fff}.open{background:#8a6d1a;color:#fff}.done{background:#444;color:#fff}
 nav{display:flex;gap:1rem}
 .help{color:#bbb;font-size:.9rem}
+.visit-stats{width:100%;border-collapse:collapse;text-align:left;font-variant-numeric:tabular-nums}
+.visit-stats th,.visit-stats td{padding:.45rem;border-bottom:1px solid #444}
 </style>
 <main>
 <h1>Renzo Vibes Merch</h1>
+${
+  analytics
+    ? `
+<section aria-labelledby="website-visits">
+  <h2 id="website-visits">Website-Besuche</h2>
+  <p class="help">Gezählt werden nur Browser mit Zustimmung. Ein Browser kann mehrere Menschen oder Geräte nicht eindeutig abbilden. Zeiten gelten für Zürich.</p>
+  <table class="visit-stats">
+    <thead><tr><th scope="col">Zeitraum</th><th scope="col">Browser</th><th scope="col">Aufrufe</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Heute</th><td>${analytics.today.visitors}</td><td>${analytics.today.views}</td></tr>
+      <tr><th scope="row">Letzte 30 Tage</th><td>${analytics.month.visitors}</td><td>${analytics.month.views}</td></tr>
+      ${analytics.days.map(({ day, visitors, views }) => `<tr><th scope="row">${html(day)}</th><td>${visitors}</td><td>${views}</td></tr>`).join("")}
+    </tbody>
+  </table>
+</section>
+`
+    : ""
+}
 <section>
 <h2>Lager</h2>
 <p>${

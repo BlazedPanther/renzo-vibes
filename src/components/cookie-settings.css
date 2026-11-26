@@ -1,0 +1,56 @@
+.cookie-settings {
+  position: fixed;
+  z-index: 60;
+  inset: auto 1rem max(1rem, env(safe-area-inset-bottom)) auto;
+  width: min(27rem, calc(100% - 2rem));
+  padding: 1.15rem 1.25rem;
+  border: 1px solid #855b99;
+  border-radius: 0.65rem;
+  background: #1b1124;
+  color: #f7eafa;
+  box-shadow: 0 0.6rem 2.5rem #0008;
+}
+
+.cookie-settings h2 {
+  margin: 0 0 0.5rem;
+  font: 700 1.35rem var(--font-sans, system-ui);
+}
+
+.cookie-settings p {
+  margin: 0 0 0.9rem;
+  line-height: 1.5;
+}
+
+.cookie-settings a,
+.cookie-settings-link {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.cookie-settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.cookie-settings button {
+  flex: 1 1 9rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #855b99;
+  border-radius: 0.4rem;
+  background: #30203d;
+  color: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cookie-settings button:hover {
+  background: #472c5c;
+}
+
+.cookie-settings :focus-visible,
+.cookie-settings-link:focus-visible {
+  outline: 2px solid #f1caff;
+  outline-offset: 3px;
+}
