@@ -225,3 +225,27 @@ test("confirmed open pre-orders use no fabricated inventory or reservations", as
     "paid",
   );
 });
+
+test("future prices are advertised only in the committed live introductory window", (t) => {
+  let time = blackFridayStart - 1;
+  const orders = openOrders({
+    filename: ":memory:",
+    provider: createSimulator(),
+    config: { ...config, mode: "live", stockMode: "tracked", introductoryComparison: true },
+    now: () => time,
+  });
+  t.after(() => orders.close());
+  assert(orders.catalog().products.every((product) => !Object.hasOwn(product, "futurePrice")));
+  time = blackFridayStart;
+  const sale = orders.catalog().products;
+  assert.deepEqual(
+    sale.map(({ price }) => price),
+    amounts.sale,
+  );
+  assert.deepEqual(
+    sale.map(({ futurePrice }) => futurePrice),
+    amounts.regular,
+  );
+  time = blackFridayEnd;
+  assert(orders.catalog().products.every((product) => !Object.hasOwn(product, "futurePrice")));
+});

@@ -329,3 +329,12 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+.merch-introductory-advantage {
+  color: var(--merch-light);
+  margin-block: 0.5rem;
+}
+
+.merch-introductory-advantage strong {
+  color: var(--merch-neon);
+}

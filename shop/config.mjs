@@ -137,6 +137,11 @@ export function readShopConfig(env) {
       mode,
       stockMode,
       preorder,
+      introductoryComparison:
+        mode === "live" &&
+        preorder &&
+        env.MERCH_ACCEPT_ORDERS === "true" &&
+        env.MERCH_INTRODUCTORY_PRICE_COMMITMENT === "true",
       shipping: data.shipping,
       legal: Object.fromEntries(legalSections.map((key) => [key, legal[key].trim()])),
       products: data.products.map(({ id, price, description, sizes }) => ({

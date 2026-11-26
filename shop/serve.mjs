@@ -57,7 +57,10 @@ async function bootstrap() {
   }
   repeat(() => orders.reconcile(), 15_000);
   if (settings.mail) {
-    const send = createMailer(settings.mail);
+    const send = createMailer({
+      ...settings.mail,
+      adminUrl: new URL("/merch-admin", settings.origin).href,
+    });
     repeat(() => orders.sendMail(send), 2_000);
   }
   if (config.mode === "live") {

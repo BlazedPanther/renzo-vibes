@@ -397,6 +397,7 @@ test("verified payments queue one private merchant alert with separate idempoten
     from: "orders@example.test",
     replyTo: "orders@example.test",
     merchantRecipient,
+    adminUrl: "https://www.renzovibes.com/merch-admin",
     fetcher: async (_url, { body, headers }) => {
       calls.push({ ...JSON.parse(body), key: headers["Idempotency-Key"] });
       return Response.json({ id: "test-delivery" });
@@ -423,6 +424,11 @@ test("verified payments queue one private merchant alert with separate idempoten
   const merchant = calls.filter(({ to }) => to.includes(merchantRecipient));
   assert.equal(merchant.length, 1);
   assert.match(merchant[0].key, /\/merchant_paid$/);
+  assert(
+    merchant[0].text.includes(
+      `https://www.renzovibes.com/merch-admin?reference=${order.reference}`,
+    ),
+  );
   assert.doesNotMatch(merchant[0].text, /buyer@example\.test|Teststrasse/);
   assert(calls.some(({ key, to }) => key.endsWith("/paid") && to.includes(address.email)));
 });

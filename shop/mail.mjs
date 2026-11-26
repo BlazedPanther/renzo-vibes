@@ -17,6 +17,7 @@ export function createMailer({
   replyTo,
   testRecipient,
   merchantRecipient,
+  adminUrl,
   fetcher = fetch,
 }) {
   return async ({ kind, orderId, address, items, total, shipping, preorder, gift, tracking }) => {
@@ -40,7 +41,10 @@ export function createMailer({
           `${subject} · ${orderId}`,
           ...(kind === "paid" ? ["Your payment has been verified."] : []),
           ...(kind === "merchant_paid"
-            ? ["Open the protected shop admin to fulfil this order."]
+            ? [
+                "Open the protected shop admin to fulfil this order.",
+                ...(adminUrl ? [`${adminUrl}?reference=${encodeURIComponent(orderId)}`] : []),
+              ]
             : []),
           ...(preorder && ["received", "paid", "delayed"].includes(kind) ? [preorderNotice] : []),
           ...(kind === "shipped" && tracking ? [`Tracking: ${tracking}`] : []),

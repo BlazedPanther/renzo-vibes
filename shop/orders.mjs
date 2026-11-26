@@ -231,6 +231,8 @@ export function openOrders({
         .all()
         .map(({ id, quantity }) => [id, quantity]),
     );
+    const showIntroductoryComparison =
+      config?.mode === "live" && config.introductoryComparison === true && pricing.promotion;
     const available = products.map((product) => ({
       id: product.id,
       name: product.name,
@@ -241,6 +243,9 @@ export function openOrders({
       backAlt: product.backAlt,
       imageNote: product.imageNote,
       price: pricing.price(product),
+      ...(showIntroductoryComparison && product.blackFridayPrice < product.price
+        ? { futurePrice: product.price }
+        : {}),
       color: product.color,
       variants: product.variants.map((variant) => ({
         ...variant,

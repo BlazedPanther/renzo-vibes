@@ -11,6 +11,7 @@ type Product = {
   name: string;
   description: string;
   price: number;
+  futurePrice?: number;
   front?: string;
   back?: string;
   frontAlt?: string;
@@ -143,6 +144,16 @@ function ProductCard({
         {product.name} · {money(product.price)}
       </h3>
       {preorder && <p className="merch-preorder-label">Pre-order</p>}
+      {!readOnly && product.futurePrice && (
+        <p className="merch-introductory-advantage">
+          <strong>
+            {Math.floor(((product.futurePrice - product.price) * 1000) / product.futurePrice) / 10}%
+            introductory discount
+          </strong>
+          {" · "}
+          {money(product.futurePrice)} from 4 December 2026
+        </p>
+      )}
       {product.imageNote && <p className="merch-image-note">{product.imageNote}</p>}
       <p>{product.description}</p>
       {readOnly ? (
