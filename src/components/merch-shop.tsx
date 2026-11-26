@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { merchLegalSections as legalSections, type MerchLegal } from "@/lib/merch-legal";
 import products from "../../shop/products.json";
+import preorderInfo from "../../shop/preorder.json";
 import "./merch-sandbox.css";
 import "./merch-campaign.css";
 
@@ -319,8 +320,8 @@ export function ClosedMerchShop() {
           <p>
             <strong>Shipping and returns</strong>
             <br />
-            CHF 7.00 per order within Switzerland. Voluntary returns within 14 days of delivery for
-            unworn, undamaged items.
+            {preorderInfo.deliveryEstimate} CHF 7.00 per order within Switzerland. Voluntary returns within
+            14 days of delivery for unworn, undamaged items.
           </p>
         </aside>
       </div>

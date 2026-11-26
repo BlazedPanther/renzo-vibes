@@ -24,7 +24,7 @@ Product prices are in CHF and include all mandatory price components [confirm ho
 
 ## Shipping
 
-We deliver to addresses in Switzerland for a flat fee of CHF 7.00 per order. All items are pre-orders and are unavailable for immediate dispatch. A confirmed dispatch date is currently unavailable. We’ll email the dispatch date once confirmed and notify you of changes. If dispatch is delayed, contact renzovibez@gmail.com. Your statutory rights relating to delayed or undelivered goods remain in effect. [Confirm carrier and procedures for extended delays, losses and undeliverable parcels.]
+We deliver to addresses in Switzerland for a flat fee of CHF 7.00 per order. All listed items are pre-orders. Estimated delivery for pre-orders is 1–2 months from the order date. We’ll ship as soon as your items are ready and email you with updates. If delivery is delayed, contact renzovibez@gmail.com. Your statutory rights relating to delayed or undelivered goods remain in effect. [Confirm carrier and procedures for extended delays, losses and undeliverable parcels.]
 
 ## Cancellations, returns and faulty goods
 
