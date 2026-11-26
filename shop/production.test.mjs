@@ -171,7 +171,7 @@ test("real shop HTTP path verifies payment, safeguards address and ships a paid 
   assert.match(html, /&lt;Demo Buyer&gt;/);
   assert.match(html, /Teststrasse 1/);
   assert.match(html, /8000 Zürich/);
-  assert.match(html, /Shipping: Sent/);
+  assert.match(html, /Versand: Verschickt/);
   const deliveries = [];
   await orders.sendMail(async (mail) => {
     deliveries.push(mail.kind);
