@@ -25,7 +25,7 @@
 	redir /datenschutz /privacy permanent
 	redir /datenschutz/ /privacy permanent
 
-	@merch path /api/merch/* /merch-admin /merch-admin/*
+	@merch path /api/merch/* /api/site-analytics /merch-admin /merch-admin/*
 	handle @merch {
 		reverse_proxy 127.0.0.1:8788
 	}

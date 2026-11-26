@@ -1,5 +1,6 @@
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
+import { siteAnalytics } from "./analytics.mjs";
 import {
   autographCard,
   blackFridayActive,
@@ -88,6 +89,7 @@ export function openOrders({
   config,
   sendConfirmations = config?.mode === "live",
   sendMerchantNotifications = false,
+  enableAnalytics = false,
   now = Date.now,
 }) {
   const products = config?.products ?? [testProduct];
@@ -214,8 +216,10 @@ export function openOrders({
       for (const id of variants.keys()) seed.run(id, config ? 0 : id === "hoodie-s" ? 1 : 4);
     });
   }
+  let analytics = null;
   try {
     initialize();
+    if (enableAnalytics) analytics = siteAnalytics(db, now);
   } catch (error) {
     db.close();
     throw error;
@@ -635,6 +639,7 @@ export function openOrders({
         AND NOT EXISTS (SELECT 1 FROM mail WHERE orderId = orders.id AND sent IS NULL)`,
       ).run(now() - days * 24 * 60 * 60_000);
     },
+    analytics,
     close: () => db.close(),
   };
 }

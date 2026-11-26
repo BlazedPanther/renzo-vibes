@@ -4,6 +4,7 @@ import { ArtistHeader, ArtistFooter } from "@/components/artist/shell";
 import { collectHead, applyHeadToDocument } from "@/lib/head";
 import { NotFoundComponent } from "@/components/not-found";
 import { siteConfig } from "@/config/site.config";
+import { CookieSettings } from "@/components/cookie-settings";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -46,6 +47,7 @@ function RootComponent() {
       {!isLinks && <ArtistHeader />}
       <Outlet />
       {!isLinks && <ArtistFooter />}
+      <CookieSettings pathname={headInput.pathname} />
     </>
   );
 }

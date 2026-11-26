@@ -45,13 +45,13 @@ const payload = (orders) => ({
   accepted: true,
 });
 
-async function fixture(t, { allowNew = true } = {}) {
+async function fixture(t, { allowNew = true, enableAnalytics = false } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "renzo-merch-"));
   const filename = join(dir, "shop.sqlite");
   let time = Date.now();
   const now = () => time;
   const simulator = createSimulator(now);
-  const orders = openOrders({ filename, provider: simulator, config, now });
+  const orders = openOrders({ filename, provider: simulator, config, enableAnalytics, now });
   const adminPassword = token();
   const adminHash = createHash("sha256").update(adminPassword).digest("hex");
   const auth = "Basic " + Buffer.from("renzo:" + adminPassword).toString("base64");
@@ -65,11 +65,12 @@ async function fixture(t, { allowNew = true } = {}) {
     orders.close();
     rmSync(dir, { force: true, recursive: true });
   });
-  async function call(path, { key, admin, json, form, source = origin } = {}) {
+  async function call(path, { key, admin, json, form, source = origin, headers = {} } = {}) {
     return fetch(origin + path, {
       method: json || form ? "POST" : "GET",
       redirect: "manual",
       headers: {
+        ...headers,
         ...(key && { Authorization: "Bearer " + key }),
         ...(admin && { Authorization: auth }),
         ...((json || form) && {
@@ -92,6 +93,42 @@ async function fixture(t, { allowNew = true } = {}) {
     },
   };
 }
+
+test("visitor counting respects consent and exposes totals only in the admin", async (t) => {
+  const { orders, call, tick } = await fixture(t, { enableAnalytics: true });
+  const endpoint = "/api/site-analytics";
+  const consent = "__Host-rv_analytics=yes";
+  const post = (cookie, type = "view", options = {}) =>
+    call(endpoint, {
+      ...options,
+      json: { type },
+      headers: { Cookie: cookie, "Sec-Fetch-Site": "same-origin" },
+    });
+  assert.equal((await post(consent, "view", { source: "https://other.example" })).status, 403);
+  assert.equal((await post("")).headers.get("set-cookie"), null);
+  assert.deepEqual({ ...orders.analytics.summary().today }, { views: 0, visitors: 0 });
+
+  const issued = (await post(consent)).headers.get("set-cookie");
+  assert.match(
+    issued,
+    /^__Host-rv_visitor=.*Max-Age=2592000; Path=\/; Secure; HttpOnly; SameSite=Lax$/,
+  );
+  const browser = issued.split(";")[0];
+  assert.equal((await post(consent + "; " + browser)).headers.get("set-cookie"), null);
+  assert.equal((await post("__Host-rv_analytics=no; " + browser)).status, 204);
+  assert.deepEqual({ ...orders.analytics.summary().today }, { views: 2, visitors: 1 });
+  assert.match(
+    (await post("__Host-rv_analytics=no; " + browser, "withdraw")).headers.get("set-cookie"),
+    /Max-Age=0/,
+  );
+  assert.equal((await call(endpoint)).status, 404);
+  assert.equal((await call("/merch-admin")).status, 401);
+  assert.match(await (await call("/merch-admin", { admin: true })).text(), /Website-Besuche/);
+  assert.doesNotMatch(await (await call("/api/merch/catalog")).text(), /"visitors"|"views"/);
+  tick(31 * 86400_000);
+  orders.analytics.clearOld();
+  assert.deepEqual({ ...orders.analytics.summary().month }, { views: 0, visitors: 0 });
+});
 
 test("real shop HTTP path verifies payment, safeguards address and ships a paid order once", async (t) => {
   const { orders, simulator, call, webhookToken } = await fixture(t);
