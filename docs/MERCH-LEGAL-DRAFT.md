@@ -4,7 +4,7 @@ Draft shop terms. Brackets mark information the seller needs to confirm. The sho
 
 ## Seller information
 
-Lorenzo Di Meo sells in his own name as Renzo Vibes Merchandise. The correspondence and returns address is Erlenstrasse 2A, 2555 Brügg BE, Switzerland. For orders, complaints and privacy enquiries, email renzovibez@gmail.com. The seller has stated that he is not VAT-registered. [Verify the right to use the address, the live SumUp account holder and the applicable tax treatment.]
+DMG Armaturen sells Renzo Vibes Merchandise. The correspondence and returns address is Erlenstrasse 2A, 2555 Brügg BE, Switzerland. For orders, complaints and privacy enquiries, email renzovibez@gmail.com. The seller has stated that he is not VAT-registered. [Verify the right to use the address, the live SumUp account holder and the applicable tax treatment.]
 
 ## Privacy policy
 
@@ -28,7 +28,7 @@ We deliver to addresses in Switzerland for a flat fee of CHF 7.00 per order. All
 
 ## Cancellations, returns and faulty goods
 
-You can cancel an unpaid checkout on the merch page. The payment provider must confirm the cancellation. You can return or exchange unworn, undamaged goods within 14 days of receiving them under our voluntary returns policy. Trying items on normally is allowed. For a voluntary return, you pay return postage. Email renzovibez@gmail.com to arrange the return. The returns address is Lorenzo Di Meo, Erlenstrasse 2A, 2555 Brügg BE, Switzerland. Size exchanges depend on availability. [Confirm the exchange procedure and any shipping charges for the replacement.] Approved refunds go through the original payment method. Your statutory rights for faults, incorrect deliveries, delays or non-delivery remain in effect.
+You can cancel an unpaid checkout on the merch page. The payment provider must confirm the cancellation. You can return or exchange unworn, undamaged goods within 14 days of receiving them under our voluntary returns policy. Trying items on normally is allowed. For a voluntary return, you pay return postage. Email renzovibez@gmail.com to arrange the return. The returns address is DMG Armaturen, Erlenstrasse 2A, 2555 Brügg BE, Switzerland. Size exchanges depend on availability. [Confirm the exchange procedure and any shipping charges for the replacement.] Approved refunds go through the original payment method. Your statutory rights for faults, incorrect deliveries, delays or non-delivery remain in effect.
 
 ## Sources
 
