@@ -32,7 +32,8 @@ export async function createSumUpProvider({ key, merchant, mode, fetcher = fetch
   }
 
   const profile = await request(`/v1/merchants/${merchant}`);
-  if (profile.sandbox !== sandbox || profile.merchant_code !== merchant) {
+  // Live merchant profiles omit the sandbox flag; only an explicit true marks a sandbox.
+  if ((profile.sandbox === true) !== sandbox || profile.merchant_code !== merchant) {
     throw new Error(
       `SumUp merchant was not verified as a ${sandbox ? "sandbox" : "live"} merchant`,
     );
