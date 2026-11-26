@@ -13,6 +13,7 @@ type Product = {
   description: string;
   price: number;
   futurePrice?: number;
+  regularPrice?: number;
   front?: string;
   back?: string;
   frontAlt?: string;
@@ -53,6 +54,10 @@ type Order = {
 const storageKey = "renzo-merch-order";
 const money = (rappen: number) =>
   new Intl.NumberFormat("en-CH", { style: "currency", currency: "CHF" }).format(rappen / 100);
+/** Discount against the regular price, floored to one decimal so it never overstates. */
+const discountPercent = (regular: number, price: number) =>
+  Math.floor(((regular - price) * 1000) / regular) / 10;
+const percentLabel = (value: number) => `${Number.isInteger(value) ? value : value.toFixed(1)}%`;
 const quantityLimit = (variant?: Product["variants"][number]) =>
   variant?.stock ?? variant?.maxQuantity ?? 0;
 const photo = (file: string) => `${import.meta.env.BASE_URL}media/${file}`;
@@ -92,6 +97,7 @@ function ProductCard({
   add: (id: string, quantity: number) => void;
 }) {
   const [showBack, setShowBack] = useState(false);
+  const regular = readOnly ? product.regularPrice : product.futurePrice;
   const image = showBack && product.back ? product.back : product.front;
   const [size, select] = useState("");
   const available = product.variants.find(({ id }) => id === size);
@@ -125,6 +131,17 @@ function ProductCard({
               </span>
             </a>
           </figure>
+          {!product.back && (
+            <div
+              className="merch-gallery-views"
+              aria-hidden="true"
+              style={{ visibility: "hidden" }}
+            >
+              <button type="button" tabIndex={-1} disabled>
+                Front
+              </button>
+            </div>
+          )}
           {product.back && (
             <div
               className="merch-gallery-views"
@@ -141,24 +158,29 @@ function ProductCard({
           )}
         </div>
       )}
-      <h3 className="merch-product-title">
-        <span>{product.name}</span> <strong>{money(product.price)}</strong>
-      </h3>
-      {preorder && <p className="merch-preorder-label">Pre-order</p>}
-      {!readOnly && product.futurePrice && (
-        <p className="merch-introductory-advantage">
-          <strong>
-            {Math.floor(((product.futurePrice - product.price) * 1000) / product.futurePrice) / 10}%
-            introductory discount
-          </strong>
-          {" · "}
-          {money(product.futurePrice)} from 7 December 2026
-        </p>
-      )}
-      {product.imageNote && <p className="merch-image-note">{product.imageNote}</p>}
-      <p>{product.description}</p>
+      <h3 className="merch-product-title">{product.name}</h3>
+      <div className="merch-price-block">
+        <div className="merch-price-line">
+          <strong className="merch-price-now">{money(product.price)}</strong>
+          {regular && <s className="merch-price-was">{money(regular)}</s>}
+        </div>
+        {regular && (
+          <p className="merch-price-save">
+            <span className="merch-sale-badge">
+              Black Friday −{percentLabel(discountPercent(regular, product.price))}
+            </span>
+            You save {money(regular - product.price)} · regular price {money(regular)} from 7
+            December 2026
+          </p>
+        )}
+      </div>
+      <div className="merch-tags">
+        {preorder && <p className="merch-preorder-label">Pre-order</p>}
+        {product.imageNote && <p className="merch-image-note">{product.imageNote}</p>}
+      </div>
+      {product.description && <p className="merch-description">{product.description}</p>}
       {readOnly ? (
-        <p>{product.variants.map(({ size }) => size).join(" / ")}</p>
+        <p className="merch-sizes">Sizes: {product.variants.map(({ size }) => size).join(" / ")}</p>
       ) : product.variants.some((variant) => quantityLimit(variant) > 0) ? (
         <form
           onSubmit={(event) => {
@@ -284,7 +306,7 @@ const campaignProducts: Product[] = Object.entries(products).flatMap(([id, produ
       ...product,
       id,
       price: product.blackFridayPrice,
-      description: "Black Friday price",
+      description: "",
       variants: sizes.map((size) => ({ id: size, size, stock: 0 })),
     },
   ];
