@@ -38,12 +38,17 @@ if (!template.includes("<!--head-->") || !template.includes("<!--app-->"))
   throw new Error("index.html-Vorlage ohne Platzhalter");
 
 const origin = siteUrl();
-const ogImageFile = "media/renzo-cover.webp";
+const ogImageFile = "media/renzo-vibes-pow-pow-share.jpg";
 const ogImage =
   origin && (await exists(`dist/${ogImageFile}`))
     ? [
         `<meta property="og:image" content="${origin}/${ogImageFile}">`,
+        '<meta property="og:image:type" content="image/jpeg">',
+        '<meta property="og:image:width" content="1200">',
+        '<meta property="og:image:height" content="675">',
+        '<meta property="og:image:alt" content="Renzo Vibes POW POW – Official Website">',
         `<meta name="twitter:image" content="${origin}/${ogImageFile}">`,
+        '<meta name="twitter:image:alt" content="Renzo Vibes POW POW – Official Website">',
       ]
     : [];
 

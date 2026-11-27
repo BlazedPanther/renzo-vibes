@@ -12,7 +12,7 @@ export const Route = createFileRoute("/merch")({
   head: () =>
     artistHead(
       "Black Friday Merch | Renzo Vibes",
-      "Explore five Renzo Vibes Black Friday pre-order pieces, with front and back product photography.",
+      "Explore the Renzo Vibes Black Friday pre-order collection, including the RVP POW POW T-shirt.",
     ),
   component: Page,
 });
